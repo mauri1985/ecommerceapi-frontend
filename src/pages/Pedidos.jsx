@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import api from "../api/axios";
 import { useAuth } from "../context/AuthContext";
+import MensajeError from "../components/MensajeError";
 
 const estadoColor = {
   PENDIENTE: "bg-yellow-100 text-yellow-800",
@@ -12,20 +13,27 @@ const estadoColor = {
 export default function Pedidos() {
   const [pedidos, setPedidos] = useState([]);
   const [cargando, setCargando] = useState(true);
-  const [error, setError] = useState("");
+  const [error, setError] = useState(null);
 
   const { usuario } = useAuth();
 
   useEffect(() => {
+    cargarPedidos();
+  }, [usuario.id]);
+
+  function cargarPedidos() {
+    setCargando(true);
+    setError(null);
+
     api
       .get(`/pedidos/${usuario.id}`)
       .then((res) => setPedidos(res.data))
-      .catch(() => setError("No se pudo cargar el historial de pedidos"))
+      .catch((err) => setError(err))
       .finally(() => setCargando(false));
-  }, [usuario.id]);
+  }
 
   if (cargando) return <p className="text-center mt-10">Cargando pedidos...</p>;
-  if (error) return <p className="text-center mt-10 text-red-600">{error}</p>;
+  if (error) return <MensajeError error={error} onReintentar={cargarPedidos} />;
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-8">

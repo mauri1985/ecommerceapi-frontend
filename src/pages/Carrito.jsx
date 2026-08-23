@@ -2,12 +2,15 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../api/axios";
 import { useAuth } from "../context/AuthContext";
+import MensajeError from "../components/MensajeError";
 
 export default function Carrito() {
   const [items, setItems] = useState([]);
   const [cargando, setCargando] = useState(true);
+  const [errorCarga, setErrorCarga] = useState(null);
   const [error, setError] = useState("");
   const [confirmando, setConfirmando] = useState(false);
+  const [actualizandoId, setActualizandoId] = useState(null);
 
   const { usuario } = useAuth();
   const navigate = useNavigate();
@@ -18,10 +21,11 @@ export default function Carrito() {
 
   function cargarCarrito() {
     setCargando(true);
+    setErrorCarga(null);
     api
       .get(`/carrito/${usuario.id}`)
       .then((res) => setItems(res.data))
-      .catch(() => setError("No se pudo cargar el carrito"))
+      .catch((err) => setErrorCarga(err))
       .finally(() => setCargando(false));
   }
 
@@ -31,6 +35,25 @@ export default function Carrito() {
       setItems(items.filter((i) => i.id !== itemId));
     } catch {
       setError("No se pudo quitar el producto");
+    }
+  }
+
+  async function cambiarCantidad(item, nuevaCantidad) {
+    if (nuevaCantidad < 1) return;
+
+    setActualizandoId(item.id);
+    setError("");
+    try {
+      const { data } = await api.put(`/carrito/item/${item.id}`, {
+        cantidad: nuevaCantidad,
+      });
+      setItems(items.map((i) => (i.id === item.id ? data : i)));
+    } catch (err) {
+      setError(
+        err.response?.data?.mensajes?.[0] || "No se pudo actualizar la cantidad"
+      );
+    } finally {
+      setActualizandoId(null);
     }
   }
 
@@ -52,6 +75,8 @@ export default function Carrito() {
   const total = items.reduce((acc, item) => acc + item.subtotal, 0);
 
   if (cargando) return <p className="text-center mt-10">Cargando carrito...</p>;
+  if (errorCarga)
+    return <MensajeError error={errorCarga} onReintentar={cargarCarrito} />;
 
   return (
     <div className="max-w-3xl mx-auto px-4 py-8">
@@ -72,11 +97,35 @@ export default function Carrito() {
                 <div>
                   <p className="font-medium">{item.productoNombre}</p>
                   <p className="text-sm text-slate-500">
-                    {item.cantidad} x ${item.precioUnitario}
+                    ${item.precioUnitario} c/u
                   </p>
                 </div>
+
                 <div className="flex items-center gap-4">
-                  <span className="font-semibold">${item.subtotal}</span>
+                  <div className="flex items-center border rounded">
+                    <button
+                      onClick={() => cambiarCantidad(item, item.cantidad - 1)}
+                      disabled={actualizandoId === item.id}
+                      className="px-2.5 py-1 hover:bg-slate-100 disabled:opacity-50"
+                    >
+                      −
+                    </button>
+                    <span className="px-3 py-1 border-x min-w-[2.5rem] text-center">
+                      {item.cantidad}
+                    </span>
+                    <button
+                      onClick={() => cambiarCantidad(item, item.cantidad + 1)}
+                      disabled={actualizandoId === item.id}
+                      className="px-2.5 py-1 hover:bg-slate-100 disabled:opacity-50"
+                    >
+                      +
+                    </button>
+                  </div>
+
+                  <span className="font-semibold w-16 text-right">
+                    ${item.subtotal}
+                  </span>
+
                   <button
                     onClick={() => quitarItem(item.id)}
                     className="text-red-600 hover:underline text-sm"

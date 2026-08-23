@@ -8,6 +8,7 @@ import Carrito from "./pages/Carrito";
 import Pedidos from "./pages/Pedidos";
 import RutaAdmin from "./components/RutaAdmin";
 import AdminProductos from "./pages/AdminProductos";
+import DetalleProducto from "./pages/DetalleProducto";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/" element={<Catalogo />} />
         <Route path="/login" element={<Login />} />
         <Route path="/registro" element={<Registro />} />
+        <Route path="/productos/:id" element={<DetalleProducto />} />
         <Route
           path="/carrito"
           element={
