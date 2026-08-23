@@ -1,11 +1,21 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import { ShoppingCart, Package, LogIn, Menu, X } from "lucide-react";
+import {
+  ShoppingCart,
+  Package,
+  LogIn,
+  Menu,
+  X,
+  Store,
+  Search,
+} from "lucide-react";
 
 export default function Navbar() {
   const { usuario, logout, estaLogueado, esAdmin } = useAuth();
   const [menuAbierto, setMenuAbierto] = useState(false);
+  const [busqueda, setBusqueda] = useState("");
+  const navigate = useNavigate();
 
   function cerrarMenu() {
     setMenuAbierto(false);
@@ -16,76 +26,118 @@ export default function Navbar() {
     cerrarMenu();
   }
 
+  function handleBuscar(e) {
+    e.preventDefault();
+    if (!busqueda.trim()) return;
+    navigate(`/?q=${encodeURIComponent(busqueda.trim())}`);
+    cerrarMenu();
+  }
+
   return (
-    <nav className="bg-slate-800 text-white px-6 py-4">
-      <div className="flex justify-between items-center">
-        <Link to="/" className="text-xl font-bold" onClick={cerrarMenu}>
-          MiTienda
-        </Link>
-
-        {/* Links en desktop */}
-        <div className="hidden md:flex items-center gap-5">
-          {estaLogueado ? (
-            <>
-              <Link
-                to="/carrito"
-                className="flex items-center gap-1.5 hover:text-slate-300 text-sm"
-              >
-                <ShoppingCart size={18} />
-                Carrito
-              </Link>
-              <Link
-                to="/pedidos"
-                className="flex items-center gap-1.5 hover:text-slate-300 text-sm"
-              >
-                <Package size={18} />
-                Mis Pedidos
-              </Link>
-              {esAdmin && (
-                <Link
-                  to="/admin/productos"
-                  className="hover:text-slate-300 text-sm"
-                >
-                  Admin
-                </Link>
-              )}
-              <span className="text-sm text-slate-300">
-                Hola, {usuario.nombre}
-              </span>
-              <button
-                onClick={handleLogout}
-                className="bg-red-600 hover:bg-red-700 px-3 py-1.5 rounded text-sm"
-              >
-                Cerrar sesión
-              </button>
-            </>
-          ) : (
-            <>
-              <Link
-                to="/login"
-                className="flex items-center gap-1.5 hover:text-slate-300 text-sm"
-              >
-                <LogIn size={18} />
-                Iniciar sesión
-              </Link>
-              <Link
-                to="/registro"
-                className="bg-blue-600 hover:bg-blue-700 px-3 py-1.5 rounded text-sm"
-              >
-                Registrarse
-              </Link>
-            </>
-          )}
+    <nav className="bg-slate-800 text-white px-6 md:py-4 py-2 shadow-md shadow-gray-400">
+      <div class="flex gap-2">
+        <div class="md:w-1/3 w-1/2 p-2">
+          {/* Boton de inicio */}
+          <Link
+            to="/"
+            className="text-xl font-bold shrink-0"
+            onClick={cerrarMenu}
+          >
+            MiTienda
+          </Link>
         </div>
+        <div class="hidden md:w-1/3 p-2 md:flex">
+          {/* Buscador, visible en desktop */}
+          <form onSubmit={handleBuscar} className="flex flex-1 max-w-md">
+            <div className="relative w-full">
+              <input
+                type="text"
+                value={busqueda}
+                onChange={(e) => setBusqueda(e.target.value)}
+                placeholder="Buscar productos..."
+                className="w-full rounded-md bg-slate-700 text-white placeholder-slate-400 pl-10 pr-4 py-1.5 text-sm outline-none focus:ring-2 focus:ring-blue-500"
+              />
+              <Search
+                size={16}
+                className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"
+              />
+            </div>
+          </form>
+        </div>
+        <div class="md:w-1/3 w-1/2 p-2">
+          {/* Links en desktop */}
+          <div className="hidden md:flex items-center gap-5 shrink-0">
+            <Link
+              to="/"
+              className="flex items-center gap-1.5 hover:text-slate-300 text-sm"
+            >
+              <Store size={18} />
+              Catálogo
+            </Link>
+            {estaLogueado ? (
+              <>
+                <Link
+                  to="/carrito"
+                  className="flex items-center gap-1.5 hover:text-slate-300 text-sm"
+                >
+                  <ShoppingCart size={18} />
+                  Carrito
+                </Link>
+                <Link
+                  to="/pedidos"
+                  className="flex items-center gap-1.5 hover:text-slate-300 text-sm"
+                >
+                  <Package size={18} />
+                  Pedidos
+                </Link>
+                {esAdmin && (
+                  <Link
+                    to="/admin/productos"
+                    className="hover:text-slate-300 text-sm"
+                  >
+                    Admin
+                  </Link>
+                )}
+                <span className="text-sm text-slate-300">
+                  Hola, {usuario.nombre}
+                </span>
+                <button
+                  onClick={handleLogout}
+                  className="bg-red-600 hover:bg-red-700 px-3 py-1.5 rounded text-sm"
+                >
+                  Cerrar sesión
+                </button>
+              </>
+            ) : (
+              <>
+                <Link
+                  to="/login"
+                  className="flex items-center gap-1.5 hover:text-slate-300 text-sm"
+                >
+                  <LogIn size={18} />
+                  Iniciar sesión
+                </Link>
+                <Link
+                  to="/registro"
+                  className="bg-blue-600 hover:bg-blue-700 px-3 py-1.5 rounded text-sm"
+                >
+                  Registrarse
+                </Link>
+              </>
+            )}
+          </div>
 
-        {/* Botón hamburguesa, solo en mobile */}
-        <button
-          onClick={() => setMenuAbierto(!menuAbierto)}
-          className="md:hidden p-2"
-          aria-label="Abrir menú"
-        >
-          {menuAbierto ? <X size={24} /> : <Menu size={24} />}
-        </button>
+          <div className="text-right">
+            {/* Botón hamburguesa, solo en mobile */}
+            <button
+              onClick={() => setMenuAbierto(!menuAbierto)}
+              className="md:hidden p-2 "
+              aria-label="Abrir menú"
+            >
+              {menuAbierto ? <X size={24} /> : <Menu size={24} />}
+            </button>
+          </div>
+        </div>
       </div>
 
       {/* Menú desplegable, solo en mobile */}
@@ -98,11 +150,31 @@ export default function Navbar() {
       >
         <div className="overflow-hidden">
           <div className="flex flex-col gap-3 pb-2">
+            {/* Buscador también en el menú mobile */}
+            <form onSubmit={handleBuscar}>
+              <div className="relative">
+                <input
+                  type="text"
+                  value={busqueda}
+                  onChange={(e) => setBusqueda(e.target.value)}
+                  placeholder="Buscar productos..."
+                  className="w-full rounded-md bg-slate-700 text-white placeholder-slate-400 pl-10 pr-4 py-1.5 text-sm outline-none focus:ring-2 focus:ring-blue-500"
+                />
+                <Search
+                  size={16}
+                  className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"
+                />
+              </div>
+            </form>
+            <Link
+              to="/"
+              className="flex items-center gap-1.5 hover:text-slate-300 text-sm"
+            >
+              <Store size={18} />
+              Catálogo
+            </Link>
             {estaLogueado ? (
               <>
-                <span className="text-sm text-slate-300">
-                  Hola, {usuario.nombre}
-                </span>
                 <Link
                   to="/carrito"
                   className="flex items-center gap-1.5 hover:text-slate-300 text-sm"
@@ -117,7 +189,7 @@ export default function Navbar() {
                   onClick={cerrarMenu}
                 >
                   <Package size={18} />
-                  Mis Pedidos
+                  Pedidos
                 </Link>
                 {esAdmin && (
                   <Link
@@ -128,6 +200,9 @@ export default function Navbar() {
                     Admin
                   </Link>
                 )}
+                <span className="text-sm text-slate-300">
+                  Hola, {usuario.nombre}
+                </span>
                 <button
                   onClick={handleLogout}
                   className="bg-red-600 hover:bg-red-700 px-3 py-1.5 rounded text-sm text-left"

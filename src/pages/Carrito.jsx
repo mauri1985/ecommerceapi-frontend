@@ -1,8 +1,12 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import api from "../api/axios";
 import { useAuth } from "../context/AuthContext";
 import MensajeError from "../components/MensajeError";
+import CarruselImagenes from "../components/CarruselImagenes";
+import ModalConfirmacion from "../components/ModalConfirmacion";
+import { Trash2, Minus, Plus } from "lucide-react";
+import { useToast } from "../context/ToastContext";
 
 export default function Carrito() {
   const [items, setItems] = useState([]);
@@ -11,6 +15,8 @@ export default function Carrito() {
   const [error, setError] = useState("");
   const [confirmando, setConfirmando] = useState(false);
   const [actualizandoId, setActualizandoId] = useState(null);
+  const [itemAEliminar, setItemAEliminar] = useState(null);
+  const { mostrarToast } = useToast();
 
   const { usuario } = useAuth();
   const navigate = useNavigate();
@@ -29,10 +35,13 @@ export default function Carrito() {
       .finally(() => setCargando(false));
   }
 
-  async function quitarItem(itemId) {
+  async function confirmarEliminacion() {
+    const itemId = itemAEliminar.id;
+    setItemAEliminar(null);
     try {
       await api.delete(`/carrito/item/${itemId}`);
       setItems(items.filter((i) => i.id !== itemId));
+      mostrarToast("¡Producto eliminado del carrito!");
     } catch {
       setError("No se pudo quitar el producto");
     }
@@ -92,45 +101,65 @@ export default function Carrito() {
             {items.map((item) => (
               <div
                 key={item.id}
-                className="flex justify-between items-center border rounded-lg p-4"
+                className="flex flex-col md:flex-row md:items-center gap-4 border border-gray-400 shadow-md rounded-lg p-4"
               >
-                <div>
-                  <p className="font-medium">{item.productoNombre}</p>
+                {/* Carrusel */}
+                <Link
+                  to={`/productos/${item.productoId}`}
+                  className="md:w-50 w-full shrink-0"
+                >
+                  <CarruselImagenes
+                    imagenes={item.imagenes}
+                    alt={item.productoNombre}
+                  />
+                </Link>
+
+                {/* Nombre del producto + precio unitario */}
+                <div className="flex-1 min-w-0">
+                  <Link to={`/productos/${item.productoId}`}>
+                    <p className="font-medium hover:text-blue-600 truncate">
+                      {item.productoNombre}
+                    </p>
+                  </Link>
                   <p className="text-sm text-slate-500">
                     ${item.precioUnitario} c/u
                   </p>
                 </div>
 
-                <div className="flex items-center gap-4">
-                  <div className="flex items-center border rounded">
-                    <button
-                      onClick={() => cambiarCantidad(item, item.cantidad - 1)}
-                      disabled={actualizandoId === item.id}
-                      className="px-2.5 py-1 hover:bg-slate-100 disabled:opacity-50"
-                    >
-                      −
-                    </button>
-                    <span className="px-3 py-1 border-x min-w-[2.5rem] text-center">
-                      {item.cantidad}
-                    </span>
-                    <button
-                      onClick={() => cambiarCantidad(item, item.cantidad + 1)}
-                      disabled={actualizandoId === item.id}
-                      className="px-2.5 py-1 hover:bg-slate-100 disabled:opacity-50"
-                    >
-                      +
-                    </button>
-                  </div>
+                {/* Editor de cantidad */}
+                <div className="flex max-w-24 items-center border rounded shrink-0">
+                  <button
+                    onClick={() => cambiarCantidad(item, item.cantidad - 1)}
+                    disabled={actualizandoId === item.id}
+                    className="p-1.5 hover:bg-slate-100 disabled:opacity-50"
+                  >
+                    <Minus size={14} />
+                  </button>
+                  <span className="px-3 py-1 border-x min-w-[2.5rem] text-center">
+                    {item.cantidad}
+                  </span>
+                  <button
+                    onClick={() => cambiarCantidad(item, item.cantidad + 1)}
+                    disabled={actualizandoId === item.id}
+                    className="p-1.5 hover:bg-slate-100 disabled:opacity-50"
+                  >
+                    <Plus size={14} />
+                  </button>
+                </div>
 
-                  <span className="font-semibold w-16 text-right">
+                <div className="flex gap-2">
+                  {/* Subtotal del producto */}
+                  <span className="font-semibold md:w-16 md:text-right shrink-0">
                     ${item.subtotal}
                   </span>
 
+                  {/* Boton eliminar */}
                   <button
-                    onClick={() => quitarItem(item.id)}
-                    className="text-red-600 hover:underline text-sm"
+                    onClick={() => setItemAEliminar(item)}
+                    className="text-red-600 hover:text-red-700 shrink-0"
+                    aria-label="Quitar producto"
                   >
-                    Quitar
+                    <Trash2 size={18} />
                   </button>
                 </div>
               </div>
@@ -151,6 +180,14 @@ export default function Carrito() {
           </div>
         </>
       )}
+
+      <ModalConfirmacion
+        abierto={itemAEliminar !== null}
+        titulo="Quitar producto"
+        mensaje={`¿Seguro que querés quitar "${itemAEliminar?.productoNombre}" del carrito?`}
+        onConfirmar={confirmarEliminacion}
+        onCancelar={() => setItemAEliminar(null)}
+      />
     </div>
   );
 }

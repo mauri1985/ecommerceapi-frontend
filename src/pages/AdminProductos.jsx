@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
 import api from "../api/axios";
+import ModalConfirmacion from "../components/ModalConfirmacion";
+import { Pencil, Trash2, Plus } from "lucide-react";
+import { useToast } from "../context/ToastContext";
 
 const vacio = {
   nombre: "",
@@ -17,6 +20,8 @@ export default function AdminProductos() {
   const [editandoId, setEditandoId] = useState(null);
   const [errores, setErrores] = useState([]);
   const [guardando, setGuardando] = useState(false);
+  const [productoAEliminar, setProductoAEliminar] = useState(null);
+  const { mostrarToast } = useToast();
 
   useEffect(() => {
     cargarProductos();
@@ -24,7 +29,17 @@ export default function AdminProductos() {
   }, []);
 
   function cargarProductos() {
-    api.get("/productos").then((res) => setProductos(res.data));
+    api
+      .get("/productos", { params: { size: 1000 } })
+      .then((res) => setProductos(res.data.contenido));
+  }
+
+  async function confirmarEliminacion() {
+    const id = productoAEliminar.id;
+    setProductoAEliminar(null);
+    await api.delete(`/productos/${id}`);
+    mostrarToast("¡Producto eliminado con exito!");
+    cargarProductos();
   }
 
   function editar(producto) {
@@ -43,12 +58,6 @@ export default function AdminProductos() {
   function cancelarEdicion() {
     setEditandoId(null);
     setForm(vacio);
-  }
-
-  async function eliminar(id) {
-    if (!confirm("¿Seguro que querés eliminar este producto?")) return;
-    await api.delete(`/productos/${id}`);
-    cargarProductos();
   }
 
   async function handleSubmit(e) {
@@ -174,13 +183,19 @@ export default function AdminProductos() {
           <button
             type="submit"
             disabled={guardando}
-            className="bg-blue-600 hover:bg-blue-700 disabled:bg-blue-300 text-white px-5 py-2 rounded font-medium"
+            className="bg-blue-600 hover:bg-blue-700 disabled:bg-blue-300 text-white px-5 py-2 rounded font-medium flex items-center gap-1.5"
           >
-            {guardando
-              ? "Guardando..."
-              : editandoId
-              ? "Actualizar"
-              : "Crear producto"}
+            {editandoId ? (
+              <>
+                <Pencil size={16} />
+                {guardando ? "Guardando..." : "Actualizar"}
+              </>
+            ) : (
+              <>
+                <Plus size={16} />
+                {guardando ? "Guardando..." : "Crear producto"}
+              </>
+            )}
           </button>
           {editandoId && (
             <button
@@ -210,20 +225,30 @@ export default function AdminProductos() {
             <div className="flex gap-3">
               <button
                 onClick={() => editar(producto)}
-                className="text-blue-600 hover:underline text-sm"
+                className="text-blue-600 hover:text-blue-700 flex items-center gap-1"
               >
-                Editar
+                <Pencil size={16} />
+                <span className="text-sm">Editar</span>
               </button>
               <button
-                onClick={() => eliminar(producto.id)}
-                className="text-red-600 hover:underline text-sm"
+                onClick={() => setProductoAEliminar(producto)}
+                className="text-red-600 hover:text-red-700 flex items-center gap-1"
               >
-                Eliminar
+                <Trash2 size={16} />
+                <span className="text-sm">Eliminar</span>
               </button>
             </div>
           </div>
         ))}
       </div>
+
+      <ModalConfirmacion
+        abierto={productoAEliminar !== null}
+        titulo="Eliminar producto"
+        mensaje={`¿Seguro que querés eliminar "${productoAEliminar?.nombre}"?`}
+        onConfirmar={confirmarEliminacion}
+        onCancelar={() => setProductoAEliminar(null)}
+      />
     </div>
   );
 }

@@ -83,7 +83,7 @@ export default function DetalleProducto() {
                         i === 0 ? imagenes.length - 1 : i - 1
                       )
                     }
-                    className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white rounded-full p-2 shadow"
+                    className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white rounded-md h-15 p-2 shadow"
                     aria-label="Imagen anterior"
                   >
                     <svg
@@ -108,7 +108,7 @@ export default function DetalleProducto() {
                         i === imagenes.length - 1 ? 0 : i + 1
                       )
                     }
-                    className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white rounded-full p-2 shadow"
+                    className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white rounded-md h-15 p-2 shadow"
                     aria-label="Imagen siguiente"
                   >
                     <svg

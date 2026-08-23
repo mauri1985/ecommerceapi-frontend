@@ -7,6 +7,7 @@ import Registro from "./pages/Registro";
 import Carrito from "./pages/Carrito";
 import Pedidos from "./pages/Pedidos";
 import RutaAdmin from "./components/RutaAdmin";
+import Footer from "./components/Footer";
 import AdminProductos from "./pages/AdminProductos";
 import DetalleProducto from "./pages/DetalleProducto";
 
@@ -44,6 +45,7 @@ function App() {
           }
         />
       </Routes>
+      <Footer />
     </>
   );
 }
