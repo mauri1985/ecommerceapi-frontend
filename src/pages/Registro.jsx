@@ -40,7 +40,7 @@ export default function Registro() {
   }
 
   return (
-    <div className="max-w-sm mx-auto mt-16 px-4">
+    <div className="max-w-sm mx-auto mt-16 px-4 min-h-svh">
       <h1 className="text-2xl font-bold mb-6 text-center">Crear cuenta</h1>
 
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">

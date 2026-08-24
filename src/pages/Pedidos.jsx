@@ -36,7 +36,7 @@ export default function Pedidos() {
   if (error) return <MensajeError error={error} onReintentar={cargarPedidos} />;
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8">
+    <div className="max-w-4xl mx-auto px-4 py-8 min-h-svh">
       <h1 className="text-2xl font-bold mb-6">Mis Pedidos</h1>
 
       {pedidos.length === 0 ? (

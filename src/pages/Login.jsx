@@ -29,8 +29,8 @@ export default function Login() {
   }
 
   return (
-    <div className="max-w-sm mx-auto mt-16 px-4">
-      <h1 className="text-2xl font-bold mb-6 text-center">Iniciar sesión</h1>
+    <div className="max-w-sm md:mx-auto mx-4 mt-16 px-4 min-h-150 border border-gray-400 rounded-xl shadow-md">
+      <h1 className="text-2xl font-bold my-6 text-center">Iniciar sesión</h1>
 
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <input
@@ -39,7 +39,7 @@ export default function Login() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
-          className="border rounded px-3 py-2 outline-none focus:ring-2 focus:ring-blue-500"
+          className="border border-gray-400 rounded px-3 py-2 outline-none focus:ring-2 focus:ring-blue-500"
         />
 
         <input
@@ -48,7 +48,7 @@ export default function Login() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
-          className="border rounded px-3 py-2 outline-none focus:ring-2 focus:ring-blue-500"
+          className="border border-gray-400 rounded px-3 py-2 outline-none focus:ring-2 focus:ring-blue-500"
         />
 
         {error && <p className="text-red-600 text-sm">{error}</p>}

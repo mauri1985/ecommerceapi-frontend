@@ -11,6 +11,8 @@ const vacio = {
   stock: "",
   categoriaId: "",
   atributos: "{}",
+  destacado: false,
+  precioOferta: "",
 };
 
 export default function AdminProductos() {
@@ -49,9 +51,11 @@ export default function AdminProductos() {
       descripcion: producto.descripcion || "",
       precio: producto.precio,
       stock: producto.stock,
+      precioOferta: producto.precioOferta || "",
       categoriaId:
         categorias.find((c) => c.nombre === producto.categoriaNombre)?.id || "",
       atributos: JSON.stringify(producto.atributos || {}),
+      destacado: producto.destacado || false,
     });
   }
 
@@ -83,6 +87,8 @@ export default function AdminProductos() {
       stock: parseInt(form.stock),
       categoriaId: parseInt(form.categoriaId),
       atributos: atributosParseados,
+      destacado: form.destacado,
+      precioOferta: form.precioOferta ? parseFloat(form.precioOferta) : null,
     };
 
     try {
@@ -103,7 +109,7 @@ export default function AdminProductos() {
   }
 
   return (
-    <div className="max-w-5xl mx-auto px-4 py-8">
+    <div className="max-w-5xl mx-auto px-4 py-8 min-h-svh">
       <h1 className="text-2xl font-bold mb-6">Administrar Productos</h1>
 
       <form
@@ -147,6 +153,14 @@ export default function AdminProductos() {
           />
           <input
             type="number"
+            step="0.01"
+            placeholder="Precio de oferta (opcional)"
+            value={form.precioOferta}
+            onChange={(e) => setForm({ ...form, precioOferta: e.target.value })}
+            className="border rounded px-3 py-2"
+          />
+          <input
+            type="number"
             placeholder="Stock"
             value={form.stock}
             onChange={(e) => setForm({ ...form, stock: e.target.value })}
@@ -170,6 +184,15 @@ export default function AdminProductos() {
           onChange={(e) => setForm({ ...form, atributos: e.target.value })}
           className="border rounded px-3 py-2 font-mono text-sm"
         />
+
+        <label className="flex items-center gap-2 text-sm">
+          <input
+            type="checkbox"
+            checked={form.destacado}
+            onChange={(e) => setForm({ ...form, destacado: e.target.checked })}
+          />
+          Mostrar en carrusel de ofertas (destacado)
+        </label>
 
         {errores.length > 0 && (
           <ul className="text-red-600 text-sm list-disc list-inside">
@@ -225,14 +248,14 @@ export default function AdminProductos() {
             <div className="flex gap-3">
               <button
                 onClick={() => editar(producto)}
-                className="text-blue-600 hover:text-blue-700 flex items-center gap-1"
+                className="text-blue-600 hover:text-blue-700 flex items-center gap-1 cursor-pointer"
               >
                 <Pencil size={16} />
                 <span className="text-sm">Editar</span>
               </button>
               <button
                 onClick={() => setProductoAEliminar(producto)}
-                className="text-red-600 hover:text-red-700 flex items-center gap-1"
+                className="text-red-600 hover:text-red-700 flex items-center gap-1 cursor-pointer"
               >
                 <Trash2 size={16} />
                 <span className="text-sm">Eliminar</span>

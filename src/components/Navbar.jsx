@@ -29,7 +29,7 @@ export default function Navbar() {
   function handleBuscar(e) {
     e.preventDefault();
     if (!busqueda.trim()) return;
-    navigate(`/?q=${encodeURIComponent(busqueda.trim())}`);
+    navigate(`/catalogo?q=${encodeURIComponent(busqueda.trim())}`);
     cerrarMenu();
   }
 
@@ -48,14 +48,14 @@ export default function Navbar() {
         </div>
         <div class="hidden md:w-1/3 p-2 md:flex">
           {/* Buscador, visible en desktop */}
-          <form onSubmit={handleBuscar} className="flex flex-1 max-w-md">
+          <form onSubmit={handleBuscar} className="flex flex-1">
             <div className="relative w-full">
               <input
                 type="text"
                 value={busqueda}
                 onChange={(e) => setBusqueda(e.target.value)}
                 placeholder="Buscar productos..."
-                className="w-full rounded-md bg-slate-700 text-white placeholder-slate-400 pl-10 pr-4 py-1.5 text-sm outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full h-10 rounded-full bg-slate-700 text-gray-100 placeholder-slate-400 pl-10 pr-4 py-1.5 text-sm outline-none focus:ring-2 focus:ring-blue-500 focus:bg-slate-200 focus:text-black"
               />
               <Search
                 size={16}
@@ -64,11 +64,11 @@ export default function Navbar() {
             </div>
           </form>
         </div>
-        <div class="md:w-1/3 w-1/2 p-2">
+        <div class="md:w-1/3 w-1/2 p-2 flex justify-end">
           {/* Links en desktop */}
           <div className="hidden md:flex items-center gap-5 shrink-0">
             <Link
-              to="/"
+              to="/catalogo"
               className="flex items-center gap-1.5 hover:text-slate-300 text-sm"
             >
               <Store size={18} />
@@ -127,7 +127,7 @@ export default function Navbar() {
             )}
           </div>
 
-          <div className="text-right">
+          <div className="">
             {/* Botón hamburguesa, solo en mobile */}
             <button
               onClick={() => setMenuAbierto(!menuAbierto)}

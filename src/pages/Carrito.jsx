@@ -88,7 +88,7 @@ export default function Carrito() {
     return <MensajeError error={errorCarga} onReintentar={cargarCarrito} />;
 
   return (
-    <div className="max-w-3xl mx-auto px-4 py-8">
+    <div className="max-w-3xl mx-auto px-4 py-8 min-h-svh">
       <h1 className="text-2xl font-bold mb-6">Mi Carrito</h1>
 
       {error && <p className="text-red-600 mb-4">{error}</p>}

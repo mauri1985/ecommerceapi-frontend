@@ -20,7 +20,6 @@ export default function Catalogo() {
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState(null);
   const [agregandoId, setAgregandoId] = useState(null);
-  const [mensajeExito, setMensajeExito] = useState("");
   const [searchParams] = useSearchParams();
   const busqueda = searchParams.get("q") || "";
   const { mostrarToast } = useToast();
@@ -66,7 +65,6 @@ export default function Catalogo() {
     }
 
     setAgregandoId(productoId);
-    setMensajeExito("");
 
     try {
       await api.post("/carrito", {
@@ -83,7 +81,7 @@ export default function Catalogo() {
   }
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-8">
+    <div className="max-w-6xl mx-auto px-4 py-8 min-h-svh">
       <div className="flex justify-between items-center mb-6">
         <div>
           <h1 className="text-2xl font-bold">Catálogo</h1>
@@ -120,10 +118,17 @@ export default function Catalogo() {
                 key={producto.id}
                 className="border border-gray-400 shadow-md hover:shadow-xl rounded-lg p-4 flex flex-col transition-all duration-300 ease-in-out hover:scale-105 hover:border-gray-500"
               >
-                <CarruselImagenes
-                  imagenes={producto.imagenes}
-                  alt={producto.nombre}
-                />
+                <div className="relative">
+                  <CarruselImagenes
+                    imagenes={producto.imagenes}
+                    alt={producto.nombre}
+                  />
+                  {producto.porcentajeDescuento && (
+                    <span className="absolute top-2 left-2 bg-green-600 text-white text-xs font-bold px-2 py-1 rounded z-10">
+                      -{producto.porcentajeDescuento}%
+                    </span>
+                  )}
+                </div>
 
                 <Link to={`/productos/${producto.id}`} className="mt-3">
                   <h2 className="font-semibold text-lg hover:text-blue-600">
@@ -137,7 +142,22 @@ export default function Catalogo() {
                   {producto.descripcion}
                 </p>
                 <div className="flex justify-between items-center mb-3">
-                  <span className="font-bold text-lg">${producto.precio}</span>
+                  <div>
+                    {producto.porcentajeDescuento ? (
+                      <div className="flex items-center gap-2">
+                        <span className="font-bold text-lg text-green-600">
+                          ${producto.precioOferta}
+                        </span>
+                        <span className="text-sm text-slate-400 line-through">
+                          ${producto.precio}
+                        </span>
+                      </div>
+                    ) : (
+                      <span className="font-bold text-lg">
+                        ${producto.precio}
+                      </span>
+                    )}
+                  </div>
                   <span className="text-sm text-slate-400">
                     Stock: {producto.stock}
                   </span>

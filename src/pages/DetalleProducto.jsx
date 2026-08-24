@@ -64,7 +64,7 @@ export default function DetalleProducto() {
   const imagenes = producto.imagenes?.length > 0 ? producto.imagenes : null;
 
   return (
-    <div className="max-w-5xl mx-auto px-4 py-8 grid grid-cols-1 md:grid-cols-2 gap-10">
+    <div className="max-w-5xl mx-auto px-4 py-8 grid grid-cols-1 md:grid-cols-2 gap-10 min-h-svh">
       <div>
         {imagenes ? (
           <>
@@ -181,7 +181,23 @@ export default function DetalleProducto() {
           </div>
         )}
 
-        <p className="text-3xl font-bold mb-2">${producto.precio}</p>
+        {producto.porcentajeDescuento ? (
+          <div className="mb-2">
+            <div className="flex items-center gap-3">
+              <p className="text-3xl font-bold text-green-600">
+                ${producto.precioOferta}
+              </p>
+              <span className="bg-green-600 text-white text-sm font-bold px-2 py-1 rounded">
+                -{producto.porcentajeDescuento}%
+              </span>
+            </div>
+            <p className="text-lg text-slate-400 line-through">
+              ${producto.precio}
+            </p>
+          </div>
+        ) : (
+          <p className="text-3xl font-bold mb-2">${producto.precio}</p>
+        )}
         <p className="text-sm text-slate-500 mb-6">
           Stock disponible: {producto.stock}
         </p>

@@ -10,13 +10,15 @@ import RutaAdmin from "./components/RutaAdmin";
 import Footer from "./components/Footer";
 import AdminProductos from "./pages/AdminProductos";
 import DetalleProducto from "./pages/DetalleProducto";
+import Portada from "./components/Portada";
 
 function App() {
   return (
     <>
       <Navbar />
       <Routes>
-        <Route path="/" element={<Catalogo />} />
+        <Route path="/" element={<Portada />} />
+        <Route path="/catalogo" element={<Catalogo />} />
         <Route path="/login" element={<Login />} />
         <Route path="/registro" element={<Registro />} />
         <Route path="/productos/:id" element={<DetalleProducto />} />
