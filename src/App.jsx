@@ -11,6 +11,7 @@ import Footer from "./components/Footer";
 import AdminProductos from "./pages/AdminProductos";
 import DetalleProducto from "./pages/DetalleProducto";
 import Portada from "./components/Portada";
+import RecuperarPassword from "./pages/RecuperarPassword";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/registro" element={<Registro />} />
         <Route path="/productos/:id" element={<DetalleProducto />} />
+        <Route path="/recuperar-password" element={<RecuperarPassword />} />
         <Route
           path="/carrito"
           element={

@@ -13,7 +13,7 @@ export default function CarruselImagenes({ imagenes, alt }) {
 
   if (!imagenes || imagenes.length === 0) {
     return (
-      <div className="w-full aspect-square bg-slate-100 rounded flex items-center justify-center text-slate-400 text-sm">
+      <div className="w-full aspect-square bg-slate-100 flex items-center justify-center text-slate-400 text-sm">
         Sin imagen
       </div>
     );
@@ -37,21 +37,21 @@ export default function CarruselImagenes({ imagenes, alt }) {
         src={imagenes[activa]}
         alt={alt}
         loading="eager"
-        className="w-full aspect-square object-cover rounded"
+        className="w-full aspect-square object-cover"
       />
 
       {imagenes.length > 1 && (
         <>
           <button
             onClick={anterior}
-            className="absolute left-1 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white rounded-md h-10 p-1 shadow"
+            className="absolute left-0 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white rounded-r-2xl h-10 p-1 shadow"
             aria-label="Imagen anterior"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-4 w-4"
               fill="none"
-              viewBox="0 0 24 24"
+              viewBox="5 0 24 24"
               stroke="currentColor"
             >
               <path
@@ -65,14 +65,14 @@ export default function CarruselImagenes({ imagenes, alt }) {
 
           <button
             onClick={siguiente}
-            className="absolute right-1 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white rounded-md h-10 p-1 shadow"
+            className="absolute right-0 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white rounded-l-2xl h-10 p-1 shadow"
             aria-label="Imagen siguiente"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-4 w-4"
               fill="none"
-              viewBox="0 0 24 24"
+              viewBox="-5 0 24 24"
               stroke="currentColor"
             >
               <path

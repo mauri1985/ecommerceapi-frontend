@@ -22,9 +22,9 @@ export default function CarruselOfertas() {
   if (productos.length === 0) return null;
 
   return (
-    <div className="relative py-8 bg-orange-300">
-      <div className="max-w-6xl mx-auto px-4">
-        <h2 className="text-2xl font-bold mb-4">Ofertas destacadas</h2>
+    <div className="relative py-8 bg-gray-200">
+      <div className="max-w-350 mx-auto px-4">
+        <h2 className="text-2xl font-bold mb-4">Destacados</h2>
 
         <div className="relative">
           <div
@@ -36,27 +36,25 @@ export default function CarruselOfertas() {
               <Link
                 key={producto.id}
                 to={`/productos/${producto.id}`}
-                className="snap-start shrink-0 w-72 sm:w-80 bg-white rounded-lg shadow-black shadow-md/20 hover:shadow-md/40 transition overflow-hidden"
+                className="snap-start shrink-0 w-72 sm:w-80 bg-white rounded-sm shadow-black shadow-md/20 hover:shadow-md/40 transition overflow-hidden"
               >
-                <div className="h-64 sm:h-72">
+                <div className="h-64 sm:h-72 transition-all duration-300 ease-in-out hover:scale-103">
                   <CarruselImagenes
                     imagenes={producto.imagenes}
                     alt={producto.nombre}
                   />
                 </div>
-                <div className="p-4 mt-4">
+                <div className="p-4 mt-4 bg-green-500 text-white">
                   <h3 className="font-semibold text-lg truncate">
                     {producto.nombre}
                   </h3>
-                  <p className="text-slate-500 text-sm mb-2">
-                    {producto.categoriaNombre}
-                  </p>
+                  <p className="text-sm mb-2">{producto.categoriaNombre}</p>
                   {producto.porcentajeDescuento ? (
                     <div className="flex items-center gap-2">
-                      <span className="font-bold text-xl text-green-600">
+                      <span className="font-bold text-xl ">
                         ${producto.precioOferta}
                       </span>
-                      <span className="text-sm text-slate-400 line-through">
+                      <span className="text-sm text-gray-200 line-through">
                         ${producto.precio}
                       </span>
                     </div>

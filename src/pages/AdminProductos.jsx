@@ -191,7 +191,7 @@ export default function AdminProductos() {
             checked={form.destacado}
             onChange={(e) => setForm({ ...form, destacado: e.target.checked })}
           />
-          Mostrar en carrusel de ofertas (destacado)
+          Mostrar en sección "Destacados" del inicio
         </label>
 
         {errores.length > 0 && (

@@ -1,14 +1,20 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import LoginModal from "./LoginModal";
+import Tooltip from "../components/Tooltip";
+
 import {
   ShoppingCart,
   Package,
   LogIn,
+  LogOut,
   Menu,
   X,
   Store,
   Search,
+  Settings,
+  UserPlus,
 } from "lucide-react";
 
 export default function Navbar() {
@@ -16,6 +22,7 @@ export default function Navbar() {
   const [menuAbierto, setMenuAbierto] = useState(false);
   const [busqueda, setBusqueda] = useState("");
   const navigate = useNavigate();
+  const [mostrarLogin, setMostrarLogin] = useState(false);
 
   function cerrarMenu() {
     setMenuAbierto(false);
@@ -67,62 +74,66 @@ export default function Navbar() {
         <div class="md:w-1/3 w-1/2 p-2 flex justify-end">
           {/* Links en desktop */}
           <div className="hidden md:flex items-center gap-5 shrink-0">
-            <Link
-              to="/catalogo"
-              className="flex items-center gap-1.5 hover:text-slate-300 text-sm"
-            >
-              <Store size={18} />
-              Catálogo
-            </Link>
+            <Tooltip texto="Catálogo">
+              <Link to="/catalogo" className="hover:text-slate-300">
+                <Store size={20} />
+              </Link>
+            </Tooltip>
+
             {estaLogueado ? (
               <>
-                <Link
-                  to="/carrito"
-                  className="flex items-center gap-1.5 hover:text-slate-300 text-sm"
-                >
-                  <ShoppingCart size={18} />
-                  Carrito
-                </Link>
-                <Link
-                  to="/pedidos"
-                  className="flex items-center gap-1.5 hover:text-slate-300 text-sm"
-                >
-                  <Package size={18} />
-                  Pedidos
-                </Link>
-                {esAdmin && (
-                  <Link
-                    to="/admin/productos"
-                    className="hover:text-slate-300 text-sm"
-                  >
-                    Admin
+                <Tooltip texto="Carrito">
+                  <Link to="/carrito" className="hover:text-slate-300">
+                    <ShoppingCart size={20} />
                   </Link>
+                </Tooltip>
+
+                <Tooltip texto="Mis pedidos">
+                  <Link to="/pedidos" className="hover:text-slate-300">
+                    <Package size={20} />
+                  </Link>
+                </Tooltip>
+
+                {esAdmin && (
+                  <Tooltip texto="Panel de administración">
+                    <Link
+                      to="/admin/productos"
+                      className="hover:text-slate-300"
+                    >
+                      <Settings size={20} />
+                    </Link>
+                  </Tooltip>
                 )}
+
                 <span className="text-sm text-slate-300">
                   Hola, {usuario.nombre}
                 </span>
-                <button
-                  onClick={handleLogout}
-                  className="bg-red-600 hover:bg-red-700 px-3 py-1.5 rounded text-sm"
-                >
-                  Cerrar sesión
-                </button>
+
+                <Tooltip texto="Cerrar sesión">
+                  <button
+                    onClick={handleLogout}
+                    className="text-red-400 hover:text-red-300"
+                  >
+                    <LogOut size={20} />
+                  </button>
+                </Tooltip>
               </>
             ) : (
               <>
-                <Link
-                  to="/login"
-                  className="flex items-center gap-1.5 hover:text-slate-300 text-sm"
-                >
-                  <LogIn size={18} />
-                  Iniciar sesión
-                </Link>
-                <Link
-                  to="/registro"
-                  className="bg-blue-600 hover:bg-blue-700 px-3 py-1.5 rounded text-sm"
-                >
-                  Registrarse
-                </Link>
+                <Tooltip texto="Iniciar sesión">
+                  <button
+                    onClick={() => setMostrarLogin(true)}
+                    className="hover:text-slate-300 cursor-pointer"
+                  >
+                    <LogIn size={20} />
+                  </button>
+                </Tooltip>
+
+                <Tooltip texto="Registrarse">
+                  <Link to="/registro" className="hover:text-slate-300">
+                    <UserPlus size={20} />
+                  </Link>
+                </Tooltip>
               </>
             )}
           </div>
@@ -211,27 +222,24 @@ export default function Navbar() {
                 </button>
               </>
             ) : (
-              <>
-                <Link
-                  to="/login"
-                  className="flex items-center gap-1.5 hover:text-slate-300 text-sm"
-                  onClick={cerrarMenu}
-                >
-                  <LogIn size={18} />
-                  Iniciar sesión
-                </Link>
-                <Link
-                  to="/registro"
-                  className="bg-blue-600 hover:bg-blue-700 px-3 py-1.5 rounded text-sm w-fit"
-                  onClick={cerrarMenu}
-                >
-                  Registrarse
-                </Link>
-              </>
+              <button
+                onClick={() => {
+                  setMostrarLogin(true);
+                  cerrarMenu();
+                }}
+                className="flex items-center gap-1.5 hover:text-slate-300 text-sm text-left"
+              >
+                <LogIn size={18} />
+                Iniciar sesión
+              </button>
             )}
           </div>
         </div>
       </div>
+      <LoginModal
+        abierto={mostrarLogin}
+        onClose={() => setMostrarLogin(false)}
+      />
     </nav>
   );
 }
