@@ -3,6 +3,7 @@ import api from "../api/axios";
 import ModalConfirmacion from "../components/ModalConfirmacion";
 import { Pencil, Trash2, Plus } from "lucide-react";
 import { useToast } from "../context/ToastContext";
+import SubidaImagen from "../components/SubidaImagen";
 
 const vacio = {
   nombre: "",
@@ -24,6 +25,7 @@ export default function AdminProductos() {
   const [guardando, setGuardando] = useState(false);
   const [productoAEliminar, setProductoAEliminar] = useState(null);
   const { mostrarToast } = useToast();
+  const [imagenesProducto, setImagenesProducto] = useState([]);
 
   useEffect(() => {
     cargarProductos();
@@ -46,6 +48,7 @@ export default function AdminProductos() {
 
   function editar(producto) {
     setEditandoId(producto.id);
+    setImagenesProducto(producto.imagenesCompletas || []);
     setForm({
       nombre: producto.nombre,
       descripcion: producto.descripcion || "",
@@ -61,6 +64,7 @@ export default function AdminProductos() {
 
   function cancelarEdicion() {
     setEditandoId(null);
+    setImagenesProducto([]);
     setForm(vacio);
   }
 
@@ -95,8 +99,14 @@ export default function AdminProductos() {
       if (editandoId) {
         await api.put(`/productos/${editandoId}`, body);
       } else {
-        await api.post("/productos", body);
+        const { data } = await api.post("/productos", body);
+        setEditandoId(data.id); // así el usuario puede subir imágenes al producto recién creado, sin cerrar el formulario
+        setImagenesProducto([]);
+        cargarProductos();
+        return; // no reseteamos el form todavía, para que pueda subir imágenes
       }
+      cancelarEdicion();
+      cargarProductos();
       cancelarEdicion();
       cargarProductos();
     } catch (err) {
@@ -117,7 +127,25 @@ export default function AdminProductos() {
         className="border rounded-lg p-5 mb-8 flex flex-col gap-3"
       >
         <h2 className="font-semibold">
-          {editandoId ? "Editar producto" : "Nuevo producto"}
+          {editandoId && (
+            <SubidaImagen
+              productoId={editandoId}
+              imagenes={imagenesProducto}
+              onImagenSubida={(img) =>
+                setImagenesProducto([...imagenesProducto, img])
+              }
+              onImagenEliminada={(id) =>
+                setImagenesProducto(imagenesProducto.filter((i) => i.id !== id))
+              }
+              onPortadaCambiada={() => {
+                api
+                  .get(`/productos/${editandoId}`)
+                  .then((res) =>
+                    setImagenesProducto(res.data.imagenesCompletas)
+                  );
+              }}
+            />
+          )}
         </h2>
 
         <div className="grid grid-cols-2 gap-3">

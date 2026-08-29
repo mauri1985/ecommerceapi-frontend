@@ -1,3 +1,6 @@
+import { Link } from "react-router-dom";
+import { INFO_CONTACTO } from "../data/InfoContacto";
+
 export default function Footer() {
   return (
     <footer className="bg-slate-800 text-slate-300 mt-16">
@@ -6,9 +9,9 @@ export default function Footer() {
           <h3 className="text-white font-semibold mb-3">MiTienda</h3>
           <ul className="flex flex-col gap-2 text-sm">
             <li>
-              <a href="#" className="hover:text-white">
+              <Link to="/sobre-nosotros" className="hover:text-white">
                 Sobre nosotros
-              </a>
+              </Link>
             </li>
             <li>
               <a href="#" className="hover:text-white">
@@ -58,9 +61,9 @@ export default function Footer() {
               </a>
             </li>
             <li>
-              <a href="#" className="hover:text-white">
+              <Link to="/contacto" className="hover:text-white">
                 Contacto
-              </a>
+              </Link>
             </li>
           </ul>
         </div>
@@ -113,6 +116,15 @@ export default function Footer() {
                 <path d="M16.6 5.82s.51.5 0 0A4.278 4.278 0 0 1 15.54 3h-3.09v12.4a2.592 2.592 0 0 1-2.59 2.5c-1.42 0-2.6-1.16-2.6-2.6c0-1.72 1.66-3.01 3.37-2.48V9.66c-3.45-.46-6.47 2.22-6.47 5.64c0 3.33 2.76 5.7 5.69 5.7c3.14 0 5.69-2.55 5.69-5.7V9.01a7.35 7.35 0 0 0 4.3 1.38V7.3s-1.88.09-3.24-1.48z" />
               </svg>
             </a>
+          </div>
+          <div className="mt-4 pt-4 border-t border-slate-700 text-xs">
+            <p>{INFO_CONTACTO.domicilio}</p>
+            <Link
+              to="/sobre-nosotros"
+              className="text-blue-400 hover:underline"
+            >
+              Ver en el mapa
+            </Link>
           </div>
         </div>
       </div>

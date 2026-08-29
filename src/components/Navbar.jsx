@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import LoginModal from "./LoginModal";
 import Tooltip from "../components/Tooltip";
+import BuscadorConSugerencias from "../components/BuscadorConSugerencias";
 
 import {
   ShoppingCart,
@@ -12,15 +13,15 @@ import {
   Menu,
   X,
   Store,
-  Search,
   Settings,
   UserPlus,
+  Phone,
+  Heart,
 } from "lucide-react";
 
 export default function Navbar() {
   const { usuario, logout, estaLogueado, esAdmin } = useAuth();
   const [menuAbierto, setMenuAbierto] = useState(false);
-  const [busqueda, setBusqueda] = useState("");
   const navigate = useNavigate();
   const [mostrarLogin, setMostrarLogin] = useState(false);
 
@@ -33,17 +34,10 @@ export default function Navbar() {
     cerrarMenu();
   }
 
-  function handleBuscar(e) {
-    e.preventDefault();
-    if (!busqueda.trim()) return;
-    navigate(`/catalogo?q=${encodeURIComponent(busqueda.trim())}`);
-    cerrarMenu();
-  }
-
   return (
     <nav className="bg-slate-800 text-white px-6 md:py-4 py-2 shadow-md shadow-gray-400">
-      <div class="flex gap-2">
-        <div class="md:w-1/3 w-1/2 p-2">
+      <div className="flex gap-2">
+        <div className="md:w-1/3 w-1/2 p-2">
           {/* Boton de inicio */}
           <Link
             to="/"
@@ -53,30 +47,21 @@ export default function Navbar() {
             MiTienda
           </Link>
         </div>
-        <div class="hidden md:w-1/3 p-2 md:flex">
+        <div className="hidden md:w-1/3 p-2 md:flex">
           {/* Buscador, visible en desktop */}
-          <form onSubmit={handleBuscar} className="flex flex-1">
-            <div className="relative w-full">
-              <input
-                type="text"
-                value={busqueda}
-                onChange={(e) => setBusqueda(e.target.value)}
-                placeholder="Buscar productos..."
-                className="w-full h-10 rounded-full bg-slate-700 text-gray-100 placeholder-slate-400 pl-10 pr-4 py-1.5 text-sm outline-none focus:ring-2 focus:ring-blue-500 focus:bg-slate-200 focus:text-black"
-              />
-              <Search
-                size={16}
-                className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"
-              />
-            </div>
-          </form>
+          <BuscadorConSugerencias claseInput="w-full h-10 rounded-full bg-slate-700 text-gray-100 placeholder-slate-400 pl-10 pr-4 py-1.5 text-sm outline-none focus:ring-2 focus:ring-blue-500 focus:bg-slate-200 focus:text-black" />
         </div>
-        <div class="md:w-1/3 w-1/2 p-2 flex justify-end">
+        <div className="md:w-1/3 w-1/2 p-2 flex justify-end">
           {/* Links en desktop */}
           <div className="hidden md:flex items-center gap-5 shrink-0">
             <Tooltip texto="Catálogo">
               <Link to="/catalogo" className="hover:text-slate-300">
                 <Store size={20} />
+              </Link>
+            </Tooltip>
+            <Tooltip texto="Contacto">
+              <Link to="/contacto" className="hover:text-slate-300">
+                <Phone size={20} />
               </Link>
             </Tooltip>
 
@@ -91,6 +76,12 @@ export default function Navbar() {
                 <Tooltip texto="Mis pedidos">
                   <Link to="/pedidos" className="hover:text-slate-300">
                     <Package size={20} />
+                  </Link>
+                </Tooltip>
+
+                <Tooltip texto="Favoritos">
+                  <Link to="/favoritos" className="hover:text-slate-300">
+                    <Heart size={20} />
                   </Link>
                 </Tooltip>
 
@@ -162,21 +153,10 @@ export default function Navbar() {
         <div className="overflow-hidden">
           <div className="flex flex-col gap-3 pb-2">
             {/* Buscador también en el menú mobile */}
-            <form onSubmit={handleBuscar}>
-              <div className="relative">
-                <input
-                  type="text"
-                  value={busqueda}
-                  onChange={(e) => setBusqueda(e.target.value)}
-                  placeholder="Buscar productos..."
-                  className="w-full rounded-md bg-slate-700 text-white placeholder-slate-400 pl-10 pr-4 py-1.5 text-sm outline-none focus:ring-2 focus:ring-blue-500"
-                />
-                <Search
-                  size={16}
-                  className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"
-                />
-              </div>
-            </form>
+            <BuscadorConSugerencias
+              claseInput="w-full rounded-md bg-slate-700 text-white placeholder-slate-400 pl-10 pr-4 py-1.5 text-sm outline-none focus:ring-2 focus:ring-blue-500"
+              onNavegar={cerrarMenu}
+            />
             <Link
               to="/"
               className="flex items-center gap-1.5 hover:text-slate-300 text-sm"
@@ -201,6 +181,14 @@ export default function Navbar() {
                 >
                   <Package size={18} />
                   Pedidos
+                </Link>
+                <Link
+                  to="/favoritos"
+                  className="flex items-center gap-1.5 hover:text-slate-300 text-sm"
+                  onClick={cerrarMenu}
+                >
+                  <Heart size={18} />
+                  Favoritos
                 </Link>
                 {esAdmin && (
                   <Link

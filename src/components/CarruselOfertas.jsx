@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import api from "../api/axios";
-import CarruselImagenes from "./CarruselImagenes";
+// import CarruselImagenes from "./CarruselImagenes";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 export default function CarruselOfertas() {
@@ -39,9 +39,15 @@ export default function CarruselOfertas() {
                 className="snap-start shrink-0 w-72 sm:w-80 bg-white rounded-sm shadow-black shadow-md/20 hover:shadow-md/40 transition overflow-hidden"
               >
                 <div className="h-64 sm:h-72 transition-all duration-300 ease-in-out hover:scale-103">
-                  <CarruselImagenes
+                  {/* <CarruselImagenes
                     imagenes={producto.imagenes}
                     alt={producto.nombre}
+                  /> */}
+                  <img
+                    src={producto.imagenes[0]}
+                    alt={producto.nombre}
+                    loading="eager"
+                    className="w-full aspect-square object-cover"
                   />
                 </div>
                 <div className="p-4 mt-4 bg-green-500 text-white">
@@ -73,14 +79,14 @@ export default function CarruselOfertas() {
                 className="hidden md:flex absolute -left-4 top-1/2 -translate-y-1/2 bg-white shadow rounded-full p-2 hover:bg-slate-50"
                 aria-label="Anterior"
               >
-                <ChevronLeft size={22} />
+                <ChevronLeft size={36} />
               </button>
               <button
                 onClick={() => desplazar(1)}
                 className="hidden md:flex absolute -right-4 top-1/2 -translate-y-1/2 bg-white shadow rounded-full p-2 hover:bg-slate-50"
                 aria-label="Siguiente"
               >
-                <ChevronRight size={22} />
+                <ChevronRight size={36} />
               </button>
             </>
           )}

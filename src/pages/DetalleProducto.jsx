@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import api from "../api/axios";
 import { useAuth } from "../context/AuthContext";
 import MensajeError from "../components/MensajeError";
+import BotonFavorito from "../components/BotonFavorito";
 
 export default function DetalleProducto() {
   const { id } = useParams();
@@ -165,7 +166,10 @@ export default function DetalleProducto() {
         <p className="text-sm text-slate-500 mb-1">
           {producto.categoriaNombre}
         </p>
-        <h1 className="text-3xl font-bold mb-4">{producto.nombre}</h1>
+        <div className="flex justify-between items-start mb-4">
+          <h1 className="text-3xl font-bold">{producto.nombre}</h1>
+          <BotonFavorito productoId={producto.id} size={24} />
+        </div>
         <p className="text-slate-700 mb-6">{producto.descripcion}</p>
 
         {producto.atributos && Object.keys(producto.atributos).length > 0 && (

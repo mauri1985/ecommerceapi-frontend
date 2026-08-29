@@ -9,6 +9,7 @@ import CarruselImagenes from "../components/CarruselImagenes";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useSearchParams } from "react-router-dom";
 import { useToast } from "../context/ToastContext";
+import BotonFavorito from "../components/BotonFavorito";
 
 const TAMANIO_PAGINA = 20;
 const TALLES_DISPONIBLES = ["XS", "S", "M", "L", "XL", "XXL"];
@@ -186,6 +187,9 @@ export default function Catalogo() {
                             -{producto.porcentajeDescuento}%
                           </span>
                         )}
+                        <div className="absolute top-2 right-2 z-10">
+                          <BotonFavorito productoId={producto.id} />
+                        </div>
                       </div>
 
                       <div className="p-2">

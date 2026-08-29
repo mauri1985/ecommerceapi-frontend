@@ -12,6 +12,10 @@ import AdminProductos from "./pages/AdminProductos";
 import DetalleProducto from "./pages/DetalleProducto";
 import Portada from "./components/Portada";
 import RecuperarPassword from "./pages/RecuperarPassword";
+import Contacto from "./pages/Contacto";
+import SobreNosotros from "./pages/SobreNosotros";
+import Favoritos from "./pages/Favoritos";
+import BotonWhatsApp from "./components/BotonWhatsApp";
 
 function App() {
   return (
@@ -24,6 +28,8 @@ function App() {
         <Route path="/registro" element={<Registro />} />
         <Route path="/productos/:id" element={<DetalleProducto />} />
         <Route path="/recuperar-password" element={<RecuperarPassword />} />
+        <Route path="/contacto" element={<Contacto />} />
+        <Route path="/sobre-nosotros" element={<SobreNosotros />} />
         <Route
           path="/carrito"
           element={
@@ -48,8 +54,17 @@ function App() {
             </RutaAdmin>
           }
         />
+        <Route
+          path="/favoritos"
+          element={
+            <RutaProtegida>
+              <Favoritos />
+            </RutaProtegida>
+          }
+        />
       </Routes>
       <Footer />
+      <BotonWhatsApp />
     </>
   );
 }
