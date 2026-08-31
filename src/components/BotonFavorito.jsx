@@ -14,7 +14,7 @@ export default function BotonFavorito({ productoId, size = 20 }) {
     e.stopPropagation();
 
     if (!estaLogueado) {
-      navigate("/login");
+      navigate("/");
       return;
     }
     toggleFavorito(productoId);

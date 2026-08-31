@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import { X } from "lucide-react";
 import Login from "../pages/Login";
 
 export default function LoginModal({ abierto, onClose }) {

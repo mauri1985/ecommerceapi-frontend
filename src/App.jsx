@@ -2,7 +2,6 @@ import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import RutaProtegida from "./components/RutaProtegida";
 import Catalogo from "./pages/Catalogo";
-import Login from "./pages/Login";
 import Registro from "./pages/Registro";
 import Carrito from "./pages/Carrito";
 import Pedidos from "./pages/Pedidos";
@@ -24,7 +23,6 @@ function App() {
       <Routes>
         <Route path="/" element={<Portada />} />
         <Route path="/catalogo" element={<Catalogo />} />
-        <Route path="/login" element={<Login />} />
         <Route path="/registro" element={<Registro />} />
         <Route path="/productos/:id" element={<DetalleProducto />} />
         <Route path="/recuperar-password" element={<RecuperarPassword />} />

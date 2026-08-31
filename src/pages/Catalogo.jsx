@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import api from "../api/axios";
 import { useAuth } from "../context/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { useLoginModal } from "../context/LoginModalContext";
 import MensajeError from "../components/MensajeError";
 import FiltrosSidebar from "../components/FiltrosSidebar";
 import CarruselImagenes from "../components/CarruselImagenes";
@@ -41,7 +41,7 @@ export default function Catalogo() {
   const [atributosSeleccionados, setAtributosSeleccionados] = useState([]);
 
   const { usuario, estaLogueado } = useAuth();
-  const navigate = useNavigate();
+  const { abrir: abrirLogin } = useLoginModal();
 
   // el useEffect que resetea la página:
   useEffect(() => {
@@ -93,7 +93,7 @@ export default function Catalogo() {
 
   async function agregarAlCarrito(productoId) {
     if (!estaLogueado) {
-      navigate("/login");
+      abrirLogin();
       return;
     }
 

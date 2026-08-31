@@ -1,9 +1,10 @@
-import { useState, useRef, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import LoginModal from "./LoginModal";
 import Tooltip from "../components/Tooltip";
 import BuscadorConSugerencias from "../components/BuscadorConSugerencias";
+import { useLoginModal } from "../context/LoginModalContext";
 
 import {
   ShoppingCart,
@@ -22,8 +23,11 @@ import {
 export default function Navbar() {
   const { usuario, logout, estaLogueado, esAdmin } = useAuth();
   const [menuAbierto, setMenuAbierto] = useState(false);
-  const navigate = useNavigate();
-  const [mostrarLogin, setMostrarLogin] = useState(false);
+  const {
+    abierto: mostrarLogin,
+    abrir: abrirLogin,
+    cerrar: cerrarLogin,
+  } = useLoginModal();
 
   function cerrarMenu() {
     setMenuAbierto(false);
@@ -113,7 +117,7 @@ export default function Navbar() {
               <>
                 <Tooltip texto="Iniciar sesión">
                   <button
-                    onClick={() => setMostrarLogin(true)}
+                    onClick={() => abrirLogin(true)}
                     className="hover:text-slate-300 cursor-pointer"
                   >
                     <LogIn size={20} />
@@ -141,7 +145,6 @@ export default function Navbar() {
           </div>
         </div>
       </div>
-
       {/* Menú desplegable, solo en mobile */}
       <div
         className={`md:hidden grid transition-all duration-300 ease-in-out ${
@@ -212,7 +215,7 @@ export default function Navbar() {
             ) : (
               <button
                 onClick={() => {
-                  setMostrarLogin(true);
+                  abrirLogin(true);
                   cerrarMenu();
                 }}
                 className="flex items-center gap-1.5 hover:text-slate-300 text-sm text-left"
@@ -224,10 +227,7 @@ export default function Navbar() {
           </div>
         </div>
       </div>
-      <LoginModal
-        abierto={mostrarLogin}
-        onClose={() => setMostrarLogin(false)}
-      />
+      <LoginModal abierto={mostrarLogin} onClose={cerrarLogin} />{" "}
     </nav>
   );
 }
