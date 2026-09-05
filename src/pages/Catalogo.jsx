@@ -201,7 +201,7 @@ export default function Catalogo() {
                         <p className="text-slate-500 text-sm mb-2">
                           {producto.categoriaNombre}
                         </p>
-                        <p className="text-slate-700 mb-3 flex-1">
+                        <p className="text-slate-700 mb-3 flex-1 line-clamp-3">
                           {producto.descripcion}
                         </p>
                         <div className="flex justify-between items-center mb-3">
