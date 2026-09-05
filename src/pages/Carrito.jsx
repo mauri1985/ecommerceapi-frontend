@@ -135,7 +135,7 @@ export default function Carrito() {
                   >
                     <Minus size={14} />
                   </button>
-                  <span className="px-3 py-1 border-x min-w-[2.5rem] text-center">
+                  <span className="px-3 py-1 border-x min-w-10 text-center">
                     {item.cantidad}
                   </span>
                   <button

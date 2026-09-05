@@ -36,9 +36,9 @@ export default function CarruselOfertas() {
               <Link
                 key={producto.id}
                 to={`/productos/${producto.id}`}
-                className="snap-start shrink-0 w-72 sm:w-80 bg-white rounded-sm shadow-black shadow-md/20 hover:shadow-md/40 transition overflow-hidden"
+                className="w-full snap-start shrink-0 sm:w-80 bg-white rounded-sm shadow-black shadow-md/20 hover:shadow-md/40 transition overflow-hidden"
               >
-                <div className="h-64 sm:h-72 transition-all duration-300 ease-in-out hover:scale-103">
+                <div className="transition-all duration-300 ease-in-out hover:scale-103 overflow-hidden">
                   {/* <CarruselImagenes
                     imagenes={producto.imagenes}
                     alt={producto.nombre}
@@ -47,10 +47,10 @@ export default function CarruselOfertas() {
                     src={producto.imagenes[0]}
                     alt={producto.nombre}
                     loading="eager"
-                    className="w-full aspect-square object-cover"
+                    className="w-full aspect-square object-contain shrink-0"
                   />
                 </div>
-                <div className="p-4 mt-4 bg-green-500 text-white">
+                <div className="p-4 bg-green-500 text-white">
                   <h3 className="font-semibold text-lg truncate">
                     {producto.nombre}
                   </h3>

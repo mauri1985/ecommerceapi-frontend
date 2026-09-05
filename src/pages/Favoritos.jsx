@@ -19,7 +19,7 @@ export default function Favoritos() {
           {favoritos.map((producto) => (
             <div
               key={producto.productoId}
-              className="border rounded-2xl overflow-hidden hover:shadow-lg transition flex flex-col"
+              className="border border-gray-300 rounded-2xl overflow-hidden hover:shadow-lg transition flex flex-col shadow"
             >
               <div className="relative overflow-hidden rounded-t-2xl">
                 <CarruselImagenes
@@ -27,7 +27,7 @@ export default function Favoritos() {
                   alt={producto.productoNombre}
                 />
                 {producto.porcentajeDescuento && (
-                  <span className="absolute top-2 left-2 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded z-10">
+                  <span className="absolute top-2 left-2 bg-green-500 text-white text-xs font-bold px-2 py-1 rounded z-10">
                     -{producto.porcentajeDescuento}%
                   </span>
                 )}
@@ -44,7 +44,7 @@ export default function Favoritos() {
                 </Link>
                 {producto.porcentajeDescuento ? (
                   <div className="flex items-center gap-2 mt-1">
-                    <span className="font-bold text-lg text-red-600">
+                    <span className="font-bold text-lg text-green-50bg-green-500">
                       ${producto.precioOferta}
                     </span>
                     <span className="text-sm text-slate-400 line-through">

@@ -266,14 +266,16 @@ export default function DetalleProducto() {
         {producto.stock > 0 && (
           <div className="flex items-center gap-3 mb-4">
             <span className="text-sm font-medium">Cantidad:</span>
-            <div className="flex items-center border rounded">
+            <div className="flex items-center border border-gray-400 rounded">
               <button
                 onClick={() => setCantidad((c) => Math.max(1, c - 1))}
                 className="px-3 py-1.5 hover:bg-slate-100"
               >
                 −
               </button>
-              <span className="px-4 py-1.5 border-x">{cantidad}</span>
+              <span className="px-4 py-1.5 border-x border-gray-400">
+                {cantidad}
+              </span>
               <button
                 onClick={() =>
                   setCantidad((c) => Math.min(producto.stock, c + 1))
