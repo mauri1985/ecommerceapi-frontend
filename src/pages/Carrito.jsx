@@ -70,13 +70,13 @@ export default function Carrito() {
     setConfirmando(true);
     setError("");
     try {
-      await api.post(`/pedidos/${usuario.id}`);
-      navigate("/pedidos");
+      const { data: pedido } = await api.post(`/pedidos/${usuario.id}`);
+      const { data: pago } = await api.post(`/pagos/preferencia/${pedido.id}`);
+      window.location.href = pago.urlPago;
     } catch (err) {
       const mensaje =
         err.response?.data?.mensajes?.[0] || "Error al confirmar el pedido";
       setError(mensaje);
-    } finally {
       setConfirmando(false);
     }
   }
