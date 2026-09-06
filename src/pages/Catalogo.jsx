@@ -6,7 +6,7 @@ import { useLoginModal } from "../context/LoginModalContext";
 import MensajeError from "../components/MensajeError";
 import FiltrosSidebar from "../components/FiltrosSidebar";
 import CarruselImagenes from "../components/CarruselImagenes";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, Filter } from "lucide-react";
 import { useSearchParams } from "react-router-dom";
 import { useToast } from "../context/ToastContext";
 import BotonFavorito from "../components/BotonFavorito";
@@ -147,22 +147,29 @@ export default function Catalogo() {
             Resultados para: <span className="font-medium">"{busqueda}"</span>
           </p>
         )}
-
+        <div className="flex flex-1 md:hidden justify-end pb-4">
+          <button className="flex flex-row gap-2 px-3 py-2 rounded-xl bg-blue-600 shadow">
+            <p className="text-white">Mostrar filtros</p>
+            <Filter className="text-white" />
+          </button>
+        </div>
         <div className="flex flex-col md:flex-row gap-4">
-          <FiltrosSidebar
-            categorias={categorias}
-            categoriasSeleccionadas={categoriasSeleccionadas}
-            onToggleCategoria={toggleCategoria}
-            onLimpiarCategorias={() => setCategoriasSeleccionadas([])}
-            precioMin={precioMinInput}
-            precioMax={precioMaxInput}
-            onCambiarPrecioMin={setPrecioMinInput}
-            onCambiarPrecioMax={setPrecioMaxInput}
-            onAplicarPrecio={aplicarPrecio}
-            onLimpiarTodo={limpiarTodo}
-            atributosSeleccionados={atributosSeleccionados}
-            onCambiarAtributos={setAtributosSeleccionados}
-          />
+          <div className="hidden md:block">
+            <FiltrosSidebar
+              categorias={categorias}
+              categoriasSeleccionadas={categoriasSeleccionadas}
+              onToggleCategoria={toggleCategoria}
+              onLimpiarCategorias={() => setCategoriasSeleccionadas([])}
+              precioMin={precioMinInput}
+              precioMax={precioMaxInput}
+              onCambiarPrecioMin={setPrecioMinInput}
+              onCambiarPrecioMax={setPrecioMaxInput}
+              onAplicarPrecio={aplicarPrecio}
+              onLimpiarTodo={limpiarTodo}
+              atributosSeleccionados={atributosSeleccionados}
+              onCambiarAtributos={setAtributosSeleccionados}
+            />
+          </div>
 
           <div className="flex-1">
             {cargando ? (
