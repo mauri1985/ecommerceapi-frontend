@@ -76,6 +76,24 @@ export default function FiltrosSidebar({
         )}
       </div>
 
+      {/* Filtro de talles */}
+      <FiltroAtributo
+        titulo="Talle"
+        clave="talle"
+        opciones={TALLES}
+        seleccionados={atributosSeleccionados}
+        onChange={onCambiarAtributos}
+      />
+
+      {/* Filtro de color */}
+      <FiltroAtributo
+        titulo="Color"
+        clave="color"
+        opciones={COLORES}
+        seleccionados={atributosSeleccionados}
+        onChange={onCambiarAtributos}
+      />
+
       {/* Filtro de precios */}
       <div className="mb-6 pb-6 border-b border-gray-400">
         <h3 className="font-medium text-sm mb-3">Precio</h3>
@@ -100,29 +118,11 @@ export default function FiltrosSidebar({
         </div>
         <button
           onClick={onAplicarPrecio}
-          className="w-full bg-slate-800 hover:bg-slate-700 text-white text-sm py-1.5 rounded"
+          className="w-full bg-slate-700 hover:bg-slate-800 text-white text-sm py-1.5 rounded"
         >
           Aplicar
         </button>
       </div>
-
-      {/* Filtro de talles */}
-      <FiltroAtributo
-        titulo="Talle"
-        clave="talle"
-        opciones={TALLES}
-        seleccionados={atributosSeleccionados}
-        onChange={onCambiarAtributos}
-      />
-
-      {/* Filtro de color */}
-      <FiltroAtributo
-        titulo="Color"
-        clave="color"
-        opciones={COLORES}
-        seleccionados={atributosSeleccionados}
-        onChange={onCambiarAtributos}
-      />
     </aside>
   );
 }

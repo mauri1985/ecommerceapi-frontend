@@ -39,6 +39,7 @@ export default function Catalogo() {
   const [precioMinAplicado, setPrecioMinAplicado] = useState("");
   const [precioMaxAplicado, setPrecioMaxAplicado] = useState("");
   const [atributosSeleccionados, setAtributosSeleccionados] = useState([]);
+  const [mostrarFiltros, setMostrarFiltros] = useState(false);
 
   const { usuario, estaLogueado } = useAuth();
   const { abrir: abrirLogin } = useLoginModal();
@@ -147,28 +148,45 @@ export default function Catalogo() {
             Resultados para: <span className="font-medium">"{busqueda}"</span>
           </p>
         )}
-        <div className="flex flex-1 md:hidden justify-end pb-4">
-          <button className="flex flex-row gap-2 px-3 py-2 rounded-xl bg-blue-600 shadow">
+        <div className="flex flex-1 md:hidden justify-between pb-4 gap-2">
+          <button className="flex flex-row gap-2 p-3 rounded-xl bg-blue-500 ">
+            <p className="text-white">Precio Menor</p>
+          </button>
+          <button className="flex flex-row gap-2 p-3 rounded-xl bg-blue-500 ">
+            <p className="text-white">Precio Mayor</p>
+          </button>
+          <button
+            className="flex flex-row gap-2 p-3 rounded-xl bg-blue-500 "
+            onClick={() => setMostrarFiltros(!mostrarFiltros)}
+          >
             <p className="text-white">Mostrar filtros</p>
             <Filter className="text-white" />
           </button>
         </div>
         <div className="flex flex-col md:flex-row gap-4">
-          <div className="hidden md:block">
-            <FiltrosSidebar
-              categorias={categorias}
-              categoriasSeleccionadas={categoriasSeleccionadas}
-              onToggleCategoria={toggleCategoria}
-              onLimpiarCategorias={() => setCategoriasSeleccionadas([])}
-              precioMin={precioMinInput}
-              precioMax={precioMaxInput}
-              onCambiarPrecioMin={setPrecioMinInput}
-              onCambiarPrecioMax={setPrecioMaxInput}
-              onAplicarPrecio={aplicarPrecio}
-              onLimpiarTodo={limpiarTodo}
-              atributosSeleccionados={atributosSeleccionados}
-              onCambiarAtributos={setAtributosSeleccionados}
-            />
+          <div
+            className={`md:block grid transition-all duration-300 ease-in-out ${
+              mostrarFiltros
+                ? "grid-rows-[1fr] opacity-100"
+                : "grid-rows-[0fr] opacity-0"
+            }`}
+          >
+            <div className="overflow-hidden min-h-0">
+              <FiltrosSidebar
+                categorias={categorias}
+                categoriasSeleccionadas={categoriasSeleccionadas}
+                onToggleCategoria={toggleCategoria}
+                onLimpiarCategorias={() => setCategoriasSeleccionadas([])}
+                precioMin={precioMinInput}
+                precioMax={precioMaxInput}
+                onCambiarPrecioMin={setPrecioMinInput}
+                onCambiarPrecioMax={setPrecioMaxInput}
+                onAplicarPrecio={aplicarPrecio}
+                onLimpiarTodo={limpiarTodo}
+                atributosSeleccionados={atributosSeleccionados}
+                onCambiarAtributos={setAtributosSeleccionados}
+              />
+            </div>
           </div>
 
           <div className="flex-1">

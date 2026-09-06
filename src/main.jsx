@@ -5,6 +5,7 @@ import { AuthProvider } from "./context/AuthContext.jsx";
 import { FavoritosProvider } from "./context/FavoritosContext.jsx";
 import { ToastProvider } from "./context/ToastContext.jsx";
 import { LoginModalProvider } from "./context/LoginModalContext.jsx";
+import { CarritoProvider } from "./context/CarritoContext.jsx";
 import App from "./App.jsx";
 import "./index.css";
 
@@ -14,9 +15,11 @@ createRoot(document.getElementById("root")).render(
       <ToastProvider>
         <AuthProvider>
           <FavoritosProvider>
-            <LoginModalProvider>
-              <App />
-            </LoginModalProvider>
+            <CarritoProvider>
+              <LoginModalProvider>
+                <App />
+              </LoginModalProvider>
+            </CarritoProvider>
           </FavoritosProvider>
         </AuthProvider>
       </ToastProvider>

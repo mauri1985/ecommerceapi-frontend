@@ -5,6 +5,7 @@ import LoginModal from "./LoginModal";
 import Tooltip from "../components/Tooltip";
 import BuscadorConSugerencias from "../components/BuscadorConSugerencias";
 import { useLoginModal } from "../context/LoginModalContext";
+import { useCarrito } from "../context/CarritoContext";
 
 import {
   ShoppingCart,
@@ -23,6 +24,8 @@ import {
 export default function Navbar() {
   const { usuario, logout, estaLogueado, esAdmin } = useAuth();
   const [menuAbierto, setMenuAbierto] = useState(false);
+  const { cantidadTotal } = useCarrito();
+
   const {
     abierto: mostrarLogin,
     abrir: abrirLogin,
@@ -72,8 +75,13 @@ export default function Navbar() {
             {estaLogueado ? (
               <>
                 <Tooltip texto="Carrito">
-                  <Link to="/carrito" className="hover:text-slate-300">
+                  <Link to="/carrito" className="relative hover:text-slate-300">
                     <ShoppingCart size={20} />
+                    {cantidadTotal > 0 && (
+                      <span className="absolute -top-2 -right-2 bg-green-600 text-white text-[10px] font-bold rounded-full min-w-4 h-4 flex items-center justify-center px-1">
+                        {cantidadTotal > 9 ? "9+" : cantidadTotal}
+                      </span>
+                    )}
                   </Link>
                 </Tooltip>
 
@@ -171,11 +179,16 @@ export default function Navbar() {
               <>
                 <Link
                   to="/carrito"
-                  className="flex items-center gap-1.5 hover:text-slate-300 text-sm"
+                  className="relative flex items-center gap-1.5 hover:text-slate-300 text-sm"
                   onClick={cerrarMenu}
                 >
                   <ShoppingCart size={18} />
                   Carrito
+                  {cantidadTotal > 0 && (
+                    <span className="bg-red-600 text-white text-[10px] font-bold rounded-full min-w-[18px] h-[18px] flex items-center justify-center px-1">
+                      {cantidadTotal > 9 ? "9+" : cantidadTotal}
+                    </span>
+                  )}
                 </Link>
                 <Link
                   to="/pedidos"
