@@ -38,7 +38,7 @@ export default function CarruselOfertas() {
                 to={`/productos/${producto.id}`}
                 className="w-full snap-start shrink-0 sm:w-80 bg-white rounded-sm shadow-black shadow-md/20 hover:shadow-md/40 transition overflow-hidden"
               >
-                <div className="transition-all duration-300 ease-in-out hover:scale-103 overflow-hidden">
+                <div className="overflow-hidden">
                   {/* <CarruselImagenes
                     imagenes={producto.imagenes}
                     alt={producto.nombre}
@@ -47,10 +47,10 @@ export default function CarruselOfertas() {
                     src={producto.imagenes[0]}
                     alt={producto.nombre}
                     loading="eager"
-                    className="w-full aspect-square object-contain shrink-0"
+                    className="w-full aspect-square object-contain shrink-0 transition-all duration-300 ease-in-out hover:scale-105"
                   />
                 </div>
-                <div className="p-4 bg-green-500 text-white">
+                <div className="p-4 bg-green-500 text-white overflow-hidden">
                   <h3 className="font-semibold text-lg truncate">
                     {producto.nombre}
                   </h3>
