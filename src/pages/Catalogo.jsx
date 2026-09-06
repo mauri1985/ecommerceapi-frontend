@@ -10,6 +10,7 @@ import { ChevronLeft, ChevronRight, Filter } from "lucide-react";
 import { useSearchParams } from "react-router-dom";
 import { useToast } from "../context/ToastContext";
 import BotonFavorito from "../components/BotonFavorito";
+import TituloAnimado from "../components/TituloAnimado";
 
 const TAMANIO_PAGINA = 20;
 const TALLES_DISPONIBLES = ["XS", "S", "M", "L", "XL", "XXL"];
@@ -140,7 +141,9 @@ export default function Catalogo() {
     <div>
       <div className="max-w-350 mx-auto px-4 py-8">
         <div className="flex justify-between items-center mb-6">
-          <h1 className="text-2xl font-bold">Catálogo</h1>
+          <TituloAnimado className="text-2xl font-bold" timeout={300}>
+            Catálogo
+          </TituloAnimado>
         </div>
 
         {busqueda && (
@@ -165,7 +168,7 @@ export default function Catalogo() {
         </div>
         <div className="flex flex-col md:flex-row gap-4">
           <div
-            className={`md:block grid transition-all duration-300 ease-in-out ${
+            className={`grid md:grid-rows-[1fr]! md:opacity-100! transition-all duration-300 ease-in-out ${
               mostrarFiltros
                 ? "grid-rows-[1fr] opacity-100"
                 : "grid-rows-[0fr] opacity-0"

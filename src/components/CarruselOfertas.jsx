@@ -1,4 +1,5 @@
 import { useEffect, useState, useRef } from "react";
+import TituloAnimado from "./TituloAnimado";
 import { Link } from "react-router-dom";
 import api from "../api/axios";
 // import CarruselImagenes from "./CarruselImagenes";
@@ -24,7 +25,9 @@ export default function CarruselOfertas() {
   return (
     <div className="relative py-8 bg-gray-200">
       <div className="max-w-350 mx-auto px-4">
-        <h2 className="text-2xl font-bold mb-4">Destacados</h2>
+        <TituloAnimado className="text-2xl font-bold" timeout={400}>
+          Destacados
+        </TituloAnimado>
 
         <div className="relative">
           <div
