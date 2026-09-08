@@ -153,7 +153,7 @@ export default function Catalogo() {
         )}
         <div className="flex flex-1 md:hidden pb-4 gap-2">
           <button
-            className="flex flex-row gap-2 p-3 rounded-xl bg-blue-500 w-full justify-center"
+            className="flex flex-row gap-2 p-3 rounded-xl bg-blue-500 w-full justify-center shadow/50"
             onClick={() => setMostrarFiltros(!mostrarFiltros)}
           >
             <p className="text-white">Mostrar filtros</p>
@@ -197,7 +197,7 @@ export default function Catalogo() {
                   {productos.map((producto) => (
                     <div
                       key={producto.id}
-                      className="border border-gray-400 shadow-md hover:shadow-xl rounded-lg flex flex-col transition-all duration-300 ease-in-out hover:scale-105 hover:border-gray-500"
+                      className="border border-gray-300 shadow-md hover:shadow-xl rounded-xl flex flex-col transition-all duration-300 ease-in-out hover:scale-105 hover:border-gray-400"
                     >
                       <div className="relative rounded-t-lg overflow-hidden">
                         <CarruselImagenes
@@ -205,7 +205,7 @@ export default function Catalogo() {
                           alt={producto.nombre}
                         />
                         {producto.porcentajeDescuento && (
-                          <span className="absolute top-2 left-2 bg-green-600 text-white text-xs font-bold px-2 py-1 rounded z-10">
+                          <span className="absolute top-2 left-2 bg-green-600/85 text-white text-xs font-bold px-2 py-1 rounded z-10">
                             -{producto.porcentajeDescuento}%
                           </span>
                         )}
@@ -214,7 +214,7 @@ export default function Catalogo() {
                         </div>
                       </div>
 
-                      <div className="p-2">
+                      <div className="p-3">
                         <Link to={`/productos/${producto.id}`} className="mt-3">
                           <h2 className="font-semibold text-lg hover:text-blue-600">
                             {producto.nombre}
@@ -223,7 +223,7 @@ export default function Catalogo() {
                         <p className="text-slate-500 text-sm mb-2">
                           {producto.categoriaNombre}
                         </p>
-                        <p className="min-h-18 text-slate-700 mb-3 flex-1 line-clamp-3">
+                        <p className="min-h-20 text-slate-700 mb-3 flex-1 line-clamp-4 text-sm">
                           {producto.descripcion}
                         </p>
                         <div className="flex justify-between items-center mb-3">
@@ -252,7 +252,7 @@ export default function Catalogo() {
                           disabled={
                             agregandoId === producto.id || producto.stock === 0
                           }
-                          className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-slate-300 text-white rounded py-2 text-sm font-medium"
+                          className="w-full bg-blue-500 hover:bg-blue-600 disabled:bg-slate-300 text-white rounded-md py-2 text-sm font-medium"
                         >
                           {producto.stock === 0
                             ? "Sin stock"
