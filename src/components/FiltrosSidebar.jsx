@@ -19,6 +19,14 @@ export default function FiltrosSidebar({
 }) {
   return (
     <aside className="flex flex-col w-full md:w-64 shrink-0">
+      <div className="flex flex-1 justify-between gap-2 pb-2">
+        <button className="flex flex-row gap-2 p-3 rounded-xl bg-blue-500 w-1/2">
+          <p className="text-white w-full text-center">Precio Menor</p>
+        </button>
+        <button className="flex flex-row gap-2 p-3 rounded-xl bg-blue-500 w-1/2">
+          <p className="text-white w-full text-center">Precio Mayor</p>
+        </button>
+      </div>
       <div className="flex justify-between items-center mb-4">
         <h2 className="font-semibold text-lg">Filtros</h2>
         <button

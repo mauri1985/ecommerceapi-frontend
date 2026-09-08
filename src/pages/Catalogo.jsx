@@ -151,15 +151,9 @@ export default function Catalogo() {
             Resultados para: <span className="font-medium">"{busqueda}"</span>
           </p>
         )}
-        <div className="flex flex-1 md:hidden justify-between pb-4 gap-2">
-          <button className="flex flex-row gap-2 p-3 rounded-xl bg-blue-500 ">
-            <p className="text-white">Precio Menor</p>
-          </button>
-          <button className="flex flex-row gap-2 p-3 rounded-xl bg-blue-500 ">
-            <p className="text-white">Precio Mayor</p>
-          </button>
+        <div className="flex flex-1 md:hidden pb-4 gap-2">
           <button
-            className="flex flex-row gap-2 p-3 rounded-xl bg-blue-500 "
+            className="flex flex-row gap-2 p-3 rounded-xl bg-blue-500 w-full justify-center"
             onClick={() => setMostrarFiltros(!mostrarFiltros)}
           >
             <p className="text-white">Mostrar filtros</p>
