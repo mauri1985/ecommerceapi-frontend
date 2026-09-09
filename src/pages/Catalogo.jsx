@@ -41,6 +41,7 @@ export default function Catalogo() {
   const [precioMaxAplicado, setPrecioMaxAplicado] = useState("");
   const [atributosSeleccionados, setAtributosSeleccionados] = useState([]);
   const [mostrarFiltros, setMostrarFiltros] = useState(false);
+  const [orden, setOrden] = useState("");
 
   const { usuario, estaLogueado } = useAuth();
   const { abrir: abrirLogin } = useLoginModal();
@@ -52,6 +53,7 @@ export default function Catalogo() {
     categoriasSeleccionadas.join(","),
     busqueda,
     atributosSeleccionados.join(","),
+    orden,
   ]);
 
   // el useEffect que carga productos:
@@ -64,6 +66,7 @@ export default function Catalogo() {
     precioMinAplicado,
     precioMaxAplicado,
     atributosSeleccionados.join(","),
+    orden,
   ]);
 
   useEffect(() => {
@@ -82,6 +85,7 @@ export default function Catalogo() {
     if (precioMaxAplicado) params.precioMax = precioMaxAplicado;
     if (atributosSeleccionados.length > 0)
       params.atributos = atributosSeleccionados;
+    if (orden) params.orden = orden;
 
     api
       .get("/productos", { params })
@@ -182,6 +186,8 @@ export default function Catalogo() {
                 onLimpiarTodo={limpiarTodo}
                 atributosSeleccionados={atributosSeleccionados}
                 onCambiarAtributos={setAtributosSeleccionados}
+                orden={orden}
+                onCambiarOrden={setOrden}
               />
             </div>
           </div>
@@ -197,7 +203,7 @@ export default function Catalogo() {
                   {productos.map((producto) => (
                     <div
                       key={producto.id}
-                      className="border border-gray-300 shadow-md hover:shadow-xl rounded-xl flex flex-col transition-all duration-300 ease-in-out hover:scale-105 hover:border-gray-400"
+                      className="border border-gray-300 shadow-md hover:shadow-xl rounded-2xl flex flex-col transition-all duration-300 ease-in-out hover:scale-105 hover:border-gray-400"
                     >
                       <div className="relative rounded-t-lg overflow-hidden">
                         <CarruselImagenes
@@ -223,7 +229,7 @@ export default function Catalogo() {
                         <p className="text-slate-500 text-sm mb-2">
                           {producto.categoriaNombre}
                         </p>
-                        <p className="min-h-20 text-slate-700 mb-3 flex-1 line-clamp-4 text-sm">
+                        <p className="min-h-16 text-slate-700 mb-3 flex-1 line-clamp-3 text-sm">
                           {producto.descripcion}
                         </p>
                         <div className="flex justify-between items-center mb-3">
@@ -252,7 +258,7 @@ export default function Catalogo() {
                           disabled={
                             agregandoId === producto.id || producto.stock === 0
                           }
-                          className="w-full bg-blue-500 hover:bg-blue-600 disabled:bg-slate-300 text-white rounded-md py-2 text-sm font-medium"
+                          className="w-full bg-blue-500 hover:bg-blue-600 disabled:bg-slate-300 text-white rounded-md py-2 text-sm font-medium cursor-pointer"
                         >
                           {producto.stock === 0
                             ? "Sin stock"

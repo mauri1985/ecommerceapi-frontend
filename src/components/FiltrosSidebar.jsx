@@ -16,27 +16,46 @@ export default function FiltrosSidebar({
   onLimpiarTodo,
   atributosSeleccionados,
   onCambiarAtributos,
+  orden,
+  onCambiarOrden,
 }) {
   return (
     <aside className="flex flex-col w-full md:w-64 shrink-0">
-      <div className="flex flex-1 justify-between gap-2 pb-2">
-        <button className="flex flex-row gap-2 p-2 rounded-xl border-1 border-gray-300 w-1/2 shadow">
-          <p className="w-full text-center text-gray-600">Precio Menor</p>
-        </button>
-        <button className="flex flex-row gap-2 p-2 rounded-xl border-1 border-gray-300 w-1/2 shadow">
-          <p className="w-full text-center text-gray-600">Precio Mayor</p>
-        </button>
-      </div>
       <div className="flex justify-between items-center mb-4">
         <h2 className="font-semibold text-lg">Filtros</h2>
         <button
           onClick={onLimpiarTodo}
-          className="text-xs text-blue-600 hover:underline"
+          className="text-sm text-gray-600 hover:underline hover:text-red-700 cursor-pointer"
         >
           Limpiar todo
         </button>
       </div>
-
+      <div className="flex flex-1 justify-between gap-2 pb-5">
+        <button
+          onClick={() =>
+            onCambiarOrden(orden === "precio_asc" ? "" : "precio_asc")
+          }
+          className={`flex flex-row px-2 py-1 rounded-xl border w-1/2 cursor-pointer shadow ${
+            orden === "precio_asc"
+              ? "bg-blue-600 border-blue-600 text-white"
+              : "border-gray-300 hover:bg-gray-100 text-gray-600"
+          }`}
+        >
+          <p className="w-full text-center">Precio Menor</p>
+        </button>
+        <button
+          onClick={() =>
+            onCambiarOrden(orden === "precio_desc" ? "" : "precio_desc")
+          }
+          className={`flex flex-row px-2 py-1 rounded-xl border w-1/2 cursor-pointer shadow ${
+            orden === "precio_desc"
+              ? "bg-blue-600 border-blue-600 text-white"
+              : "border-gray-300 hover:bg-gray-100 text-gray-600"
+          }`}
+        >
+          <p className="w-full text-center">Precio Mayor</p>
+        </button>
+      </div>
       {/* Filtros de categorias */}
       <div className="mb-6 pb-6 border-b border-gray-400">
         <h3 className="font-medium text-sm mb-3">Categorías</h3>

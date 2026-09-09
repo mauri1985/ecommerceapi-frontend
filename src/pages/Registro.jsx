@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
 import api from "../api/axios";
+import { useLoginModal } from "../context/LoginModalContext";
 
 export default function Registro() {
   const [nombre, setNombre] = useState("");
@@ -10,7 +10,7 @@ export default function Registro() {
   const [cargando, setCargando] = useState(false);
   const [exito, setExito] = useState(false);
 
-  const navigate = useNavigate();
+  const { abrir: abrirLogin } = useLoginModal();
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -20,7 +20,7 @@ export default function Registro() {
     try {
       await api.post("/usuarios", { nombre, email, password });
       setExito(true);
-      setTimeout(() => navigate("/login"), 1500);
+      setTimeout(() => abrirLogin(), 1500);
     } catch (err) {
       const mensajes = err.response?.data?.mensajes || ["Error al registrarse"];
       setErrores(mensajes);
@@ -33,7 +33,7 @@ export default function Registro() {
     return (
       <div className="max-w-sm mx-auto mt-16 px-4 text-center">
         <p className="text-green-600 font-medium">
-          ¡Cuenta creada con éxito! Redirigiendo al login...
+          ¡Cuenta creada con éxito! Iniciá sesión para continuar.
         </p>
       </div>
     );
@@ -89,9 +89,13 @@ export default function Registro() {
 
         <p className="text-sm text-center text-slate-500">
           ¿Ya tenés cuenta?{" "}
-          <Link to="/login" className="text-blue-600 hover:underline">
+          <button
+            type="button"
+            onClick={abrirLogin}
+            className="text-blue-600 hover:underline"
+          >
             Iniciá sesión
-          </Link>
+          </button>
         </p>
       </form>
     </div>

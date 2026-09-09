@@ -1,12 +1,12 @@
 import { Heart } from "lucide-react";
-import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useFavoritos } from "../context/FavoritosContext";
+import { useLoginModal } from "../context/LoginModalContext";
 
 export default function BotonFavorito({ productoId, size = 20 }) {
   const { estaLogueado } = useAuth();
   const { esFavorito, toggleFavorito } = useFavoritos();
-  const navigate = useNavigate();
+  const { abrir: abrirLogin } = useLoginModal();
   const activo = estaLogueado && esFavorito(productoId);
 
   function handleClick(e) {
@@ -14,7 +14,7 @@ export default function BotonFavorito({ productoId, size = 20 }) {
     e.stopPropagation();
 
     if (!estaLogueado) {
-      navigate("/");
+      abrirLogin();
       return;
     }
     toggleFavorito(productoId);
@@ -24,11 +24,15 @@ export default function BotonFavorito({ productoId, size = 20 }) {
     <button
       onClick={handleClick}
       aria-label={activo ? "Quitar de favoritos" : "Agregar a favoritos"}
-      className="bg-white/80 hover:bg-white rounded-full p-1.5 shadow-md/25"
+      className="bg-white/80 hover:bg-white rounded-full p-1.5 cursor-pointer shadow"
     >
       <Heart
         size={size}
-        className={activo ? "fill-red-500 text-red-500" : "text-slate-600"}
+        className={
+          activo
+            ? "fill-red-500 text-red-500"
+            : "text-slate-600 hover:text-red-600 hover:fill-red-600"
+        }
       />
     </button>
   );
