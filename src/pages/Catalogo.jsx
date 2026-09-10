@@ -11,6 +11,7 @@ import { useSearchParams } from "react-router-dom";
 import { useToast } from "../context/ToastContext";
 import BotonFavorito from "../components/BotonFavorito";
 import TituloAnimado from "../components/TituloAnimado";
+import DOMPurify from "dompurify";
 
 const TAMANIO_PAGINA = 20;
 const TALLES_DISPONIBLES = ["XS", "S", "M", "L", "XL", "XXL"];
@@ -231,9 +232,12 @@ export default function Catalogo() {
                         <p className="text-slate-500 text-sm mb-2">
                           {producto.categoriaNombre}
                         </p>
-                        <p className="min-h-16 text-slate-700 mb-3 flex-1 line-clamp-3 text-sm">
-                          {producto.descripcion}
-                        </p>
+                        <div
+                          className="prose prose-sm max-w-none text-slate-700 mb-3 flex-1 line-clamp-3 h-18"
+                          dangerouslySetInnerHTML={{
+                            __html: DOMPurify.sanitize(producto.descripcion),
+                          }}
+                        />
                         <div className="flex justify-between items-center mb-3">
                           <div>
                             {producto.porcentajeDescuento ? (

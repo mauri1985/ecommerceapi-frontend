@@ -1,6 +1,9 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import api from "../api/axios";
 import { useLoginModal } from "../context/LoginModalContext";
+import { useAuth } from "../context/AuthContext";
+import { GoogleLogin } from "@react-oauth/google";
 
 export default function Registro() {
   const [nombre, setNombre] = useState("");
@@ -9,12 +12,21 @@ export default function Registro() {
   const [errores, setErrores] = useState([]);
   const [cargando, setCargando] = useState(false);
   const [exito, setExito] = useState(false);
+  const [confirmarPassword, setConfirmarPassword] = useState("");
+  const { loginConGoogle } = useAuth();
 
   const { abrir: abrirLogin } = useLoginModal();
+  const navigate = useNavigate();
 
   async function handleSubmit(e) {
     e.preventDefault();
     setErrores([]);
+
+    if (password !== confirmarPassword) {
+      setErrores(["Las contraseñas no coinciden"]);
+      return;
+    }
+
     setCargando(true);
 
     try {
@@ -26,6 +38,19 @@ export default function Registro() {
       setErrores(mensajes);
     } finally {
       setCargando(false);
+    }
+  }
+
+  async function handleGoogleSuccess(credentialResponse) {
+    setErrores([]);
+    try {
+      await loginConGoogle(credentialResponse.credential);
+      navigate("/");
+    } catch (err) {
+      setErrores([
+        err.response?.data?.mensajes?.[0] ||
+          "Error al iniciar sesión con Google",
+      ]);
     }
   }
 
@@ -71,6 +96,15 @@ export default function Registro() {
           className="border rounded px-3 py-2 outline-none focus:ring-2 focus:ring-blue-500"
         />
 
+        <input
+          type="password"
+          placeholder="Confirmar contraseña"
+          value={confirmarPassword}
+          onChange={(e) => setConfirmarPassword(e.target.value)}
+          required
+          className="border rounded px-3 py-2 outline-none focus:ring-2 focus:ring-blue-500"
+        />
+
         {errores.length > 0 && (
           <ul className="text-red-600 text-sm list-disc list-inside">
             {errores.map((msg, i) => (
@@ -98,6 +132,21 @@ export default function Registro() {
           </button>
         </p>
       </form>
+
+      <div className="flex items-center gap-3 my-4">
+        <div className="flex-1 border-t"></div>
+        <span className="text-xs text-slate-400">O</span>
+        <div className="flex-1 border-t"></div>
+      </div>
+
+      <div className="flex justify-center">
+        <GoogleLogin
+          onSuccess={handleGoogleSuccess}
+          onError={() => setError("Error al iniciar sesión con Google")}
+          text="continue_with"
+          locale="es"
+        />
+      </div>
     </div>
   );
 }

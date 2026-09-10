@@ -66,11 +66,26 @@ export function AuthProvider({ children }) {
     setUsuario(datosUsuario);
   }
 
+  async function loginConGoogle(credential) {
+    const { data } = await api.post("/auth/google", { credential });
+
+    const datosUsuario = {
+      id: data.id,
+      email: data.email,
+      nombre: data.nombre,
+      rol: data.rol,
+    };
+    localStorage.setItem("token", data.token);
+    localStorage.setItem("usuario", JSON.stringify(datosUsuario));
+    setUsuario(datosUsuario);
+  }
+
   return (
     <AuthContext.Provider
       value={{
         usuario,
         login,
+        loginConGoogle,
         logout,
         estaLogueado: !!usuario,
         esAdmin: usuario?.rol === "ADMIN",

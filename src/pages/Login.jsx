@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { X, Eye, EyeOff } from "lucide-react";
+import { GoogleLogin } from "@react-oauth/google";
 
 export default function Login({ onClose }) {
   const [email, setEmail] = useState("");
@@ -11,7 +12,7 @@ export default function Login({ onClose }) {
   const [error, setError] = useState("");
   const [cargando, setCargando] = useState(false);
 
-  const { login } = useAuth();
+  const { login, loginConGoogle } = useAuth();
   const navigate = useNavigate();
 
   // Precargar el email guardado, si el usuario había marcado "recordar" antes
@@ -45,6 +46,20 @@ export default function Login({ onClose }) {
       setError(mensaje);
     } finally {
       setCargando(false);
+    }
+  }
+
+  async function handleGoogleSuccess(credentialResponse) {
+    setError("");
+    try {
+      await loginConGoogle(credentialResponse.credential);
+      if (onClose) onClose();
+      navigate("/");
+    } catch (err) {
+      setError(
+        err.response?.data?.mensajes?.[0] ||
+          "Error al iniciar sesión con Google"
+      );
     }
   }
 
@@ -114,6 +129,21 @@ export default function Login({ onClose }) {
           {cargando ? "Ingresando..." : "Ingresar"}
         </button>
       </form>
+
+      <div className="flex items-center gap-3 my-4">
+        <div className="flex-1 border-t"></div>
+        <span className="text-xs text-slate-400">O</span>
+        <div className="flex-1 border-t"></div>
+      </div>
+
+      <div className="flex justify-center">
+        <GoogleLogin
+          onSuccess={handleGoogleSuccess}
+          onError={() => setError("Error al iniciar sesión con Google")}
+          text="continue_with"
+          locale="es"
+        />
+      </div>
 
       <div className="flex justify-between items-center text-sm">
         <Link

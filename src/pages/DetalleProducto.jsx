@@ -4,6 +4,7 @@ import api from "../api/axios";
 import { useAuth } from "../context/AuthContext";
 import MensajeError from "../components/MensajeError";
 import BotonFavorito from "../components/BotonFavorito";
+import DOMPurify from "dompurify";
 
 export default function DetalleProducto() {
   const { id } = useParams();
@@ -219,7 +220,12 @@ export default function DetalleProducto() {
           <h1 className="text-3xl font-bold">{producto.nombre}</h1>
           <BotonFavorito productoId={producto.id} size={24} />
         </div>
-        <p className="text-slate-700 mb-6">{producto.descripcion}</p>
+        <div
+          className="prose prose-sm max-w-none text-slate-700 mb-6"
+          dangerouslySetInnerHTML={{
+            __html: DOMPurify.sanitize(producto.descripcion),
+          }}
+        />
 
         {producto.atributos && Object.keys(producto.atributos).length > 0 && (
           <div className="flex flex-wrap gap-2 mb-6">

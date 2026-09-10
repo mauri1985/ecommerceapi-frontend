@@ -4,6 +4,7 @@ import ModalConfirmacion from "../components/ModalConfirmacion";
 import { Pencil, Trash2, Plus } from "lucide-react";
 import { useToast } from "../context/ToastContext";
 import SubidaImagen from "../components/SubidaImagen";
+import EditorDescripcion from "../components/EditorDescripcion";
 
 const vacio = {
   nombre: "",
@@ -197,12 +198,9 @@ export default function AdminProductos() {
           />
         </div>
 
-        <textarea
-          placeholder="Descripción"
+        <EditorDescripcion
           value={form.descripcion}
-          onChange={(e) => setForm({ ...form, descripcion: e.target.value })}
-          className="border rounded px-3 py-2"
-          rows={2}
+          onChange={(html) => setForm({ ...form, descripcion: html })}
         />
 
         <input
