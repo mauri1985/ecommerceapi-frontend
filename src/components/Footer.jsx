@@ -129,7 +129,7 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="border-t border-slate-700 py-4 text-center text-xs text-slate-400">
+      <div className="border-t border-slate-700 py-4 text-center text-xs text-slate-400 min-h-svh">
         © {new Date().getFullYear()} MiTienda. Todos los derechos reservados. /
         Desarrollador: Mauricio Hernandez
       </div>

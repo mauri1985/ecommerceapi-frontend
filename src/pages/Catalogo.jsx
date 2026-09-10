@@ -138,7 +138,9 @@ export default function Catalogo() {
     setPrecioMinAplicado("");
     setPrecioMaxAplicado("");
     setAtributosSeleccionados([]);
+    setOrden("");
     setPagina(0);
+    navigate("/catalogo"); // limpia también el ?q= de la búsqueda por texto
   }
 
   return (
@@ -272,9 +274,17 @@ export default function Catalogo() {
                 </div>
 
                 {productos.length === 0 && (
-                  <p className="text-center text-slate-500 mt-10">
-                    No hay productos que coincidan con los filtros.
-                  </p>
+                  <div className="text-center mt-10">
+                    <p className="text-slate-500 mb-3">
+                      No hay productos que coincidan con los filtros.
+                    </p>
+                    <button
+                      onClick={limpiarTodo}
+                      className="text-blue-600 hover:underline text-sm cursor-pointer"
+                    >
+                      Limpiar filtros
+                    </button>
+                  </div>
                 )}
 
                 {totalPaginas > 1 && (

@@ -31,7 +31,7 @@ export default function Registro() {
 
   if (exito) {
     return (
-      <div className="max-w-sm mx-auto mt-16 px-4 text-center">
+      <div className="max-w-sm mx-auto mt-16 px-4 text-center min-h-70">
         <p className="text-green-600 font-medium">
           ¡Cuenta creada con éxito! Iniciá sesión para continuar.
         </p>
