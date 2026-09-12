@@ -141,7 +141,7 @@ export default function Catalogo() {
 
   return (
     <div>
-      <div className="max-w-350 mx-auto px-4 py-8 bg-slate-50">
+      <div className="max-w-350 mx-auto px-4 py-8">
         <div className="flex justify-between items-center mb-6">
           <TituloAnimado className="text-2xl font-bold" timeout={300}>
             Catálogo
