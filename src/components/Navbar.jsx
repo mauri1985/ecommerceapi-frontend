@@ -6,7 +6,7 @@ import Tooltip from "../components/Tooltip";
 import BuscadorConSugerencias from "../components/BuscadorConSugerencias";
 import { useLoginModal } from "../context/LoginModalContext";
 import { useCarrito } from "../context/CarritoContext";
-import logo from "../assets/logo_maurishop_navbar.svg";
+import LogoMauriShop from "./LogoMauriShop";
 
 import {
   ShoppingCart,
@@ -48,7 +48,7 @@ export default function Navbar() {
         <div className="md:w-1/3 w-1/2 p-2">
           {/* Boton de inicio */}
           <Link to="/" className="shrink-0" onClick={cerrarMenu}>
-            <img src={logo} alt="MauriShop" className="h-12" />
+            <LogoMauriShop className="h-12" />
           </Link>
         </div>
         <div className="hidden md:w-1/3 p-2 md:flex">
@@ -138,7 +138,7 @@ export default function Navbar() {
             )}
           </div>
 
-          <div className="">
+          <div className="pt-1">
             {/* Botón hamburguesa, solo en mobile */}
             <button
               onClick={() => setMenuAbierto(!menuAbierto)}
@@ -162,7 +162,7 @@ export default function Navbar() {
           <div className="flex flex-col gap-3 pb-2">
             {/* Buscador también en el menú mobile */}
             <BuscadorConSugerencias
-              claseInput="w-full rounded-md bg-slate-700 text-white placeholder-slate-400 pl-10 pr-4 py-1.5 text-sm outline-none focus:ring-2 focus:ring-blue-500"
+              claseInput="w-full rounded-md bg-gray-200 text-white placeholder-slate-400 pl-10 pr-4 py-1.5 text-sm outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white"
               onNavegar={cerrarMenu}
             />
             <Link
