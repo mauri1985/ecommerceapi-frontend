@@ -7,6 +7,7 @@ import CarruselImagenes from "../components/CarruselImagenes";
 import ModalConfirmacion from "../components/ModalConfirmacion";
 import { Trash2, Minus, Plus } from "lucide-react";
 import { useToast } from "../context/ToastContext";
+import { useCarrito } from "../context/CarritoContext";
 
 export default function Carrito() {
   const [items, setItems] = useState([]);
@@ -17,6 +18,7 @@ export default function Carrito() {
   const [actualizandoId, setActualizandoId] = useState(null);
   const [itemAEliminar, setItemAEliminar] = useState(null);
   const { mostrarToast } = useToast();
+  const { cargarCarrito: cargarCarritoContext } = useCarrito();
 
   const { usuario } = useAuth();
   const navigate = useNavigate();
@@ -41,6 +43,7 @@ export default function Carrito() {
     try {
       await api.delete(`/carrito/item/${itemId}`);
       setItems(items.filter((i) => i.id !== itemId));
+      cargarCarritoContext();
       mostrarToast("¡Producto eliminado del carrito!");
     } catch {
       setError("No se pudo quitar el producto");
@@ -57,6 +60,7 @@ export default function Carrito() {
         cantidad: nuevaCantidad,
       });
       setItems(items.map((i) => (i.id === item.id ? data : i)));
+      cargarCarritoContext();
     } catch (err) {
       setError(
         err.response?.data?.mensajes?.[0] || "No se pudo actualizar la cantidad"

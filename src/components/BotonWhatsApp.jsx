@@ -40,7 +40,7 @@ export default function BotonWhatsApp() {
       >
         <div className="bg-green-500 text-white px-4 py-3 flex justify-between items-center">
           <div>
-            <p className="font-semibold text-sm">MiTienda</p>
+            <p className="font-semibold text-sm">AuraShop</p>
             <p className="text-xs text-green-100">
               Normalmente responde en minutos
             </p>

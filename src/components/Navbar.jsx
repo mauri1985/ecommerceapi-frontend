@@ -6,6 +6,7 @@ import Tooltip from "../components/Tooltip";
 import BuscadorConSugerencias from "../components/BuscadorConSugerencias";
 import { useLoginModal } from "../context/LoginModalContext";
 import { useCarrito } from "../context/CarritoContext";
+import logo from "../assets/logo_aurashop_navbar.svg";
 
 import {
   ShoppingCart,
@@ -42,21 +43,17 @@ export default function Navbar() {
   }
 
   return (
-    <nav className="bg-slate-800 text-white px-6 md:py-4 py-2 shadow-md shadow-gray-400">
+    <nav className="bg-blue-600 text-white px-6 py-1 shadow-md shadow-gray-400">
       <div className="flex gap-2">
         <div className="md:w-1/3 w-1/2 p-2">
           {/* Boton de inicio */}
-          <Link
-            to="/"
-            className="text-xl font-bold shrink-0"
-            onClick={cerrarMenu}
-          >
-            MiTienda
+          <Link to="/" className="shrink-0" onClick={cerrarMenu}>
+            <img src={logo} alt="AuraShop" className="h-12" />
           </Link>
         </div>
         <div className="hidden md:w-1/3 p-2 md:flex">
           {/* Buscador, visible en desktop */}
-          <BuscadorConSugerencias claseInput="w-full h-10 rounded-full bg-slate-700 text-gray-100 placeholder-slate-400 pl-10 pr-4 py-1.5 text-sm outline-none focus:ring-2 focus:ring-blue-500 focus:bg-slate-200 focus:text-black" />
+          <BuscadorConSugerencias claseInput="w-full h-10 rounded-full bg-gray-100 text-gray-100 placeholder-slate-400 pl-10 pr-4 py-1.5 text-sm outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white focus:text-black" />
         </div>
         <div className="md:w-1/3 w-1/2 p-2 flex justify-end">
           {/* Links en desktop */}
@@ -78,7 +75,7 @@ export default function Navbar() {
                   <Link to="/carrito" className="relative hover:text-slate-300">
                     <ShoppingCart size={20} />
                     {cantidadTotal > 0 && (
-                      <span className="absolute -top-2 -right-2 bg-green-600 text-white text-[10px] font-bold rounded-full min-w-4 h-4 flex items-center justify-center px-1">
+                      <span className="absolute -top-2 -right-2 bg-red-600 text-white text-[10px] font-bold rounded-full min-w-4 h-4 flex items-center justify-center px-1">
                         {cantidadTotal > 9 ? "9+" : cantidadTotal}
                       </span>
                     )}

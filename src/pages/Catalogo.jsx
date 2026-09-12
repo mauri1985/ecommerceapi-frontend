@@ -12,17 +12,10 @@ import { useToast } from "../context/ToastContext";
 import BotonFavorito from "../components/BotonFavorito";
 import TituloAnimado from "../components/TituloAnimado";
 import DOMPurify from "dompurify";
+import { useCarrito } from "../context/CarritoContext";
+import { Navigate } from "react-router-dom";
 
 const TAMANIO_PAGINA = 20;
-const TALLES_DISPONIBLES = ["XS", "S", "M", "L", "XL", "XXL"];
-const COLORES_DISPONIBLES = [
-  "Blanco",
-  "Negro",
-  "Azul",
-  "Rojo",
-  "Verde",
-  "Gris",
-];
 
 export default function Catalogo() {
   const [productos, setProductos] = useState([]);
@@ -43,6 +36,7 @@ export default function Catalogo() {
   const [atributosSeleccionados, setAtributosSeleccionados] = useState([]);
   const [mostrarFiltros, setMostrarFiltros] = useState(false);
   const [orden, setOrden] = useState("");
+  const { cargarCarrito } = useCarrito();
 
   const { usuario, estaLogueado } = useAuth();
   const { abrir: abrirLogin } = useLoginModal();
@@ -112,6 +106,7 @@ export default function Catalogo() {
         productoId,
         cantidad: 1,
       });
+      cargarCarrito();
       mostrarToast("¡Producto agregado al carrito!");
     } catch (err) {
       setError(err);
@@ -146,7 +141,7 @@ export default function Catalogo() {
 
   return (
     <div>
-      <div className="max-w-350 mx-auto px-4 py-8">
+      <div className="max-w-350 mx-auto px-4 py-8 bg-slate-50">
         <div className="flex justify-between items-center mb-6">
           <TituloAnimado className="text-2xl font-bold" timeout={300}>
             Catálogo
@@ -206,7 +201,7 @@ export default function Catalogo() {
                   {productos.map((producto) => (
                     <div
                       key={producto.id}
-                      className="border border-gray-300 shadow-md hover:shadow-xl rounded-2xl flex flex-col transition-all duration-300 ease-in-out hover:scale-105 hover:border-gray-400"
+                      className="border bg-white border-gray-300 shadow-md hover:shadow-xl rounded-2xl flex flex-col transition-all duration-300 ease-in-out hover:scale-105 hover:border-gray-400"
                     >
                       <div className="relative rounded-t-lg overflow-hidden">
                         <CarruselImagenes

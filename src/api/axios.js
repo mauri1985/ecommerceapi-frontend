@@ -17,14 +17,18 @@ api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (!error.response) {
-      // El backend no respondió (caído, CORS, sin conexión, etc.)
       error.esErrorDeConexion = true;
     } else if (error.response.status === 401) {
-      // Token vencido o inválido: cerramos sesión y mandamos a login
-      localStorage.removeItem("token");
-      localStorage.removeItem("usuario");
-      if (window.location.pathname !== "/login") {
-        window.location.href = "/login";
+      const esIntentoDeLogin =
+        error.config?.url?.includes("/auth/login") ||
+        error.config?.url?.includes("/auth/google");
+
+      if (!esIntentoDeLogin) {
+        localStorage.removeItem("token");
+        localStorage.removeItem("usuario");
+        if (window.location.pathname !== "/") {
+          window.location.href = "/";
+        }
       }
     }
     return Promise.reject(error);

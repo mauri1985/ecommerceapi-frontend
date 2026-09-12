@@ -5,6 +5,7 @@ import { useAuth } from "../context/AuthContext";
 import MensajeError from "../components/MensajeError";
 import BotonFavorito from "../components/BotonFavorito";
 import DOMPurify from "dompurify";
+import { useCarrito } from "../context/CarritoContext";
 
 export default function DetalleProducto() {
   const { id } = useParams();
@@ -19,6 +20,7 @@ export default function DetalleProducto() {
   const [arrastreX, setArrastreX] = useState(0);
   const [arrastrando, setArrastrando] = useState(false);
   const touchStartXRef = useRef(0);
+  const { cargarCarrito } = useCarrito();
 
   const { usuario, estaLogueado } = useAuth();
   const navigate = useNavigate();
@@ -51,9 +53,9 @@ export default function DetalleProducto() {
         productoId: producto.id,
         cantidad,
       });
-      setMensajeExito("¡Producto agregado al carrito!");
+      cargarCarrito(); // <-- agregado
+      mostrarToast("¡Producto agregado al carrito!");
       setCantidad(1);
-      setTimeout(() => setMensajeExito(""), 2000);
     } catch (err) {
       setError(err);
     } finally {
