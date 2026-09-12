@@ -6,7 +6,7 @@ import Tooltip from "../components/Tooltip";
 import BuscadorConSugerencias from "../components/BuscadorConSugerencias";
 import { useLoginModal } from "../context/LoginModalContext";
 import { useCarrito } from "../context/CarritoContext";
-import logo from "../assets/logo_aurashop_navbar.svg";
+import logo from "../assets/logo_maurishop_navbar.svg";
 
 import {
   ShoppingCart,
@@ -48,7 +48,7 @@ export default function Navbar() {
         <div className="md:w-1/3 w-1/2 p-2">
           {/* Boton de inicio */}
           <Link to="/" className="shrink-0" onClick={cerrarMenu}>
-            <img src={logo} alt="AuraShop" className="h-12" />
+            <img src={logo} alt="MauriShop" className="h-12" />
           </Link>
         </div>
         <div className="hidden md:w-1/3 p-2 md:flex">
