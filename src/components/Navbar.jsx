@@ -44,20 +44,20 @@ export default function Navbar() {
 
   return (
     <nav className="bg-blue-600 text-white px-6 py-1 shadow-md shadow-gray-400">
-      <div className="flex gap-2">
-        <div className="md:w-1/3 w-1/2 p-2">
+      <div className="flex gap-2 items-center justify-between">
+        <div className="p-2 shrink-0">
           {/* Boton de inicio */}
           <Link to="/" className="shrink-0" onClick={cerrarMenu}>
             <LogoMauriShop className="h-12" />
           </Link>
         </div>
-        <div className="hidden md:w-1/3 p-2 md:flex">
+        <div className="hidden md:flex flex-1 max-w-lg p-2 min-w-0">
           {/* Buscador, visible en desktop */}
           <BuscadorConSugerencias claseInput="w-full h-10 rounded-full bg-gray-100 text-gray-100 placeholder-slate-400 pl-10 pr-4 py-1.5 text-sm outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white focus:text-black" />
         </div>
-        <div className="md:w-1/3 w-1/2 p-2 flex justify-end">
+        <div className="p-2 flex justify-end items-center shrink-0">
           {/* Links en desktop */}
-          <div className="hidden md:flex items-center gap-5 shrink-0">
+          <div className="hidden md:flex items-center gap-4 shrink-0">
             <Tooltip texto="Catálogo">
               <Link to="/catalogo" className="hover:text-slate-300">
                 <Store size={20} />
