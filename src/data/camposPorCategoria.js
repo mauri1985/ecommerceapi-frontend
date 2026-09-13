@@ -1,15 +1,34 @@
 export const TALLES = ["XS", "S", "M", "L", "XL", "XXL"];
-export const COLORES = ["Blanco", "Negro", "Azul", "Rojo", "Verde", "Gris"];
+export const COLORES = [
+  "Blanco",
+  "Gris",
+  "Negro",
+  "Amarillo",
+  "Naranja",
+  "Rojo",
+  "Verde",
+  "Lima",
+  "Celeste",
+  "Azul",
+  "Violeta",
+  "Purpura",
+];
 export const MARCAS = ["Samsung", "Apple", "Xiaomi", "Huawei", "Motorola"];
 export const EDADES = ["0 - 3", "3 - 6", "6 - 12"];
 
 export const COLORES_HEX = {
   Blanco: "#ffffff",
-  Negro: "#18181b",
-  Azul: "#3b82f6",
-  Rojo: "#ef4444",
-  Verde: "#22c55e",
   Gris: "#9ca3af",
+  Negro: "#18181b",
+  Amarillo: "#fff085",
+  Naranja: "#ff8904",
+  Rojo: "#ff6467",
+  Verde: "#05df72",
+  Lima: "#bbf451",
+  Celeste: "#00bcff",
+  Azul: "#2b7fff",
+  Violeta: "#8e51ff",
+  Purpura: "#ad46ff",
 };
 
 // Cada campo ahora define sus "opciones" — si tiene opciones, se renderiza como select.
