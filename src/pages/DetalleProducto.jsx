@@ -6,6 +6,7 @@ import MensajeError from "../components/MensajeError";
 import BotonFavorito from "../components/BotonFavorito";
 import DOMPurify from "dompurify";
 import { useCarrito } from "../context/CarritoContext";
+import Lightbox from "../components/Lightbox";
 
 export default function DetalleProducto() {
   const { id } = useParams();
@@ -21,6 +22,7 @@ export default function DetalleProducto() {
   const [arrastrando, setArrastrando] = useState(false);
   const touchStartXRef = useRef(0);
   const { cargarCarrito } = useCarrito();
+  const [lightboxAbierto, setLightboxAbierto] = useState(false);
 
   const { usuario, estaLogueado } = useAuth();
   const navigate = useNavigate();
@@ -131,7 +133,8 @@ export default function DetalleProducto() {
                     key={i}
                     src={url}
                     alt={producto.nombre}
-                    className="w-full aspect-square object-contain shrink-0"
+                    className="w-full aspect-square object-contain shrink-0 cursor-zoom-in"
+                    onClick={() => setLightboxAbierto(true)}
                   />
                 ))}
               </div>
@@ -308,6 +311,14 @@ export default function DetalleProducto() {
             : "Agregar al carrito"}
         </button>
       </div>
+      {lightboxAbierto && (
+        <Lightbox
+          imagenes={imagenes}
+          indiceActivo={imagenActiva}
+          onCerrar={() => setLightboxAbierto(false)}
+          onCambiarIndice={setImagenActiva}
+        />
+      )}
     </div>
   );
 }
