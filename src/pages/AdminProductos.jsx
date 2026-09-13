@@ -5,6 +5,7 @@ import { Pencil, Trash2, Plus } from "lucide-react";
 import { useToast } from "../context/ToastContext";
 import SubidaImagen from "../components/SubidaImagen";
 import EditorDescripcion from "../components/EditorDescripcion";
+import { obtenerCamposDeCategoria } from "../data/camposPorCategoria";
 
 const vacio = {
   nombre: "",
@@ -12,7 +13,7 @@ const vacio = {
   precio: "",
   stock: "",
   categoriaId: "",
-  atributos: "{}",
+  atributos: {},
   destacado: false,
   precioOferta: "",
 };
@@ -58,7 +59,7 @@ export default function AdminProductos() {
       precioOferta: producto.precioOferta || "",
       categoriaId:
         categorias.find((c) => c.nombre === producto.categoriaNombre)?.id || "",
-      atributos: JSON.stringify(producto.atributos || {}),
+      atributos: producto.atributos || {},
       destacado: producto.destacado || false,
     });
   }
@@ -74,24 +75,13 @@ export default function AdminProductos() {
     setErrores([]);
     setGuardando(true);
 
-    let atributosParseados;
-    try {
-      atributosParseados = JSON.parse(form.atributos || "{}");
-    } catch {
-      setErrores([
-        'Los atributos deben ser un JSON válido, ej: {"talle": "M"}',
-      ]);
-      setGuardando(false);
-      return;
-    }
-
     const body = {
       nombre: form.nombre,
       descripcion: form.descripcion,
       precio: parseFloat(form.precio),
       stock: parseInt(form.stock),
       categoriaId: parseInt(form.categoriaId),
-      atributos: atributosParseados,
+      atributos: form.atributos,
       destacado: form.destacado,
       precioOferta: form.precioOferta ? parseFloat(form.precioOferta) : null,
     };
@@ -108,8 +98,6 @@ export default function AdminProductos() {
       }
       cancelarEdicion();
       cargarProductos();
-      cancelarEdicion();
-      cargarProductos();
     } catch (err) {
       setErrores(
         err.response?.data?.mensajes || ["Error al guardar el producto"]
@@ -117,6 +105,17 @@ export default function AdminProductos() {
     } finally {
       setGuardando(false);
     }
+  }
+
+  function cambiarAtributo(clave, valor) {
+    setForm((prev) => ({
+      ...prev,
+      atributos: { ...prev.atributos, [clave]: valor },
+    }));
+  }
+
+  function cambiarCategoria(categoriaId) {
+    setForm((prev) => ({ ...prev, categoriaId, atributos: {} }));
   }
 
   return (
@@ -160,7 +159,7 @@ export default function AdminProductos() {
           />
           <select
             value={form.categoriaId}
-            onChange={(e) => setForm({ ...form, categoriaId: e.target.value })}
+            onChange={(e) => cambiarCategoria(e.target.value)}
             required
             className="border rounded px-3 py-2"
           >
@@ -203,13 +202,42 @@ export default function AdminProductos() {
           onChange={(html) => setForm({ ...form, descripcion: html })}
         />
 
-        <input
-          type="text"
-          placeholder='Atributos JSON, ej: {"talle": "M", "color": "azul"}'
-          value={form.atributos}
-          onChange={(e) => setForm({ ...form, atributos: e.target.value })}
-          className="border rounded px-3 py-2 font-mono text-sm"
-        />
+        {form.categoriaId &&
+          obtenerCamposDeCategoria(form.categoriaId, categorias).length > 0 && (
+            <div className="grid grid-cols-2 gap-3">
+              {obtenerCamposDeCategoria(form.categoriaId, categorias).map(
+                (campo) =>
+                  campo.opciones ? (
+                    <select
+                      key={campo.clave}
+                      value={form.atributos[campo.clave] || ""}
+                      onChange={(e) =>
+                        cambiarAtributo(campo.clave, e.target.value)
+                      }
+                      className="border rounded px-3 py-2"
+                    >
+                      <option value="">{campo.etiqueta}</option>
+                      {campo.opciones.map((op) => (
+                        <option key={op} value={op}>
+                          {op}
+                        </option>
+                      ))}
+                    </select>
+                  ) : (
+                    <input
+                      key={campo.clave}
+                      type="text"
+                      placeholder={campo.etiqueta}
+                      value={form.atributos[campo.clave] || ""}
+                      onChange={(e) =>
+                        cambiarAtributo(campo.clave, e.target.value)
+                      }
+                      className="border rounded px-3 py-2"
+                    />
+                  )
+              )}
+            </div>
+          )}
 
         <label className="flex items-center gap-2 text-sm">
           <input

@@ -13,7 +13,7 @@ import BotonFavorito from "../components/BotonFavorito";
 import TituloAnimado from "../components/TituloAnimado";
 import DOMPurify from "dompurify";
 import { useCarrito } from "../context/CarritoContext";
-import { Navigate } from "react-router-dom";
+import { obtenerAtributosFiltrables } from "../data/filtrosPorCategoria";
 
 const TAMANIO_PAGINA = 20;
 
@@ -37,6 +37,10 @@ export default function Catalogo() {
   const [mostrarFiltros, setMostrarFiltros] = useState(false);
   const [orden, setOrden] = useState("");
   const { cargarCarrito } = useCarrito();
+  const atributosFiltrables = obtenerAtributosFiltrables(
+    categoriasSeleccionadas,
+    categorias
+  );
 
   const { usuario, estaLogueado } = useAuth();
   const { abrir: abrirLogin } = useLoginModal();
@@ -67,6 +71,15 @@ export default function Catalogo() {
   useEffect(() => {
     api.get("/categorias").then((res) => setCategorias(res.data));
   }, []);
+
+  useEffect(() => {
+    setAtributosSeleccionados((prev) =>
+      prev.filter((entrada) => {
+        const clave = entrada.split(":")[0];
+        return atributosFiltrables.includes(clave);
+      })
+    );
+  }, [categoriasSeleccionadas.join(",")]);
 
   function cargarProductos() {
     setCargando(true);
@@ -186,6 +199,7 @@ export default function Catalogo() {
                 onCambiarAtributos={setAtributosSeleccionados}
                 orden={orden}
                 onCambiarOrden={setOrden}
+                atributosFiltrables={atributosFiltrables}
               />
             </div>
           </div>

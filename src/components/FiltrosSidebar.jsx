@@ -1,7 +1,6 @@
 import FiltroAtributo from "./FiltroAtributo";
-
-const TALLES = ["XS", "S", "M", "L", "XL", "XXL"];
-const COLORES = ["Blanco", "Negro", "Azul", "Rojo", "Verde", "Gris"];
+import { TALLES, COLORES, MARCAS, EDADES } from "../data/camposPorCategoria";
+import FiltroColor from "./FiltroColor";
 
 export default function FiltrosSidebar({
   categorias,
@@ -18,6 +17,7 @@ export default function FiltrosSidebar({
   onCambiarAtributos,
   orden,
   onCambiarOrden,
+  atributosFiltrables,
 }) {
   return (
     <aside className="flex flex-col w-full md:w-64 shrink-0">
@@ -103,23 +103,45 @@ export default function FiltrosSidebar({
         )}
       </div>
 
-      {/* Filtro de talles */}
-      <FiltroAtributo
-        titulo="Talle"
-        clave="talle"
-        opciones={TALLES}
-        seleccionados={atributosSeleccionados}
-        onChange={onCambiarAtributos}
-      />
+      {atributosFiltrables.includes("talle") && (
+        <FiltroAtributo
+          titulo="Talle"
+          clave="talle"
+          opciones={TALLES}
+          seleccionados={atributosSeleccionados}
+          onChange={onCambiarAtributos}
+        />
+      )}
 
-      {/* Filtro de color */}
-      <FiltroAtributo
-        titulo="Color"
-        clave="color"
-        opciones={COLORES}
-        seleccionados={atributosSeleccionados}
-        onChange={onCambiarAtributos}
-      />
+      {atributosFiltrables.includes("color") && (
+        <FiltroColor
+          titulo="Color"
+          clave="color"
+          opciones={COLORES}
+          seleccionados={atributosSeleccionados}
+          onChange={onCambiarAtributos}
+        />
+      )}
+
+      {atributosFiltrables.includes("marca") && (
+        <FiltroAtributo
+          titulo="Marca"
+          clave="marca"
+          opciones={MARCAS}
+          seleccionados={atributosSeleccionados}
+          onChange={onCambiarAtributos}
+        />
+      )}
+
+      {atributosFiltrables.includes("edad") && (
+        <FiltroAtributo
+          titulo="Edad"
+          clave="edad"
+          opciones={EDADES}
+          seleccionados={atributosSeleccionados}
+          onChange={onCambiarAtributos}
+        />
+      )}
 
       {/* Filtro de precios */}
       <div className="mb-6 pb-6 border-b border-gray-400">
