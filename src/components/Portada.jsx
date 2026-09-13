@@ -4,7 +4,7 @@ import CarruselOfertas from "./CarruselOfertas";
 
 const Portada = () => {
   return (
-    <div className="min-h-[60vh] bg-slate-50 ">
+    <div className="min-h-[60vh]">
       <CarruselOfertas />
       <Catalogo />
     </div>

@@ -199,7 +199,8 @@ export default function Catalogo() {
               <>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
                   {productos.map((producto) => (
-                    <div
+                    <Link
+                      to={`/productos/${producto.id}`}
                       key={producto.id}
                       className="border bg-white border-gray-300 shadow-md hover:shadow-xl rounded-2xl flex flex-col transition-all duration-300 ease-in-out hover:scale-105 hover:border-gray-400"
                     >
@@ -213,17 +214,21 @@ export default function Catalogo() {
                             -{producto.porcentajeDescuento}%
                           </span>
                         )}
-                        <div className="absolute top-2 right-2 z-10">
+                        <div
+                          className="absolute top-2 right-2 z-10"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                          }}
+                        >
                           <BotonFavorito productoId={producto.id} />
                         </div>
                       </div>
 
                       <div className="p-3">
-                        <Link to={`/productos/${producto.id}`} className="mt-3">
-                          <h2 className="font-semibold text-lg hover:text-blue-600">
-                            {producto.nombre}
-                          </h2>
-                        </Link>
+                        <h2 className="font-semibold text-lg hover:text-blue-600 mt-3">
+                          {producto.nombre}
+                        </h2>
                         <p className="text-slate-500 text-sm mb-2">
                           {producto.categoriaNombre}
                         </p>
@@ -255,7 +260,11 @@ export default function Catalogo() {
                           </span>
                         </div>
                         <button
-                          onClick={() => agregarAlCarrito(producto.id)}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            agregarAlCarrito(producto.id);
+                          }}
                           disabled={
                             agregandoId === producto.id || producto.stock === 0
                           }
@@ -268,7 +277,7 @@ export default function Catalogo() {
                             : "Agregar al carrito"}
                         </button>
                       </div>
-                    </div>
+                    </Link>
                   ))}
                 </div>
 
