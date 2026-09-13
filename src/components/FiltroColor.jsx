@@ -24,10 +24,10 @@ export default function FiltroColor({
   return (
     <div className="mb-6 pb-6 border-b border-gray-400">
       <h3 className="font-medium text-sm mb-3">{titulo}</h3>
-      <div className="flex flex-wrap gap-3">
+      <div className="grid grid-cols-6 gap-y-5 gap-x-1">
         {opciones.map((op) => {
           const activo = activos.includes(op);
-          const esClaro = op === "Blanco";
+          const esClaro = op === "Blanco" || op === "Amarillo" || op === "Lima";
 
           return (
             <button
@@ -35,7 +35,7 @@ export default function FiltroColor({
               onClick={() => toggle(op)}
               title={op}
               aria-label={op}
-              className={`w-8 h-8 rounded-full flex items-center justify-center transition-transform ${
+              className={`w-10 h-10 md:w-8 md:h-8 rounded-lg flex items-center justify-center transition-transform ${
                 activo
                   ? "ring-2 ring-offset-2 ring-blue-600 scale-110"
                   : "hover:scale-105"

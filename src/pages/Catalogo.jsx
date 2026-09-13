@@ -218,7 +218,7 @@ export default function Catalogo() {
                       key={producto.id}
                       className="border bg-white border-gray-300 shadow-md hover:shadow-xl rounded-2xl flex flex-col transition-all duration-300 ease-in-out hover:scale-105 hover:border-gray-400"
                     >
-                      <div className="relative rounded-t-lg overflow-hidden">
+                      <div className="relative rounded-xl overflow-hidden border border-gray-300 m-3">
                         <CarruselImagenes
                           imagenes={producto.imagenes}
                           alt={producto.nombre}
@@ -247,7 +247,7 @@ export default function Catalogo() {
                           {producto.categoriaNombre}
                         </p>
                         <div
-                          className="prose prose-sm max-w-none text-slate-700 mb-3 flex-1 line-clamp-3 h-18"
+                          className="prose prose-sm max-w-none text-slate-700 mb-3 flex-1 line-clamp-1 h-6"
                           dangerouslySetInnerHTML={{
                             __html: DOMPurify.sanitize(producto.descripcion),
                           }}
