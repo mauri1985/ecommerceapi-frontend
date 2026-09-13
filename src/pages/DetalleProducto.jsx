@@ -17,7 +17,6 @@ export default function DetalleProducto() {
   const [error, setError] = useState(null);
   const [agregando, setAgregando] = useState(false);
   const [mensajeExito, setMensajeExito] = useState("");
-  const [touchStart, setTouchStart] = useState(null);
   const [arrastreX, setArrastreX] = useState(0);
   const [arrastrando, setArrastrando] = useState(false);
   const touchStartXRef = useRef(0);
