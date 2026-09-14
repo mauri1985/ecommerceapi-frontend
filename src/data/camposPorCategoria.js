@@ -12,6 +12,9 @@ export const COLORES = [
   "Azul",
   "Violeta",
   "Purpura",
+  "Beige",
+  "Caqui",
+  "Rosa",
 ];
 export const MARCAS = ["Samsung", "Apple", "Xiaomi", "Huawei", "Motorola"];
 export const EDADES = ["0 - 3", "3 - 6", "6 - 12"];
@@ -29,6 +32,9 @@ export const COLORES_HEX = {
   Azul: "#2b7fff",
   Violeta: "#8e51ff",
   Purpura: "#ad46ff",
+  Beige: "#EDE8D0",
+  Caqui: "#D5C58A",
+  Rosa: "#fb64b6"
 };
 
 // Cada campo ahora define sus "opciones" — si tiene opciones, se renderiza como select.
