@@ -42,6 +42,7 @@ export const CAMPOS_POR_CATEGORIA = {
     { clave: "marca", etiqueta: "Marca", opciones: MARCAS },
     { clave: "modelo", etiqueta: "Modelo" }, // texto libre, no hay lista fija de modelos
     { clave: "almacenamiento", etiqueta: "Almacenamiento" },
+    { clave: "color", etiqueta: "Color", opciones: COLORES },
   ],
   Tecnologia: [
     { clave: "marca", etiqueta: "Marca", opciones: MARCAS },
