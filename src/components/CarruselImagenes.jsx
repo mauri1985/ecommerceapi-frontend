@@ -22,32 +22,39 @@ export default function CarruselImagenes({ imagenes, alt }) {
     );
   }
 
-  function imagenAnterior() {
+  function imagenAnterior(e) {
+    e.preventDefault();
+    e.stopPropagation();
     setImagenActiva((i) => (i === 0 ? imagenes.length - 1 : i - 1));
   }
 
-  function imagenSiguiente() {
+  function imagenSiguiente(e) {
+    e.preventDefault();
+    e.stopPropagation();
     setImagenActiva((i) => (i === imagenes.length - 1 ? 0 : i + 1));
   }
 
   function handleTouchStart(e) {
+    e.stopPropagation();
     touchStartXRef.current = e.touches[0].clientX;
     setArrastrando(true);
   }
 
   function handleTouchMove(e) {
+    e.stopPropagation();
     if (!arrastrando) return;
     const delta = e.touches[0].clientX - touchStartXRef.current;
     setArrastreX(delta);
   }
 
-  function handleTouchEnd() {
+  function handleTouchEnd(e) {
+    e.stopPropagation();
     const UMBRAL_MINIMO = 50;
 
     if (arrastreX < -UMBRAL_MINIMO) {
-      imagenSiguiente();
+      imagenSiguiente(e);
     } else if (arrastreX > UMBRAL_MINIMO) {
-      imagenAnterior();
+      imagenAnterior(e);
     }
 
     setArrastrando(false);

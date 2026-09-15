@@ -1,7 +1,12 @@
 import { Link } from "react-router-dom";
 import { INFO_CONTACTO } from "../data/InfoContacto";
+import { useLoginModal } from "../context/LoginModalContext";
+import { useAuth } from "../context/AuthContext";
 
 export default function Footer() {
+  const { abrir: abrirLogin } = useLoginModal();
+  const { estaLogueado } = useAuth();
+
   return (
     <footer className="bg-slate-800 text-slate-300 mt-16">
       <div className="max-w-6xl mx-auto px-6 py-10 grid grid-cols-2 md:grid-cols-4 gap-8">
@@ -30,19 +35,26 @@ export default function Footer() {
           <h3 className="text-white font-semibold mb-3">Ayuda</h3>
           <ul className="flex flex-col gap-2 text-sm">
             <li>
-              <a href="#" className="hover:text-white">
+              <Link to="/preguntas-frecuentes" className="hover:text-white">
                 Preguntas frecuentes
-              </a>
+              </Link>
             </li>
+
             <li>
-              <a href="#" className="hover:text-white">
+              <Link
+                to="/preguntas-frecuentes#envios"
+                className="hover:text-white"
+              >
                 Envíos y entregas
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="#" className="hover:text-white">
+              <Link
+                to="/preguntas-frecuentes#cambios"
+                className="hover:text-white"
+              >
                 Cambios y devoluciones
-              </a>
+              </Link>
             </li>
           </ul>
         </div>
@@ -50,15 +62,20 @@ export default function Footer() {
         <div>
           <h3 className="text-white font-semibold mb-3">Cuenta</h3>
           <ul className="flex flex-col gap-2 text-sm">
+            {!estaLogueado && (
+              <li>
+                <button
+                  onClick={abrirLogin}
+                  className="hover:text-white text-left"
+                >
+                  Iniciar sesión
+                </button>
+              </li>
+            )}
             <li>
-              <a href="#" className="hover:text-white">
-                Iniciar sesión
-              </a>
-            </li>
-            <li>
-              <a href="#" className="hover:text-white">
+              <Link to="/pedidos" className="hover:text-white">
                 Mis pedidos
-              </a>
+              </Link>
             </li>
             <li>
               <Link to="/contacto" className="hover:text-white">

@@ -1,4 +1,5 @@
 import { useEditor, EditorContent } from "@tiptap/react";
+import { useEffect } from "react";
 import StarterKit from "@tiptap/starter-kit";
 import Placeholder from "@tiptap/extension-placeholder";
 import { Bold, Italic, List, ListOrdered } from "lucide-react";
@@ -19,6 +20,15 @@ export default function EditorDescripcion({ value, onChange }) {
       },
     },
   });
+
+  useEffect(() => {
+    if (!editor) return;
+    // Solo actualizamos si el contenido externo es distinto al actual,
+    // para no interrumpir al usuario mientras está escribiendo.
+    if (value !== editor.getHTML()) {
+      editor.commands.setContent(value || "", false);
+    }
+  }, [value, editor]);
 
   if (!editor) return null;
 
