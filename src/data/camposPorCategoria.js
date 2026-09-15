@@ -29,7 +29,7 @@ export const COLORES_HEX = {
   Negro: "#18181b",
   Amarillo: "#fff085",
   Naranja: "#ff8904",
-  Rojo: "#ff6467",
+  Rojo: "#fb2c36",
   Verde: "#05df72",
   Lima: "#bbf451",
   Celeste: "#00bcff",

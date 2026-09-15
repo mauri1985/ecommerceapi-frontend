@@ -19,14 +19,14 @@ export default function Footer() {
               </Link>
             </li>
             <li>
-              <a href="#" className="hover:text-white">
+              <Link to="/terminos-condiciones" className="hover:text-white">
                 Términos y condiciones
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="#" className="hover:text-white">
+              <Link to="/politica-privacidad" className="hover:text-white">
                 Política de privacidad
-              </a>
+              </Link>
             </li>
           </ul>
         </div>

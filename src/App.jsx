@@ -18,6 +18,8 @@ import BotonWhatsApp from "./components/BotonWhatsApp";
 import VerificarEmail from "./pages/VerificarEmail";
 import RestablecerPassword from "./pages/RestablecerPassword";
 import PreguntasFrecuentes from "./pages/PreguntasFrecuentes";
+import TerminosCondiciones from "./pages/TerminosCondiciones";
+import PoliticaPrivacidad from "./pages/PoliticaPrivacidad";
 
 function App() {
   return (
@@ -34,6 +36,8 @@ function App() {
         <Route path="/verificar-email" element={<VerificarEmail />} />
         <Route path="/restablecer-password" element={<RestablecerPassword />} />
         <Route path="/preguntas-frecuentes" element={<PreguntasFrecuentes />} />
+        <Route path="/terminos-condiciones" element={<TerminosCondiciones />} />
+        <Route path="/politica-privacidad" element={<PoliticaPrivacidad />} />
         <Route
           path="/carrito"
           element={
