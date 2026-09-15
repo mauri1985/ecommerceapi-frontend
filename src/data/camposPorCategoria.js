@@ -12,6 +12,13 @@ export const COLORES = [
   "Azul",
   "Violeta",
   "Purpura",
+  "Beige",
+  "Caqui",
+  "Rosa",
+  "Marron",
+  "Oliva",
+  "Dorado",
+  "Plateado",
 ];
 export const MARCAS = ["Samsung", "Apple", "Xiaomi", "Huawei", "Motorola"];
 export const EDADES = ["0 - 3", "3 - 6", "6 - 12"];
@@ -29,6 +36,13 @@ export const COLORES_HEX = {
   Azul: "#2b7fff",
   Violeta: "#8e51ff",
   Purpura: "#ad46ff",
+  Beige: "#EDE8D0",
+  Caqui: "#D5C58A",
+  Rosa: "#fb64b6",
+  Marron: "#A52A2A",
+  Oliva: "#7c7c67",
+  Dorado: "#FFD700",
+  Plateado: "#C0C0C0",
 };
 
 // Cada campo ahora define sus "opciones" — si tiene opciones, se renderiza como select.
@@ -42,6 +56,7 @@ export const CAMPOS_POR_CATEGORIA = {
     { clave: "marca", etiqueta: "Marca", opciones: MARCAS },
     { clave: "modelo", etiqueta: "Modelo" }, // texto libre, no hay lista fija de modelos
     { clave: "almacenamiento", etiqueta: "Almacenamiento" },
+    { clave: "color", etiqueta: "Color", opciones: COLORES },
   ],
   Tecnologia: [
     { clave: "marca", etiqueta: "Marca", opciones: MARCAS },
