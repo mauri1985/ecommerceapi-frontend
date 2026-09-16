@@ -2,13 +2,22 @@ import { Link } from "react-router-dom";
 import { useFavoritos } from "../context/FavoritosContext";
 import BotonFavorito from "../components/BotonFavorito";
 import CarruselImagenes from "../components/CarruselImagenes";
+import TituloAnimado from "../components/TituloAnimado";
+import { Heart } from "lucide-react";
 
 export default function Favoritos() {
   const { favoritos } = useFavoritos();
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-8">
-      <h1 className="text-2xl font-bold mb-6">Mis favoritos</h1>
+    <div className="max-w-4xl mx-auto px-4 py-8 min-h-100">
+      <TituloAnimado className="text-2xl font-bold" timeout={400}>
+        <div className="flex flex-row gap-3 items-center">
+          <div>Favoritos </div>
+          <div>
+            <Heart size={30} />
+          </div>
+        </div>
+      </TituloAnimado>
 
       {favoritos.length === 0 ? (
         <p className="text-slate-500">

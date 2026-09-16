@@ -105,7 +105,7 @@ export default function DetalleProducto() {
   }
 
   return (
-    <div className="max-w-5xl mx-auto px-4 py-8 grid grid-cols-1 md:grid-cols-2 gap-10 min-h-svh">
+    <div className="max-w-5xl mx-auto px-4 py-8 grid grid-cols-1 md:grid-cols-2 gap-10 ">
       <div>
         {imagenes ? (
           <>
@@ -236,9 +236,9 @@ export default function DetalleProducto() {
             {Object.entries(producto.atributos).map(([clave, valor]) => (
               <span
                 key={clave}
-                className="text-xs bg-slate-100 text-slate-700 px-2.5 py-1 rounded-full"
+                className="text-xs bg-slate-300 text-slate-700 px-2.5 py-1 rounded-md"
               >
-                {clave}: {String(valor)}
+                <b>{clave.toUpperCase()}</b>: {String(valor.toUpperCase())}
               </span>
             ))}
           </div>

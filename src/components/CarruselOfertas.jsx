@@ -23,9 +23,9 @@ export default function CarruselOfertas() {
   if (productos.length === 0) return null;
 
   return (
-    <div className="relative py-8 bg-gray-200">
+    <div className="relative py-4 bg-gray-200">
       <div className="max-w-350 mx-auto px-4">
-        <TituloAnimado className="text-2xl font-bold" timeout={400}>
+        <TituloAnimado className="text-2xl font-bold pb-4" timeout={400}>
           Destacados
         </TituloAnimado>
 
@@ -79,14 +79,14 @@ export default function CarruselOfertas() {
             <>
               <button
                 onClick={() => desplazar(-1)}
-                className="hidden md:flex absolute -left-4 top-1/2 -translate-y-1/2 bg-white shadow rounded-full p-2 hover:bg-slate-50"
+                className="md:flex absolute -left-4 top-1/2 -translate-y-1/2 bg-white shadow rounded-full p-2 hover:bg-slate-50"
                 aria-label="Anterior"
               >
                 <ChevronLeft size={36} />
               </button>
               <button
                 onClick={() => desplazar(1)}
-                className="hidden md:flex absolute -right-4 top-1/2 -translate-y-1/2 bg-white shadow rounded-full p-2 hover:bg-slate-50"
+                className="md:flex absolute -right-4 top-1/2 -translate-y-1/2 bg-white shadow rounded-full p-2 hover:bg-slate-50"
                 aria-label="Siguiente"
               >
                 <ChevronRight size={36} />

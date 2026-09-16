@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import api from "../api/axios";
 import { useAuth } from "../context/AuthContext";
 import MensajeError from "../components/MensajeError";
+import TituloAnimado from "../components/TituloAnimado";
+import { Package } from "lucide-react";
 
 const estadoColor = {
   PENDIENTE: "bg-yellow-100 text-yellow-800",
@@ -36,8 +38,15 @@ export default function Pedidos() {
   if (error) return <MensajeError error={error} onReintentar={cargarPedidos} />;
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8 min-h-svh">
-      <h1 className="text-2xl font-bold mb-6">Mis Pedidos</h1>
+    <div className="max-w-4xl mx-auto px-4 py-8 min-h-100">
+      <TituloAnimado className="text-2xl font-bold" timeout={400}>
+        <div className="flex flex-row gap-3 items-center">
+          <div>Mis Pedidos </div>
+          <div>
+            <Package size={30} />
+          </div>
+        </div>
+      </TituloAnimado>
 
       {pedidos.length === 0 ? (
         <p className="text-slate-500">Todavía no realizaste ningún pedido.</p>

@@ -8,6 +8,8 @@ import ModalConfirmacion from "../components/ModalConfirmacion";
 import { Trash2, Minus, Plus } from "lucide-react";
 import { useToast } from "../context/ToastContext";
 import { useCarrito } from "../context/CarritoContext";
+import { ShoppingCart } from "lucide-react";
+import TituloAnimado from "../components/TituloAnimado";
 
 export default function Carrito() {
   const [items, setItems] = useState([]);
@@ -92,13 +94,22 @@ export default function Carrito() {
     return <MensajeError error={errorCarga} onReintentar={cargarCarrito} />;
 
   return (
-    <div className="max-w-3xl mx-auto px-4 py-8 ">
-      <h1 className="text-2xl font-bold mb-6">Mi Carrito</h1>
+    <div className="max-w-3xl mx-auto px-4 py-8 min-h-100">
+      <TituloAnimado className="text-2xl font-bold" timeout={400}>
+        <div className="flex flex-row gap-3 items-center">
+          <div>Carrito </div>
+          <div>
+            <ShoppingCart size={30} />
+          </div>
+        </div>
+      </TituloAnimado>
 
       {error && <p className="text-red-600 mb-4">{error}</p>}
 
       {items.length === 0 ? (
-        <p className="text-slate-500">Tu carrito está vacío.</p>
+        <p className="text-slate-500">
+          Tu carrito está vacío, que estas esperando!{" "}
+        </p>
       ) : (
         <>
           <div className="flex flex-col gap-3 mb-6">

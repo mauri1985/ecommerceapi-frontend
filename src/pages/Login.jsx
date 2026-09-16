@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import { X, Eye, EyeOff } from "lucide-react";
+import { X, Eye, EyeOff, Loader2 } from "lucide-react";
 import { GoogleLogin } from "@react-oauth/google";
 
 export default function Login({ onClose }) {
@@ -124,9 +124,16 @@ export default function Login({ onClose }) {
         <button
           type="submit"
           disabled={cargando}
-          className="bg-blue-600 hover:bg-blue-700 disabled:bg-blue-300 text-white rounded py-2 font-medium cursor-pointer"
+          className="bg-blue-600 hover:bg-blue-700 disabled:bg-blue-300 text-white rounded py-2 font-medium cursor-pointer flex items-center justify-center gap-2"
         >
-          {cargando ? "Ingresando..." : "Ingresar"}
+          {cargando ? (
+            <>
+              <Loader2 size={18} className="animate-spin" />
+              Ingresando...
+            </>
+          ) : (
+            "Ingresar"
+          )}
         </button>
       </form>
 

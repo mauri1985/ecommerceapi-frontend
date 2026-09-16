@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Phone, Mail, Clock, MapPin, MessageCircle } from "lucide-react";
 import { useToast } from "../context/ToastContext";
 import { INFO_CONTACTO } from "../data/InfoContacto";
+import TituloAnimado from "../components/TituloAnimado";
 
 export default function Contacto() {
   const [form, setForm] = useState({
@@ -31,7 +32,9 @@ export default function Contacto() {
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-12">
-      <h1 className="text-3xl font-bold mb-2">Contacto</h1>
+      <TituloAnimado className="text-2xl font-bold" timeout={400}>
+        Contacto
+      </TituloAnimado>
       <p className="text-slate-500 mb-10">
         ¿Tenés alguna consulta? Escribinos o comunicate por estos medios.
       </p>
