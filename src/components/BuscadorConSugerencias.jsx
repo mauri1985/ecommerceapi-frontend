@@ -69,7 +69,7 @@ export default function BuscadorConSugerencias({ onNavegar, claseInput }) {
             value={texto}
             onChange={(e) => setTexto(e.target.value)}
             onFocus={() => texto.trim() && setMostrar(true)}
-            placeholder="Buscar productos..."
+            placeholder="Buscar"
             className={claseInput}
           />
           <Search

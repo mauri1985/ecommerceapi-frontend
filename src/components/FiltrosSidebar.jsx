@@ -1,6 +1,7 @@
 import FiltroAtributo from "./FiltroAtributo";
 import { TALLES, COLORES, MARCAS, EDADES } from "../data/camposPorCategoria";
 import FiltroColor from "./FiltroColor";
+import OrdenPrecio from "./OrdenPrecio";
 
 export default function FiltrosSidebar({
   categorias,
@@ -30,31 +31,8 @@ export default function FiltrosSidebar({
           Limpiar todo
         </button>
       </div>
-      <div className="flex flex-1 justify-between gap-2 pb-5">
-        <button
-          onClick={() =>
-            onCambiarOrden(orden === "precio_asc" ? "" : "precio_asc")
-          }
-          className={`flex flex-row px-2 py-1 rounded-xl border w-1/2 cursor-pointer shadow ${
-            orden === "precio_asc"
-              ? "bg-blue-600 border-blue-600 text-white"
-              : "border-gray-300 hover:bg-gray-100 text-gray-600"
-          }`}
-        >
-          <p className="w-full text-center">Precio Menor</p>
-        </button>
-        <button
-          onClick={() =>
-            onCambiarOrden(orden === "precio_desc" ? "" : "precio_desc")
-          }
-          className={`flex flex-row px-2 py-1 rounded-xl border w-1/2 cursor-pointer shadow ${
-            orden === "precio_desc"
-              ? "bg-blue-600 border-blue-600 text-white"
-              : "border-gray-300 hover:bg-gray-100 text-gray-600"
-          }`}
-        >
-          <p className="w-full text-center">Precio Mayor</p>
-        </button>
+      <div className="hidden md:flex flex-1 justify-between gap-2 pb-5">
+        <OrdenPrecio orden={orden} onCambiarOrden={onCambiarOrden} />
       </div>
       {/* Filtros de categorias */}
       <div className="mb-6 pb-6 border-b border-gray-400">

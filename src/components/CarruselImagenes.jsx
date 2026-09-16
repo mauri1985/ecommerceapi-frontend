@@ -82,7 +82,7 @@ export default function CarruselImagenes({ imagenes, alt }) {
           <img
             key={i}
             src={url}
-            className="w-full aspect-square object-contain shrink-0"
+            className="w-full aspect-square object-contain shrink-0 bg-white"
           />
         ))}
       </div>

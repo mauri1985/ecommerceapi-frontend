@@ -24,7 +24,7 @@ export default function BotonFavorito({ productoId, size = 20 }) {
     <button
       onClick={handleClick}
       aria-label={activo ? "Quitar de favoritos" : "Agregar a favoritos"}
-      className="bg-white/80 hover:bg-white rounded-full p-1.5 cursor-pointer shadow"
+      className="bg-white/80 hover:bg-white rounded-full p-1.5 cursor-pointer shadow transition-all duration-300 ease-in-out hover:scale-115"
     >
       <Heart
         size={size}

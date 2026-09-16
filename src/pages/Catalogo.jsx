@@ -5,6 +5,8 @@ import { useAuth } from "../context/AuthContext";
 import { useLoginModal } from "../context/LoginModalContext";
 import MensajeError from "../components/MensajeError";
 import FiltrosSidebar from "../components/FiltrosSidebar";
+import OrdenPrecio from "../components/OrdenPrecio";
+import BuscadorConSugerencias from "../components/BuscadorConSugerencias";
 import CarruselImagenes from "../components/CarruselImagenes";
 import { ChevronLeft, ChevronRight, Filter } from "lucide-react";
 import { useSearchParams } from "react-router-dom";
@@ -166,41 +168,52 @@ export default function Catalogo() {
             Resultados para: <span className="font-medium">"{busqueda}"</span>
           </p>
         )}
-        <div className="flex flex-1 md:hidden pb-4 gap-2">
-          <button
-            className="flex flex-row gap-2 p-3 rounded-xl bg-blue-500 w-full justify-center shadow/50"
-            onClick={() => setMostrarFiltros(!mostrarFiltros)}
-          >
-            <p className="text-white">Mostrar filtros</p>
-            <Filter className="text-white" />
-          </button>
-        </div>
+
         <div className="flex flex-col md:flex-row gap-4">
-          <div
-            className={`grid md:grid-rows-[1fr]! md:opacity-100! transition-all duration-300 ease-in-out ${
-              mostrarFiltros
-                ? "grid-rows-[1fr] opacity-100"
-                : "grid-rows-[0fr] opacity-0"
-            }`}
-          >
-            <div className="overflow-hidden min-h-0">
-              <FiltrosSidebar
-                categorias={categorias}
-                categoriasSeleccionadas={categoriasSeleccionadas}
-                onToggleCategoria={toggleCategoria}
-                onLimpiarCategorias={() => setCategoriasSeleccionadas([])}
-                precioMin={precioMinInput}
-                precioMax={precioMaxInput}
-                onCambiarPrecioMin={setPrecioMinInput}
-                onCambiarPrecioMax={setPrecioMaxInput}
-                onAplicarPrecio={aplicarPrecio}
-                onLimpiarTodo={limpiarTodo}
-                atributosSeleccionados={atributosSeleccionados}
-                onCambiarAtributos={setAtributosSeleccionados}
-                orden={orden}
-                onCambiarOrden={setOrden}
-                atributosFiltrables={atributosFiltrables}
-              />
+          <div>
+            <div className="md:hidden">
+              <div className="flex flex-1 max-w-lg pb-4 min-w-0">
+                <BuscadorConSugerencias claseInput="w-full h-12 rounded-xl bg-white ring-2 ring-gray-400 placeholder-slate-600 pl-10 pr-4 py-1.5 text-sm outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white focus:text-black" />
+              </div>
+              <div>
+                <OrdenPrecio orden={orden} onCambiarOrden={setOrden} />
+              </div>
+            </div>
+            <div className="flex flex-1 md:hidden py-4 gap-2">
+              <button
+                className="flex flex-row h-12 gap-2 p-3 rounded-xl bg-blue-600 w-full justify-center shadow/50"
+                onClick={() => setMostrarFiltros(!mostrarFiltros)}
+              >
+                <p className="text-white">Mostrar filtros</p>
+                <Filter className="text-white" />
+              </button>
+            </div>
+            <div
+              className={`grid md:grid-rows-[1fr]! md:opacity-100! transition-all duration-300 ease-in-out ${
+                mostrarFiltros
+                  ? "grid-rows-[1fr] opacity-100"
+                  : "grid-rows-[0fr] opacity-0"
+              }`}
+            >
+              <div className="overflow-hidden min-h-0">
+                <FiltrosSidebar
+                  categorias={categorias}
+                  categoriasSeleccionadas={categoriasSeleccionadas}
+                  onToggleCategoria={toggleCategoria}
+                  onLimpiarCategorias={() => setCategoriasSeleccionadas([])}
+                  precioMin={precioMinInput}
+                  precioMax={precioMaxInput}
+                  onCambiarPrecioMin={setPrecioMinInput}
+                  onCambiarPrecioMax={setPrecioMaxInput}
+                  onAplicarPrecio={aplicarPrecio}
+                  onLimpiarTodo={limpiarTodo}
+                  atributosSeleccionados={atributosSeleccionados}
+                  onCambiarAtributos={setAtributosSeleccionados}
+                  orden={orden}
+                  onCambiarOrden={setOrden}
+                  atributosFiltrables={atributosFiltrables}
+                />
+              </div>
             </div>
           </div>
 
@@ -282,7 +295,7 @@ export default function Catalogo() {
                           disabled={
                             agregandoId === producto.id || producto.stock === 0
                           }
-                          className="w-full bg-blue-500 hover:bg-blue-600 disabled:bg-slate-300 text-white rounded-md py-2 text-sm font-medium cursor-pointer"
+                          className="w-full bg-blue-500 hover:bg-blue-600 disabled:bg-slate-300 text-white rounded-lg py-2 text-sm font-medium cursor-pointer"
                         >
                           {producto.stock === 0
                             ? "Sin stock"

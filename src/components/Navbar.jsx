@@ -44,7 +44,7 @@ export default function Navbar() {
 
   return (
     <nav className="bg-blue-600 text-white px-6 py-1 shadow-md shadow-gray-400">
-      <div className="flex gap-2 items-center justify-between">
+      <div className="flex gap-2 items-center justify-between max-w-350 mx-auto px-4 shadow">
         <div className="p-2 shrink-0">
           {/* Boton de inicio */}
           <Link to="/" className="shrink-0" onClick={cerrarMenu}>
@@ -161,10 +161,7 @@ export default function Navbar() {
         <div className="overflow-hidden">
           <div className="flex flex-col gap-3 pb-2">
             {/* Buscador también en el menú mobile */}
-            <BuscadorConSugerencias
-              claseInput="w-full rounded-md bg-gray-200 text-white placeholder-slate-400 pl-10 pr-4 py-1.5 text-sm outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white"
-              onNavegar={cerrarMenu}
-            />
+
             <Link
               to="/"
               className="flex items-center gap-1.5 hover:text-slate-300 text-sm"

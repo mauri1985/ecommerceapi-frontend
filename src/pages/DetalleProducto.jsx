@@ -132,7 +132,7 @@ export default function DetalleProducto() {
                     key={i}
                     src={url}
                     alt={producto.nombre}
-                    className="w-full aspect-square object-contain shrink-0 cursor-zoom-in"
+                    className="w-full aspect-square object-contain shrink-0 cursor-zoom-in bg-white"
                     onClick={() => setLightboxAbierto(true)}
                   />
                 ))}
@@ -301,7 +301,7 @@ export default function DetalleProducto() {
         <button
           onClick={agregarAlCarrito}
           disabled={agregando || producto.stock === 0}
-          className="bg-blue-600 hover:bg-blue-700 disabled:bg-slate-300 text-white rounded py-3 px-8 font-medium"
+          className="bg-blue-600 hover:bg-blue-700 disabled:bg-slate-300 text-white rounded py-3 px-8 font-medium shadow-md/20"
         >
           {producto.stock === 0
             ? "Sin stock"
