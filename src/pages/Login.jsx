@@ -51,6 +51,7 @@ export default function Login({ onClose }) {
 
   async function handleGoogleSuccess(credentialResponse) {
     setError("");
+    setCargando(true);
     try {
       await loginConGoogle(credentialResponse.credential);
       if (onClose) onClose();
@@ -60,11 +61,18 @@ export default function Login({ onClose }) {
         err.response?.data?.mensajes?.[0] ||
           "Error al iniciar sesión con Google"
       );
+    } finally {
+      setCargando(false);
     }
   }
 
   return (
-    <div className="flex flex-col text-gray-600 gap-3">
+    <div className="relative flex flex-col text-gray-600 gap-3">
+      {cargando && (
+        <div className="absolute inset-0 bg-white/80 flex items-center justify-center z-10 rounded-xl">
+          <Loader2 size={32} className="animate-spin text-blue-600" />
+        </div>
+      )}
       <div className="flex justify-between items-center">
         <h1 className="text-2xl font-bold">Iniciar sesión</h1>
         <button
@@ -83,7 +91,8 @@ export default function Login({ onClose }) {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
-          className="border border-gray-400 rounded px-3 py-2 outline-none focus:ring-2 focus:ring-blue-500"
+          disabled={cargando}
+          className="border border-gray-400 rounded px-3 py-2 outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-slate-50 disabled:text-slate-400"
         />
 
         <div className="relative">
@@ -143,7 +152,11 @@ export default function Login({ onClose }) {
         <div className="flex-1 border-t"></div>
       </div>
 
-      <div className="flex justify-center">
+      <div
+        className={`flex justify-center ${
+          cargando ? "opacity-50 pointer-events-none" : ""
+        }`}
+      >
         <GoogleLogin
           onSuccess={handleGoogleSuccess}
           onError={() => setError("Error al iniciar sesión con Google")}
