@@ -7,6 +7,7 @@ import BotonFavorito from "../components/BotonFavorito";
 import DOMPurify from "dompurify";
 import { useCarrito } from "../context/CarritoContext";
 import Lightbox from "../components/Lightbox";
+import BotonCompartir from "../components/BotonCompartir";
 
 export default function DetalleProducto() {
   const { id } = useParams();
@@ -222,7 +223,10 @@ export default function DetalleProducto() {
         </p>
         <div className="flex justify-between items-start mb-4">
           <h1 className="text-3xl font-bold">{producto.nombre}</h1>
-          <BotonFavorito productoId={producto.id} size={24} />
+          <div className="flex gap-2">
+            <BotonCompartir titulo={producto.nombre} size={24} />
+            <BotonFavorito productoId={producto.id} size={24} />
+          </div>
         </div>
         <div
           className="prose prose-sm max-w-none text-slate-700 mb-6"

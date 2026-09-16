@@ -152,7 +152,7 @@ export default function Navbar() {
       </div>
       {/* Menú desplegable, solo en mobile */}
       <div
-        className={`md:hidden grid transition-all duration-300 ease-in-out ${
+        className={`md:hidden px-4 grid transition-all duration-300 ease-in-out ${
           menuAbierto
             ? "grid-rows-[1fr] opacity-100 mt-4"
             : "grid-rows-[0fr] opacity-0"
