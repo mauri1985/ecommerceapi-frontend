@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import api from "../api/axios";
 import { useAuth } from "../context/AuthContext";
 import { useLoginModal } from "../context/LoginModalContext";
@@ -39,6 +39,7 @@ export default function Catalogo() {
   const [mostrarFiltros, setMostrarFiltros] = useState(false);
   const [orden, setOrden] = useState("");
   const { cargarCarrito } = useCarrito();
+  const navigate = useNavigate();
   const atributosFiltrables = obtenerAtributosFiltrables(
     categoriasSeleccionadas,
     categorias

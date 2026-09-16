@@ -30,6 +30,7 @@ export default function AdminProductos() {
   const [productoAEliminar, setProductoAEliminar] = useState(null);
   const { mostrarToast } = useToast();
   const [imagenesProducto, setImagenesProducto] = useState([]);
+  const [categoriaFiltro, setCategoriaFiltro] = useState("");
 
   useEffect(() => {
     cargarProductos();
@@ -119,6 +120,14 @@ export default function AdminProductos() {
   function cambiarCategoria(categoriaId) {
     setForm((prev) => ({ ...prev, categoriaId, atributos: {} }));
   }
+
+  const productosFiltrados = categoriaFiltro
+    ? productos.filter(
+        (p) =>
+          p.categoriaNombre ===
+          categorias.find((c) => c.id === Number(categoriaFiltro))?.nombre
+      )
+    : productos;
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-8 min-h-svh">
@@ -315,8 +324,26 @@ export default function AdminProductos() {
         </div>
       </form>
 
+      <div className="flex justify-between items-center mb-3">
+        <h2 className="font-semibold text-lg">
+          Productos ({productosFiltrados.length})
+        </h2>
+        <select
+          value={categoriaFiltro}
+          onChange={(e) => setCategoriaFiltro(e.target.value)}
+          className="border rounded px-3 py-2 text-sm"
+        >
+          <option value="">Todas las categorías</option>
+          {categorias.map((c) => (
+            <option key={c.id} value={c.id}>
+              {c.nombre}
+            </option>
+          ))}
+        </select>
+      </div>
+
       <div className="flex flex-col gap-2">
-        {productos.map((producto) => (
+        {productosFiltrados.map((producto) => (
           <div
             key={producto.id}
             className="flex justify-between items-center border rounded-lg p-4"
