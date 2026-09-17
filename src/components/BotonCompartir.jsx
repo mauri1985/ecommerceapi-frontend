@@ -39,7 +39,7 @@ export default function BotonCompartir({ titulo, texto, size = 20 }) {
     <button
       onClick={compartir}
       aria-label="Compartir"
-      className="bg-white/80 hover:bg-white rounded-full p-1.5 cursor-pointer shadow transition-all duration-300 ease-in-out hover:scale-115 shadow"
+      className="bg-white/80 hover:bg-white rounded-full p-1.5 cursor-pointer transition-all duration-300 ease-in-out hover:scale-115 shadow"
     >
       {copiado ? (
         <Check size={size} className="text-green-600" />
