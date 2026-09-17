@@ -9,12 +9,15 @@ export default function Favoritos() {
   const { favoritos } = useFavoritos();
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8 min-h-100">
-      <TituloAnimado className="text-2xl font-bold" timeout={400}>
+    <div className="max-w-4xl mx-auto px-4 py-8">
+      <TituloAnimado
+        className="flex items-center  h-15 text-2xl font-bold"
+        timeout={400}
+      >
         <div className="flex flex-row gap-3 items-center">
           <div>Favoritos </div>
           <div>
-            <Heart size={30} />
+            <Heart size={25} className="mt-1" />
           </div>
         </div>
       </TituloAnimado>
@@ -28,7 +31,7 @@ export default function Favoritos() {
           {favoritos.map((producto) => (
             <div
               key={producto.productoId}
-              className="border border-gray-300 rounded-2xl overflow-hidden hover:shadow-lg transition flex flex-col shadow"
+              className="border border-gray-300 rounded-2xl overflow-hidden hover:shadow-lg transition flex flex-col bg-white shadow"
             >
               <div className="relative overflow-hidden rounded-t-2xl">
                 <CarruselImagenes

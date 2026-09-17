@@ -39,11 +39,14 @@ export default function Pedidos() {
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-8 min-h-100">
-      <TituloAnimado className="text-2xl font-bold" timeout={400}>
+      <TituloAnimado
+        className="flex items-center h-15 text-2xl font-bold"
+        timeout={400}
+      >
         <div className="flex flex-row gap-3 items-center">
           <div>Mis Pedidos </div>
           <div>
-            <Package size={30} />
+            <Package size={25} className="mt-1" />
           </div>
         </div>
       </TituloAnimado>
@@ -53,7 +56,7 @@ export default function Pedidos() {
       ) : (
         <div className="flex flex-col gap-5">
           {pedidos.map((pedido) => (
-            <div key={pedido.id} className="border rounded-lg p-5">
+            <div key={pedido.id} className="border rounded-lg p-5 bg-white">
               <div className="flex justify-between items-start mb-3">
                 <div>
                   <p className="font-semibold">Pedido #{pedido.id}</p>

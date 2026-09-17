@@ -94,12 +94,15 @@ export default function Carrito() {
     return <MensajeError error={errorCarga} onReintentar={cargarCarrito} />;
 
   return (
-    <div className="max-w-3xl mx-auto px-4 py-8 min-h-100">
-      <TituloAnimado className="text-2xl font-bold" timeout={400}>
+    <div className="max-w-4xl mx-auto px-4 py-8 min-h-100">
+      <TituloAnimado
+        className="flex items-center h-15 text-2xl font-bold"
+        timeout={400}
+      >
         <div className="flex flex-row gap-3 items-center">
           <div>Carrito </div>
           <div>
-            <ShoppingCart size={30} />
+            <ShoppingCart size={25} className="mt-1" />
           </div>
         </div>
       </TituloAnimado>
@@ -116,12 +119,12 @@ export default function Carrito() {
             {items.map((item) => (
               <div
                 key={item.id}
-                className="flex flex-col md:flex-row md:items-center gap-4 border border-gray-400 shadow-md rounded-lg p-4"
+                className="flex flex-col md:flex-row md:items-center gap-4 border border-gray-400 shadow-md rounded-lg p-4 bg-white"
               >
                 {/* Carrusel */}
                 <Link
                   to={`/productos/${item.productoId}`}
-                  className="md:w-50 w-full shrink-0"
+                  className="md:w-50 w-full shrink-0 border border-gray-300 rounded-md"
                 >
                   <CarruselImagenes
                     imagenes={item.imagenes}
