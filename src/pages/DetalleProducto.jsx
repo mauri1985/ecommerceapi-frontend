@@ -224,7 +224,13 @@ export default function DetalleProducto() {
         <div className="flex justify-between items-start mb-4">
           <h1 className="text-3xl font-bold">{producto.nombre}</h1>
           <div className="flex gap-2">
-            <BotonCompartir titulo={producto.nombre} size={24} />
+            <BotonCompartir
+              titulo={producto.nombre}
+              texto={`¡Mirá "${producto.nombre}" en Mauri Shop! $${
+                producto.precioOferta || producto.precio
+              }`}
+              size={24}
+            />
             <BotonFavorito productoId={producto.id} size={24} />
           </div>
         </div>

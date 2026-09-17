@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Share2, Check } from "lucide-react";
 import { useToast } from "../context/ToastContext";
 
-export default function BotonCompartir({ titulo, size = 20 }) {
+export default function BotonCompartir({ titulo, texto, size = 20 }) {
   const [copiado, setCopiado] = useState(false);
   const { mostrarToast } = useToast();
 
@@ -14,7 +14,7 @@ export default function BotonCompartir({ titulo, size = 20 }) {
 
     if (navigator.share) {
       try {
-        await navigator.share({ title: titulo, url });
+        await navigator.share({ title: titulo, text: texto, url });
       } catch (err) {
         // El usuario canceló el diálogo de compartir; no es un error real, no hacemos nada.
         if (err.name !== "AbortError") {
@@ -23,7 +23,9 @@ export default function BotonCompartir({ titulo, size = 20 }) {
       }
     } else {
       try {
-        await navigator.clipboard.writeText(url);
+        await navigator.clipboard.writeText(
+          `${texto ? texto + "\n" : ""}${url}`
+        );
         setCopiado(true);
         mostrarToast("¡Link copiado al portapapeles!");
         setTimeout(() => setCopiado(false), 2000);
