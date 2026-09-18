@@ -20,58 +20,77 @@ import RestablecerPassword from "./pages/RestablecerPassword";
 import PreguntasFrecuentes from "./pages/PreguntasFrecuentes";
 import TerminosCondiciones from "./pages/TerminosCondiciones";
 import PoliticaPrivacidad from "./pages/PoliticaPrivacidad";
+import ScrollAlTope from "./components/ScrollAlTope";
 
 function App() {
   return (
     <>
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Portada />} />
-        <Route path="/catalogo" element={<Catalogo />} />
-        <Route path="/registro" element={<Registro />} />
-        <Route path="/productos/:id" element={<DetalleProducto />} />
-        <Route path="/recuperar-password" element={<RecuperarPassword />} />
-        <Route path="/contacto" element={<Contacto />} />
-        <Route path="/sobre-nosotros" element={<SobreNosotros />} />
-        <Route path="/verificar-email" element={<VerificarEmail />} />
-        <Route path="/restablecer-password" element={<RestablecerPassword />} />
-        <Route path="/preguntas-frecuentes" element={<PreguntasFrecuentes />} />
-        <Route path="/terminos-condiciones" element={<TerminosCondiciones />} />
-        <Route path="/politica-privacidad" element={<PoliticaPrivacidad />} />
-        <Route
-          path="/carrito"
-          element={
-            <RutaProtegida>
-              <Carrito />
-            </RutaProtegida>
-          }
-        />
-        <Route
-          path="/pedidos"
-          element={
-            <RutaProtegida>
-              <Pedidos />
-            </RutaProtegida>
-          }
-        />
-        <Route
-          path="/admin/productos"
-          element={
-            <RutaAdmin>
-              <AdminProductos />
-            </RutaAdmin>
-          }
-        />
-        <Route
-          path="/favoritos"
-          element={
-            <RutaProtegida>
-              <Favoritos />
-            </RutaProtegida>
-          }
-        />
-      </Routes>
-      <Footer />
+      <ScrollAlTope />
+      <div className="min-h-screen flex flex-col">
+        <Navbar />
+        <main className="flex-1 ">
+          <Routes>
+            <Route path="/" element={<Portada />} />
+            <Route path="/catalogo" element={<Catalogo />} />
+            <Route path="/registro" element={<Registro />} />
+            <Route path="/productos/:id" element={<DetalleProducto />} />
+            <Route path="/recuperar-password" element={<RecuperarPassword />} />
+            <Route path="/contacto" element={<Contacto />} />
+            <Route path="/sobre-nosotros" element={<SobreNosotros />} />
+            <Route path="/verificar-email" element={<VerificarEmail />} />
+            <Route
+              path="/restablecer-password"
+              element={<RestablecerPassword />}
+            />
+            <Route
+              path="/preguntas-frecuentes"
+              element={<PreguntasFrecuentes />}
+            />
+            <Route
+              path="/terminos-condiciones"
+              element={<TerminosCondiciones />}
+            />
+            <Route
+              path="/politica-privacidad"
+              element={<PoliticaPrivacidad />}
+            />
+            <Route
+              path="/carrito"
+              element={
+                <RutaProtegida>
+                  <Carrito />
+                </RutaProtegida>
+              }
+            />
+            <Route
+              path="/pedidos"
+              element={
+                <RutaProtegida>
+                  <Pedidos />
+                </RutaProtegida>
+              }
+            />
+            <Route
+              path="/admin/productos"
+              element={
+                <RutaAdmin>
+                  <AdminProductos />
+                </RutaAdmin>
+              }
+            />
+            <Route
+              path="/favoritos"
+              element={
+                <RutaProtegida>
+                  <Favoritos />
+                </RutaProtegida>
+              }
+            />
+          </Routes>
+        </main>
+        <Footer />
+      </div>
+
       <BotonWhatsApp />
     </>
   );
