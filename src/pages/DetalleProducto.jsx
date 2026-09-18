@@ -217,7 +217,7 @@ export default function DetalleProducto() {
         )}
       </div>
 
-      <div>
+      <div className="min-w-0">
         <p className="text-sm text-slate-500 mb-1">
           {producto.categoriaNombre}
         </p>
