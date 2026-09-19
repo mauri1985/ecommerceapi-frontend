@@ -1,10 +1,9 @@
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useState, useCallback } from "react";
+import useEmblaCarousel from "embla-carousel-react";
 
 export default function CarruselImagenes({ imagenes, alt }) {
-  const [arrastreX, setArrastreX] = useState(0);
-  const [arrastrando, setArrastrando] = useState(false);
   const [imagenActiva, setImagenActiva] = useState(0);
-  const touchStartXRef = useRef(0);
+  const [emblaRef, emblaApi] = useEmblaCarousel({ align: "start" });
 
   useEffect(() => {
     if (!imagenes) return;
@@ -14,6 +13,32 @@ export default function CarruselImagenes({ imagenes, alt }) {
     });
   }, [imagenes]);
 
+  useEffect(() => {
+    if (!emblaApi) return;
+    const actualizarIndice = () =>
+      setImagenActiva(emblaApi.selectedScrollSnap());
+    emblaApi.on("select", actualizarIndice);
+    return () => emblaApi.off("select", actualizarIndice);
+  }, [emblaApi]);
+
+  const imagenAnterior = useCallback(
+    (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      emblaApi && emblaApi.scrollPrev();
+    },
+    [emblaApi]
+  );
+
+  const imagenSiguiente = useCallback(
+    (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      emblaApi && emblaApi.scrollNext();
+    },
+    [emblaApi]
+  );
+
   if (!imagenes || imagenes.length === 0) {
     return (
       <div className="w-full aspect-square bg-slate-100 flex items-center justify-center text-slate-400 text-sm">
@@ -22,76 +47,30 @@ export default function CarruselImagenes({ imagenes, alt }) {
     );
   }
 
-  function imagenAnterior(e) {
-    e.preventDefault();
-    e.stopPropagation();
-    setImagenActiva((i) => (i === 0 ? imagenes.length - 1 : i - 1));
-  }
-
-  function imagenSiguiente(e) {
-    e.preventDefault();
-    e.stopPropagation();
-    setImagenActiva((i) => (i === imagenes.length - 1 ? 0 : i + 1));
-  }
-
-  function handleTouchStart(e) {
-    e.stopPropagation();
-    touchStartXRef.current = e.touches[0].clientX;
-    setArrastrando(true);
-  }
-
-  function handleTouchMove(e) {
-    e.stopPropagation();
-    if (!arrastrando) return;
-    const delta = e.touches[0].clientX - touchStartXRef.current;
-    setArrastreX(delta);
-  }
-
-  function handleTouchEnd(e) {
-    e.stopPropagation();
-    const UMBRAL_MINIMO = 50;
-
-    if (arrastreX < -UMBRAL_MINIMO) {
-      imagenSiguiente(e);
-    } else if (arrastreX > UMBRAL_MINIMO) {
-      imagenAnterior(e);
-    }
-
-    setArrastrando(false);
-    setArrastreX(0);
-  }
-
   return (
     <div
-      className="relative overflow-hidden rounded-lg "
-      onTouchStart={handleTouchStart}
-      onTouchMove={handleTouchMove}
-      onTouchEnd={handleTouchEnd}
+      className="relative overflow-hidden rounded-lg"
+      onClick={(e) => e.stopPropagation()}
+      onTouchStart={(e) => e.stopPropagation()}
     >
-      <div
-        className={`flex ${
-          arrastrando ? "" : "transition-transform duration-300 ease-out"
-        }`}
-        style={{
-          transform: `translateX(calc(-${
-            imagenActiva * 100
-          }% + ${arrastreX}px))`,
-        }}
-      >
-        {imagenes.map((url, i) => (
-          <img
-            key={i}
-            src={url}
-            className="w-full aspect-square object-contain shrink-0 bg-white"
-          />
-        ))}
+      <div className="overflow-hidden" ref={emblaRef}>
+        <div className="flex">
+          {imagenes.map((url, i) => (
+            <img
+              key={i}
+              src={url}
+              alt={alt}
+              className="flex-[0_0_100%] min-w-0 aspect-square object-contain bg-white"
+            />
+          ))}
+        </div>
       </div>
 
       {imagenes.length > 1 && (
         <>
           <button
             onClick={imagenAnterior}
-            className="absolute left-0 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white rounded-r-2xl h-15 p-1 border-t border-r border-b border-gray-300 shadow"
+            className="absolute left-0 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white rounded-r-2xl h-15 p-1 border-t border-r border-b border-slate-300 shadow"
             aria-label="Imagen anterior"
           >
             <svg
@@ -112,7 +91,7 @@ export default function CarruselImagenes({ imagenes, alt }) {
 
           <button
             onClick={imagenSiguiente}
-            className="absolute right-0 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white rounded-l-2xl h-15 p-1 border-t border-l border-b border-gray-300 shadow"
+            className="absolute right-0 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white rounded-l-2xl h-15 p-1 border-t border-l border-b border-slate-300 shadow"
             aria-label="Imagen siguiente"
           >
             <svg

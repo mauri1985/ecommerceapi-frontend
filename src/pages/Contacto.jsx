@@ -112,7 +112,7 @@ export default function Contacto() {
             value={form.nombre}
             onChange={handleChange}
             required
-            className="border border-gray-400 rounded px-3 py-2 outline-none focus:ring-2 focus:ring-blue-500"
+            className="border border-slate-400 rounded px-3 py-2 outline-none focus:ring-2 focus:ring-blue-500"
           />
           <input
             type="tel"
@@ -121,7 +121,7 @@ export default function Contacto() {
             value={form.telefono}
             onChange={handleChange}
             required
-            className="border border-gray-400 rounded px-3 py-2 outline-none focus:ring-2 focus:ring-blue-500"
+            className="border border-slate-400 rounded px-3 py-2 outline-none focus:ring-2 focus:ring-blue-500"
           />
           <input
             type="email"
@@ -130,7 +130,7 @@ export default function Contacto() {
             value={form.email}
             onChange={handleChange}
             required
-            className="border border-gray-400 rounded px-3 py-2 outline-none focus:ring-2 focus:ring-blue-500"
+            className="border border-slate-400 rounded px-3 py-2 outline-none focus:ring-2 focus:ring-blue-500"
           />
           <textarea
             name="mensaje"
@@ -139,7 +139,7 @@ export default function Contacto() {
             onChange={handleChange}
             required
             rows={5}
-            className="border border-gray-400 rounded px-3 py-2 outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+            className="border border-slate-400 rounded px-3 py-2 outline-none focus:ring-2 focus:ring-blue-500 resize-none"
           />
           <button
             type="submit"

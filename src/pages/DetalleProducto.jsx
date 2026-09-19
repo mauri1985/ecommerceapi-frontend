@@ -1,5 +1,6 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import useEmblaCarousel from "embla-carousel-react";
 import api from "../api/axios";
 import { useAuth } from "../context/AuthContext";
 import MensajeError from "../components/MensajeError";
@@ -18,11 +19,10 @@ export default function DetalleProducto() {
   const [error, setError] = useState(null);
   const [agregando, setAgregando] = useState(false);
   const [mensajeExito, setMensajeExito] = useState("");
-  const [arrastreX, setArrastreX] = useState(0);
-  const [arrastrando, setArrastrando] = useState(false);
-  const touchStartXRef = useRef(0);
   const { cargarCarrito } = useCarrito();
   const [lightboxAbierto, setLightboxAbierto] = useState(false);
+
+  const [emblaRef, emblaApi] = useEmblaCarousel({ align: "start" });
 
   const { usuario, estaLogueado } = useAuth();
   const navigate = useNavigate();
@@ -55,7 +55,7 @@ export default function DetalleProducto() {
         productoId: producto.id,
         cantidad,
       });
-      cargarCarrito(); // <-- agregado
+      cargarCarrito();
       mostrarToast("¡Producto agregado al carrito!");
       setCantidad(1);
     } catch (err) {
@@ -65,6 +65,32 @@ export default function DetalleProducto() {
     }
   }
 
+  // Cuando Embla cambia de imagen (swipe o botones), reflejamos el índice en el estado
+  useEffect(() => {
+    if (!emblaApi) return;
+    const actualizarIndice = () =>
+      setImagenActiva(emblaApi.selectedScrollSnap());
+    emblaApi.on("select", actualizarIndice);
+    return () => emblaApi.off("select", actualizarIndice);
+  }, [emblaApi]);
+
+  // Cuando el índice cambia desde afuera (miniatura clickeada, o vuelta del lightbox), sincronizamos Embla
+  useEffect(() => {
+    if (!emblaApi) return;
+    if (emblaApi.selectedScrollSnap() !== imagenActiva) {
+      emblaApi.scrollTo(imagenActiva);
+    }
+  }, [imagenActiva, emblaApi]);
+
+  const imagenAnterior = useCallback(
+    () => emblaApi && emblaApi.scrollPrev(),
+    [emblaApi]
+  );
+  const imagenSiguiente = useCallback(
+    () => emblaApi && emblaApi.scrollNext(),
+    [emblaApi]
+  );
+
   if (cargando)
     return <p className="text-center mt-10">Cargando producto...</p>;
   if (error && !producto)
@@ -73,77 +99,31 @@ export default function DetalleProducto() {
 
   const imagenes = producto.imagenes?.length > 0 ? producto.imagenes : null;
 
-  function imagenAnterior() {
-    setImagenActiva((i) => (i === 0 ? imagenes.length - 1 : i - 1));
-  }
-
-  function imagenSiguiente() {
-    setImagenActiva((i) => (i === imagenes.length - 1 ? 0 : i + 1));
-  }
-
-  function handleTouchStart(e) {
-    touchStartXRef.current = e.touches[0].clientX;
-    setArrastrando(true);
-  }
-
-  function handleTouchMove(e) {
-    if (!arrastrando) return;
-    const delta = e.touches[0].clientX - touchStartXRef.current;
-    setArrastreX(delta);
-  }
-
-  function handleTouchEnd() {
-    const UMBRAL_MINIMO = 50;
-
-    if (arrastreX < -UMBRAL_MINIMO) {
-      imagenSiguiente();
-    } else if (arrastreX > UMBRAL_MINIMO) {
-      imagenAnterior();
-    }
-
-    setArrastrando(false);
-    setArrastreX(0);
-  }
-
   return (
-    <div className="max-w-5xl mx-auto px-4 py-8 grid grid-cols-1 md:grid-cols-2 gap-10 ">
+    <div className="max-w-5xl mx-auto px-4 py-8 grid grid-cols-1 md:grid-cols-2 gap-10">
       <div>
         {imagenes ? (
           <>
-            <div
-              className="relative overflow-hidden rounded-lg border border-gray-300"
-              onTouchStart={handleTouchStart}
-              onTouchMove={handleTouchMove}
-              onTouchEnd={handleTouchEnd}
-            >
-              <div
-                className={`flex ${
-                  arrastrando
-                    ? ""
-                    : "transition-transform duration-300 ease-out"
-                }`}
-                style={{
-                  transform: `translateX(calc(-${
-                    imagenActiva * 100
-                  }% + ${arrastreX}px))`,
-                }}
-              >
-                {imagenes.map((url, i) => (
-                  <img
-                    key={i}
-                    src={url}
-                    alt={producto.nombre}
-                    className="w-full aspect-square object-contain shrink-0 cursor-zoom-in bg-white"
-                    onClick={() => setLightboxAbierto(true)}
-                  />
-                ))}
+            <div className="relative overflow-hidden rounded-lg border border-slate-300 ">
+              <div className="overflow-hidden" ref={emblaRef}>
+                <div className="flex">
+                  {imagenes.map((url, i) => (
+                    <img
+                      key={i}
+                      src={url}
+                      alt={producto.nombre}
+                      className="flex-[0_0_100%] min-w-0 aspect-square object-contain cursor-zoom-in bg-white"
+                      onClick={() => setLightboxAbierto(true)}
+                    />
+                  ))}
+                </div>
               </div>
 
               {imagenes.length > 1 && (
                 <>
                   <button
                     onClick={imagenAnterior}
-                    className="absolute left-0 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white h-15 rounded-r-2xl p-1 border border-gray-300 shadow"
+                    className="absolute left-0 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white h-15 rounded-r-2xl p-1 border border-slate-300 shadow"
                     aria-label="Imagen anterior"
                   >
                     <svg
@@ -164,7 +144,7 @@ export default function DetalleProducto() {
 
                   <button
                     onClick={imagenSiguiente}
-                    className="absolute right-0 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white h-15 rounded-l-2xl p-1 border border-gray-300 shadow"
+                    className="absolute right-0 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white h-15 rounded-l-2xl p-1 border border-slate-300 shadow"
                     aria-label="Imagen siguiente"
                   >
                     <svg
@@ -196,7 +176,7 @@ export default function DetalleProducto() {
                   <button
                     key={i}
                     onClick={() => setImagenActiva(i)}
-                    className={`shrink-0 w-16 h-16 rounded border border-gray-300 overflow-hidden ${
+                    className={`shrink-0 w-16 h-16 rounded border border-slate-300 overflow-hidden ${
                       i === imagenActiva ? "ring-2 ring-blue-400" : ""
                     }`}
                   >
@@ -246,9 +226,9 @@ export default function DetalleProducto() {
             {Object.entries(producto.atributos).map(([clave, valor]) => (
               <span
                 key={clave}
-                className="text-xs bg-slate-300 text-slate-700 px-2.5 py-1 rounded-md"
+                className="text-xs bg-slate-300 text-slate-700 px-2.5 py-1 rounded-md font-semibold ring ring-slate-400"
               >
-                <b>{clave.toUpperCase()}</b>: {String(valor.toUpperCase())}
+                {clave.toUpperCase()}: {String(valor.toUpperCase())}
               </span>
             ))}
           </div>
@@ -286,14 +266,14 @@ export default function DetalleProducto() {
         {producto.stock > 0 && (
           <div className="flex items-center gap-3 mb-4">
             <span className="text-sm font-medium">Cantidad:</span>
-            <div className="flex items-center border border-gray-400 rounded">
+            <div className="flex items-center border border-slate-400 rounded">
               <button
                 onClick={() => setCantidad((c) => Math.max(1, c - 1))}
                 className="px-3 py-1.5 hover:bg-slate-100"
               >
                 −
               </button>
-              <span className="px-4 py-1.5 border-x border-gray-400">
+              <span className="px-4 py-1.5 border-x border-slate-400">
                 {cantidad}
               </span>
               <button
@@ -320,6 +300,7 @@ export default function DetalleProducto() {
             : "Agregar al carrito"}
         </button>
       </div>
+
       {lightboxAbierto && (
         <Lightbox
           imagenes={imagenes}

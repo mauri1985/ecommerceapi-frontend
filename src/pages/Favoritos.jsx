@@ -31,7 +31,7 @@ export default function Favoritos() {
           {favoritos.map((producto) => (
             <div
               key={producto.productoId}
-              className="border border-gray-300 rounded-2xl overflow-hidden hover:shadow-lg transition flex flex-col bg-white shadow"
+              className="border border-slate-300 rounded-2xl overflow-hidden hover:shadow-lg transition flex flex-col bg-white shadow"
             >
               <div className="relative overflow-hidden rounded-t-2xl">
                 <CarruselImagenes

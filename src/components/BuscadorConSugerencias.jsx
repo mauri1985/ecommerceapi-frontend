@@ -80,7 +80,7 @@ export default function BuscadorConSugerencias({ onNavegar, claseInput }) {
       </form>
 
       <div
-        className={`absolute z-30 mt-1 w-full bg-white text-slate-800 border border-gray-300 rounded-lg shadow-lg overflow-hidden transition-all duration-200 ease-in-out ${
+        className={`absolute z-30 mt-1 w-full bg-white text-slate-800 border border-slate-300 rounded-lg shadow-lg overflow-hidden transition-all duration-200 ease-in-out ${
           mostrar && texto.trim()
             ? "max-h-96 opacity-100"
             : "max-h-0 opacity-0 pointer-events-none border-0"

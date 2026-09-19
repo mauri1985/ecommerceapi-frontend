@@ -145,7 +145,7 @@ export default function AdminProductos() {
 
       <form
         onSubmit={handleSubmit}
-        className="border border-gray-400 rounded-lg p-5 mb-8 flex flex-col gap-3"
+        className="border border-slate-400 rounded-lg p-5 mb-8 flex flex-col gap-3"
       >
         <h2 className="font-semibold">
           {editandoId && (
@@ -176,13 +176,13 @@ export default function AdminProductos() {
             value={form.nombre}
             onChange={(e) => setForm({ ...form, nombre: e.target.value })}
             required
-            className="border border-gray-400  rounded px-3 py-2"
+            className="border border-slate-400  rounded px-3 py-2"
           />
           <select
             value={form.categoriaId}
             onChange={(e) => cambiarCategoria(e.target.value)}
             required
-            className="border border-gray-400  rounded px-3 py-2"
+            className="border border-slate-400  rounded px-3 py-2"
           >
             <option value="">Seleccionar categoría</option>
             {categorias.map((c) => (
@@ -198,7 +198,7 @@ export default function AdminProductos() {
             value={form.precio}
             onChange={(e) => setForm({ ...form, precio: e.target.value })}
             required
-            className="border border-gray-400  rounded px-3 py-2"
+            className="border border-slate-400  rounded px-3 py-2"
           />
           <input
             type="number"
@@ -206,7 +206,7 @@ export default function AdminProductos() {
             placeholder="Precio de oferta (opcional)"
             value={form.precioOferta}
             onChange={(e) => setForm({ ...form, precioOferta: e.target.value })}
-            className="border border-gray-400 rounded px-3 py-2"
+            className="border border-slate-400 rounded px-3 py-2"
           />
           <input
             type="number"
@@ -214,7 +214,7 @@ export default function AdminProductos() {
             value={form.stock}
             onChange={(e) => setForm({ ...form, stock: e.target.value })}
             required
-            className="border border-gray-400 rounded px-3 py-2"
+            className="border border-slate-400 rounded px-3 py-2"
           />
         </div>
 
@@ -235,7 +235,7 @@ export default function AdminProductos() {
                       onChange={(e) =>
                         cambiarAtributo(campo.clave, e.target.value)
                       }
-                      className="border border-gray-400  rounded px-3 py-2"
+                      className="border border-slate-400  rounded px-3 py-2"
                     >
                       <option value="">{campo.etiqueta}</option>
                       {campo.opciones.map((op) => (
@@ -253,7 +253,7 @@ export default function AdminProductos() {
                       onChange={(e) =>
                         cambiarAtributo(campo.clave, e.target.value)
                       }
-                      className="border border-gray-400 rounded px-3 py-2"
+                      className="border border-slate-400 rounded px-3 py-2"
                     />
                   )
               )}
@@ -267,7 +267,7 @@ export default function AdminProductos() {
               onChange={(e) =>
                 setForm({ ...form, destacado: e.target.checked })
               }
-              className="peer h-4 w-4 cursor-pointer transition-all appearance-none rounded shadow hover:shadow-md border border-gray-400 checked:bg-blue-600 checked:border-blue-600"
+              className="peer h-4 w-4 cursor-pointer transition-all appearance-none rounded shadow hover:shadow-md border border-slate-400 checked:bg-blue-600 checked:border-blue-600"
             />
             <span className="absolute text-white opacity-0 peer-checked:opacity-100 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
               <svg
@@ -319,7 +319,7 @@ export default function AdminProductos() {
             <button
               type="button"
               onClick={cancelarEdicion}
-              className="border border-gray-400  px-5 py-2 rounded font-medium"
+              className="border border-slate-400  px-5 py-2 rounded font-medium"
             >
               Cancelar
             </button>
@@ -334,7 +334,7 @@ export default function AdminProductos() {
         <select
           value={categoriaFiltro}
           onChange={(e) => setCategoriaFiltro(e.target.value)}
-          className="border border-gray-400 rounded px-3 py-2 text-sm"
+          className="border border-slate-400 rounded px-3 py-2 text-sm"
         >
           <option value="">Todas las categorías</option>
           {categorias.map((c) => (
@@ -349,7 +349,7 @@ export default function AdminProductos() {
         {productosFiltrados.map((producto) => (
           <div
             key={producto.id}
-            className="flex justify-between items-center border border-gray-400 rounded-lg p-4"
+            className="flex justify-between items-center border border-slate-400 rounded-lg p-4"
           >
             <div>
               <p className="font-medium">{producto.nombre}</p>

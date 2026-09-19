@@ -230,9 +230,9 @@ export default function Catalogo() {
                     <Link
                       to={`/productos/${producto.id}`}
                       key={producto.id}
-                      className="border bg-white border-gray-300 shadow-md hover:shadow-xl rounded-2xl flex flex-col transition-all duration-300 ease-in-out hover:scale-105 hover:border-gray-400"
+                      className="border bg-white border-slate-300 shadow-md hover:shadow-xl rounded-2xl flex flex-col transition-all duration-300 ease-in-out hover:scale-105 hover:border-slate-400"
                     >
-                      <div className="relative rounded-xl overflow-hidden border border-gray-300 m-3">
+                      <div className="relative rounded-xl overflow-hidden border border-slate-300 m-3">
                         <CarruselImagenes
                           imagenes={producto.imagenes}
                           alt={producto.nombre}
