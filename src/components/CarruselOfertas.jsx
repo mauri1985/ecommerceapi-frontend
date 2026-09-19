@@ -32,14 +32,14 @@ export default function CarruselOfertas() {
         <div className="relative">
           <div
             ref={contenedorRef}
-            className="flex gap-5 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-4"
+            className="flex overflow-x-auto snap-x snap-mandatory scroll-smooth pb-4"
             style={{ scrollbarWidth: "none" }}
           >
             {productos.map((producto) => (
               <Link
                 key={producto.id}
                 to={`/productos/${producto.id}`}
-                className="w-full snap-start shrink-0 sm:w-80 bg-white rounded-sm shadow-black shadow-md/20 hover:shadow-md/40 transition overflow-hidden"
+                className="w-full snap-start shrink-0 sm:w-80 mr-5 bg-white rounded-sm shadow-black shadow-md/20 hover:shadow-md/40 transition overflow-hidden"
               >
                 <div className="overflow-hidden">
                   {/* <CarruselImagenes
