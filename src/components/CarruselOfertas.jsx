@@ -39,7 +39,7 @@ export default function CarruselOfertas() {
               <Link
                 key={producto.id}
                 to={`/productos/${producto.id}`}
-                className="w-full snap-start shrink-0 sm:w-80 mr-5 bg-white rounded-sm shadow-black shadow-md/20 hover:shadow-md/40 transition overflow-hidden"
+                className="w-full snap-start shrink-0 sm:w-80 mr-5 last:mr-0 bg-white rounded-sm shadow-black shadow-md/20 hover:shadow-md/40 transition overflow-hidden"
               >
                 <div className="overflow-hidden">
                   {/* <CarruselImagenes
