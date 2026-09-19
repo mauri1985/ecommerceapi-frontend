@@ -1,24 +1,30 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useCallback } from "react";
+import useEmblaCarousel from "embla-carousel-react";
 import TituloAnimado from "./TituloAnimado";
 import { Link } from "react-router-dom";
 import api from "../api/axios";
-// import CarruselImagenes from "./CarruselImagenes";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 export default function CarruselOfertas() {
   const [productos, setProductos] = useState([]);
-  const contenedorRef = useRef(null);
+  const [emblaRef, emblaApi] = useEmblaCarousel({
+    align: "start",
+    dragFree: false,
+    containScroll: "trimSnaps",
+  });
 
   useEffect(() => {
     api.get("/productos/destacados").then((res) => setProductos(res.data));
   }, []);
 
-  function desplazar(direccion) {
-    const contenedor = contenedorRef.current;
-    if (!contenedor) return;
-    const distancia = contenedor.clientWidth * 0.9;
-    contenedor.scrollBy({ left: direccion * distancia, behavior: "smooth" });
-  }
+  const desplazarAtras = useCallback(
+    () => emblaApi && emblaApi.scrollPrev(),
+    [emblaApi]
+  );
+  const desplazarAdelante = useCallback(
+    () => emblaApi && emblaApi.scrollNext(),
+    [emblaApi]
+  );
 
   if (productos.length === 0) return null;
 
@@ -30,63 +36,57 @@ export default function CarruselOfertas() {
         </TituloAnimado>
 
         <div className="relative">
-          <div
-            ref={contenedorRef}
-            className="flex overflow-x-auto snap-x snap-mandatory pb-4"
-            style={{ scrollbarWidth: "none" }}
-          >
-            {productos.map((producto) => (
-              <Link
-                key={producto.id}
-                to={`/productos/${producto.id}`}
-                className="w-full snap-start snap-always shrink-0 sm:w-80 mr-5 last:mr-0 bg-white rounded-sm shadow-black shadow-md/20 hover:shadow-md/40 transition overflow-hidden"
-              >
-                <div className="overflow-hidden">
-                  {/* <CarruselImagenes
-                    imagenes={producto.imagenes}
-                    alt={producto.nombre}
-                  /> */}
-                  <img
-                    src={producto.imagenes[0]}
-                    alt={producto.nombre}
-                    loading="eager"
-                    className="w-full aspect-square object-contain shrink-0 transition-all duration-300 ease-in-out hover:scale-105"
-                  />
-                </div>
-                <div className="p-4 bg-green-500 text-white overflow-hidden">
-                  <h3 className="font-semibold text-lg truncate">
-                    {producto.nombre}
-                  </h3>
-                  <p className="text-sm mb-2">{producto.categoriaNombre}</p>
-                  {producto.porcentajeDescuento ? (
-                    <div className="flex items-center gap-2">
-                      <span className="font-bold text-xl ">
-                        ${producto.precioOferta}
-                      </span>
-                      <span className="text-sm text-gray-200 line-through">
-                        ${producto.precio}
-                      </span>
-                    </div>
-                  ) : (
-                    <p className="font-bold text-xl">${producto.precio}</p>
-                  )}
-                </div>
-              </Link>
-            ))}
+          <div className="overflow-hidden" ref={emblaRef}>
+            <div className="flex gap-5">
+              {productos.map((producto) => (
+                <Link
+                  key={producto.id}
+                  to={`/productos/${producto.id}`}
+                  className="flex-[0_0_100%] sm:flex-[0_0_320px] min-w-0 bg-white rounded-sm shadow-black shadow-md/20 hover:shadow-md/40 transition overflow-hidden"
+                >
+                  <div className="overflow-hidden">
+                    <img
+                      src={producto.imagenes[0]}
+                      alt={producto.nombre}
+                      loading="eager"
+                      className="w-full aspect-square object-contain shrink-0 transition-all duration-300 ease-in-out hover:scale-105"
+                    />
+                  </div>
+                  <div className="p-4 bg-green-500 text-white overflow-hidden">
+                    <h3 className="font-semibold text-lg truncate">
+                      {producto.nombre}
+                    </h3>
+                    <p className="text-sm mb-2">{producto.categoriaNombre}</p>
+                    {producto.porcentajeDescuento ? (
+                      <div className="flex items-center gap-2">
+                        <span className="font-bold text-xl">
+                          ${producto.precioOferta}
+                        </span>
+                        <span className="text-sm text-gray-200 line-through">
+                          ${producto.precio}
+                        </span>
+                      </div>
+                    ) : (
+                      <p className="font-bold text-xl">${producto.precio}</p>
+                    )}
+                  </div>
+                </Link>
+              ))}
+            </div>
           </div>
 
           {productos.length > 2 && (
             <>
               <button
-                onClick={() => desplazar(-1)}
-                className="md:flex absolute -left-4 top-1/2 -translate-y-1/2 bg-white shadow rounded-full p-2 hover:bg-slate-50"
+                onClick={desplazarAtras}
+                className="flex absolute -left-4 top-1/2 -translate-y-1/2 bg-white shadow rounded-full p-2 hover:bg-slate-50"
                 aria-label="Anterior"
               >
                 <ChevronLeft size={36} />
               </button>
               <button
-                onClick={() => desplazar(1)}
-                className="md:flex absolute -right-4 top-1/2 -translate-y-1/2 bg-white shadow rounded-full p-2 hover:bg-slate-50"
+                onClick={desplazarAdelante}
+                className="flex absolute -right-4 top-1/2 -translate-y-1/2 bg-white shadow rounded-full p-2 hover:bg-slate-50"
                 aria-label="Siguiente"
               >
                 <ChevronRight size={36} />
