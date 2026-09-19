@@ -1,4 +1,5 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useCallback } from "react";
+import useEmblaCarousel from "embla-carousel-react";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
 
 export default function Lightbox({
@@ -7,9 +8,30 @@ export default function Lightbox({
   onCerrar,
   onCambiarIndice,
 }) {
-  const [arrastreX, setArrastreX] = useState(0);
-  const [arrastrando, setArrastrando] = useState(false);
-  const touchStartXRef = useRef(0);
+  const [emblaRef, emblaApi] = useEmblaCarousel({ align: "center" });
+
+  // Al montarse, saltamos (sin animación) a la imagen que ya estaba activa en la página
+  useEffect(() => {
+    if (!emblaApi) return;
+    emblaApi.scrollTo(indiceActivo, true);
+  }, [emblaApi]);
+
+  // Cuando el usuario swipea dentro del lightbox, avisamos al padre para que quede sincronizado
+  useEffect(() => {
+    if (!emblaApi) return;
+    const actualizar = () => onCambiarIndice(emblaApi.selectedScrollSnap());
+    emblaApi.on("select", actualizar);
+    return () => emblaApi.off("select", actualizar);
+  }, [emblaApi, onCambiarIndice]);
+
+  const anterior = useCallback(
+    () => emblaApi && emblaApi.scrollPrev(),
+    [emblaApi]
+  );
+  const siguiente = useCallback(
+    () => emblaApi && emblaApi.scrollNext(),
+    [emblaApi]
+  );
 
   useEffect(() => {
     function manejarTeclado(e) {
@@ -23,50 +45,12 @@ export default function Lightbox({
       document.removeEventListener("keydown", manejarTeclado);
       document.body.style.overflow = "";
     };
-  }, [indiceActivo]);
-
-  function anterior() {
-    onCambiarIndice(
-      indiceActivo === 0 ? imagenes.length - 1 : indiceActivo - 1
-    );
-  }
-
-  function siguiente() {
-    onCambiarIndice(
-      indiceActivo === imagenes.length - 1 ? 0 : indiceActivo + 1
-    );
-  }
-
-  function handleTouchStart(e) {
-    touchStartXRef.current = e.touches[0].clientX;
-    setArrastrando(true);
-  }
-
-  function handleTouchMove(e) {
-    if (!arrastrando) return;
-    setArrastreX(e.touches[0].clientX - touchStartXRef.current);
-  }
-
-  function handleTouchEnd() {
-    const UMBRAL_MINIMO = 50;
-
-    if (arrastreX < -UMBRAL_MINIMO) {
-      siguiente();
-    } else if (arrastreX > UMBRAL_MINIMO) {
-      anterior();
-    }
-
-    setArrastrando(false);
-    setArrastreX(0);
-  }
+  }, [anterior, siguiente, onCerrar]);
 
   return (
     <div
-      className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center overflow-hidden"
+      className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center"
       onClick={onCerrar}
-      onTouchStart={handleTouchStart}
-      onTouchMove={handleTouchMove}
-      onTouchEnd={handleTouchEnd}
     >
       <button
         onClick={onCerrar}
@@ -76,16 +60,27 @@ export default function Lightbox({
         <X size={32} />
       </button>
 
-      <img
-        src={imagenes[indiceActivo]}
-        alt=""
-        className={`max-w-[90vw] max-h-[85vh] object-contain select-none ${
-          arrastrando ? "" : "transition-transform duration-200 ease-out"
-        }`}
-        style={{ transform: `translateX(${arrastreX}px)` }}
+      <div
+        className="overflow-hidden max-w-[90vw] max-h-[85vh] w-full"
+        ref={emblaRef}
         onClick={(e) => e.stopPropagation()}
-        draggable={false}
-      />
+      >
+        <div className="flex h-full">
+          {imagenes.map((url, i) => (
+            <div
+              key={i}
+              className="flex-[0_0_100%] min-w-0 flex items-center justify-center"
+            >
+              <img
+                src={url}
+                alt=""
+                className="max-w-[90vw] max-h-[85vh] object-contain select-none"
+                draggable={false}
+              />
+            </div>
+          ))}
+        </div>
+      </div>
 
       {imagenes.length > 1 && (
         <>
