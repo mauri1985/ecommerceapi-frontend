@@ -29,7 +29,7 @@ export default function CarruselOfertas() {
   if (productos.length === 0) return null;
 
   return (
-    <div className="relative py-4 bg-gray-200">
+    <div className="relative py-4 bg-slate-200">
       <div className="max-w-350 mx-auto px-4">
         <TituloAnimado className="text-2xl font-bold pb-4" timeout={400}>
           Destacados
