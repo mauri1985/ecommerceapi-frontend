@@ -43,7 +43,7 @@ export default function Navbar() {
   }
 
   return (
-    <nav className="bg-blue-600 text-white shadow-[0_4px_6px_-2px_rgba(0,0,0,0.30)] py-1 relative z-30">
+    <nav className="bg-blue-800 text-white shadow-[0_4px_6px_-2px_rgba(0,0,0,0.30)] py-1 relative z-30">
       <div className="flex gap-2 items-center justify-between w-full md:max-w-350 mx-auto px-4">
         <div className="p-2 shrink-0">
           {/* Boton de inicio */}

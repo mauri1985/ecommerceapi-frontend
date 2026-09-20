@@ -70,7 +70,7 @@ export default function CarruselImagenes({ imagenes, alt }) {
         <>
           <button
             onClick={imagenAnterior}
-            className="absolute left-0 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white rounded-r-2xl h-15 p-1 border-t border-r border-b border-slate-300 shadow"
+            className="absolute left-0 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white rounded-r-2xl h-15 p-1 border-t border-r border-b border-gray-300 shadow"
             aria-label="Imagen anterior"
           >
             <svg
@@ -91,7 +91,7 @@ export default function CarruselImagenes({ imagenes, alt }) {
 
           <button
             onClick={imagenSiguiente}
-            className="absolute right-0 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white rounded-l-2xl h-15 p-1 border-t border-l border-b border-slate-300 shadow"
+            className="absolute right-0 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white rounded-l-2xl h-15 p-1 border-t border-l border-b border-gray-300 shadow"
             aria-label="Imagen siguiente"
           >
             <svg

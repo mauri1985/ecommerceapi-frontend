@@ -37,7 +37,7 @@ export default function FiltroColor({
               aria-label={op}
               className={`w-10 h-10 md:w-8 md:h-8 rounded-lg flex items-center justify-center transition-transform ${
                 activo ? "ring-2 ring-blue-600 scale-110" : "hover:scale-105"
-              } ${esClaro ? "border border-slate-300" : ""}`}
+              } ${esClaro ? "border border-gray-300" : ""}`}
               style={{ backgroundColor: COLORES_HEX[op] }}
             >
               {activo && (

@@ -144,7 +144,7 @@ export default function DetalleProducto() {
 
                   <button
                     onClick={imagenSiguiente}
-                    className="absolute right-0 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white h-15 rounded-l-2xl p-1 border border-slate-300 shadow"
+                    className="absolute right-0 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white h-15 rounded-l-2xl p-1 border border-gray-300 shadow"
                     aria-label="Imagen siguiente"
                   >
                     <svg
@@ -176,7 +176,7 @@ export default function DetalleProducto() {
                   <button
                     key={i}
                     onClick={() => setImagenActiva(i)}
-                    className={`shrink-0 w-16 h-16 rounded border border-slate-300 overflow-hidden ${
+                    className={`shrink-0 w-16 h-16 rounded border border-gray-300 overflow-hidden ${
                       i === imagenActiva ? "ring-2 ring-blue-400" : ""
                     }`}
                   >

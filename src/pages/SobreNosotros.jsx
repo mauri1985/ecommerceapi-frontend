@@ -6,8 +6,11 @@ export default function SobreNosotros() {
     <div className="max-w-5xl mx-auto px-4 py-12">
       <h1 className="text-3xl font-bold mb-2">Sobre nosotros</h1>
       <p className="text-slate-500 mb-10 max-w-2xl">
-        Contale al mundo un poco sobre tu tienda acá: cuándo empezaste, qué te
-        apasiona de lo que vendés, y por qué alguien debería elegirte a vos.
+        Emprendimiento personal, donde ademas de ser el dueño de la tienda,
+        tambien soy desarrollador de la plataforma. La idea surge de tener un
+        negocio propio, mientras voy desarrollando y aprendiendo del negocio al
+        mismo tiempo. La plataforma está en mejora continua, por lo que
+        cualquier sugerencia o reportes de mejoras son bienvenidos.
       </p>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-start">
