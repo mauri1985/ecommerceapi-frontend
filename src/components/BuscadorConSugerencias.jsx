@@ -114,7 +114,7 @@ export default function BuscadorConSugerencias({ onNavegar, claseInput }) {
 
             <button
               onClick={irAlCatalogo}
-              className="w-full text-center text-sm text-gray-600 hover:bg-slate-50 py-2.5 border-t font-medium"
+              className="w-full text-center text-sm text-slate-600 hover:bg-slate-50 py-2.5 border-t font-medium"
             >
               Ver todos los resultados
             </button>

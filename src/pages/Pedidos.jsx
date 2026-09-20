@@ -46,7 +46,7 @@ export default function Pedidos() {
         <div className="flex flex-row gap-3 items-center">
           <div>Mis Pedidos </div>
           <div>
-            <Package size={25} className="mt-1" />
+            <Package size={25} />
           </div>
         </div>
       </TituloAnimado>

@@ -92,7 +92,7 @@ export default function Login({ onClose }) {
           onChange={(e) => setEmail(e.target.value)}
           required
           disabled={cargando}
-          className="border border-slate-400 rounded px-3 py-2 outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-slate-50 disabled:text-slate-400"
+          className="border border-gray-400 rounded px-3 py-2 outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-slate-50 disabled:text-slate-400"
         />
 
         <div className="relative">
@@ -102,7 +102,7 @@ export default function Login({ onClose }) {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
-            className="border border-slate-400 rounded px-3 py-2 pr-10 w-full outline-none focus:ring-2 focus:ring-blue-500"
+            className="border border-gray-400 rounded px-3 py-2 pr-10 w-full outline-none focus:ring-2 focus:ring-blue-500"
           />
           <button
             type="button"

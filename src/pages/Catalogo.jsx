@@ -174,7 +174,7 @@ export default function Catalogo() {
           <div>
             <div className="md:hidden">
               <div className="flex flex-1 max-w-lg pb-4 min-w-0">
-                <BuscadorConSugerencias claseInput="w-full h-12 rounded-xl bg-white ring-2 ring-gray-400 placeholder-slate-600 pl-10 pr-4 py-1.5 text-sm outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white focus:text-black" />
+                <BuscadorConSugerencias claseInput="w-full h-10 rounded-md bg-white ring-1 ring-slate-400 placeholder-slate-600 pl-10 pr-4 py-1.5 text-md outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white focus:text-black" />
               </div>
               <div>
                 <OrdenPrecio orden={orden} onCambiarOrden={setOrden} />
@@ -182,11 +182,11 @@ export default function Catalogo() {
             </div>
             <div className="flex flex-1 md:hidden py-4 gap-2">
               <button
-                className="flex flex-row h-12 gap-2 p-3 rounded-xl bg-blue-600 w-full justify-center shadow/50"
+                className="flex flex-row h-10 gap-2 p-3 rounded-md bg-blue-600 w-full justify-center items-center "
                 onClick={() => setMostrarFiltros(!mostrarFiltros)}
               >
                 <p className="text-white">Mostrar filtros</p>
-                <Filter className="text-white" />
+                <Filter className="text-white" size={18} />
               </button>
             </div>
             <div
@@ -230,9 +230,9 @@ export default function Catalogo() {
                     <Link
                       to={`/productos/${producto.id}`}
                       key={producto.id}
-                      className="border bg-white border-slate-300 shadow-md hover:shadow-xl rounded-2xl flex flex-col transition-all duration-300 ease-in-out hover:scale-105 hover:border-slate-400"
+                      className="border bg-white border-gray-300 shadow-md hover:shadow-xl rounded-2xl flex flex-col transition-all duration-300 ease-in-out hover:scale-105 hover:border-gray-400"
                     >
-                      <div className="relative rounded-xl overflow-hidden border border-slate-300 m-3">
+                      <div className="relative rounded-xl overflow-hidden border border-gray-300 m-3">
                         <CarruselImagenes
                           imagenes={producto.imagenes}
                           alt={producto.nombre}

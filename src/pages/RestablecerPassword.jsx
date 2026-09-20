@@ -65,7 +65,7 @@ export default function RestablecerPassword() {
             onChange={(e) => setPassword(e.target.value)}
             required
             minLength={6}
-            className="border border-slate-400 rounded px-3 py-2 pr-10 w-full outline-none focus:ring-2 focus:ring-blue-500"
+            className="border border-gray-400 rounded px-3 py-2 pr-10 w-full outline-none focus:ring-2 focus:ring-blue-500"
           />
           <button
             type="button"

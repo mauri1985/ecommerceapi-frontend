@@ -105,7 +105,7 @@ export default function Navbar() {
                   </Tooltip>
                 )}
 
-                <span className="text-sm text-slate-300">
+                <span className="text-sm text-slate-100">
                   Hola, {usuario.nombre}
                 </span>
 
@@ -163,7 +163,7 @@ export default function Navbar() {
             {/* Buscador también en el menú mobile */}
 
             <Link
-              to="/"
+              to="/catalogo"
               className="flex items-center gap-1.5 hover:text-slate-300 text-sm"
               onClick={cerrarMenu}
             >

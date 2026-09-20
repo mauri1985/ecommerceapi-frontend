@@ -35,7 +35,7 @@ export default function FiltrosSidebar({
         <OrdenPrecio orden={orden} onCambiarOrden={onCambiarOrden} />
       </div>
       {/* Filtros de categorias */}
-      <div className="mb-6 pb-6 border-b border-slate-400">
+      <div className="mb-6 pb-6 border-b border-gray-400">
         <h3 className="font-medium text-sm mb-3">Categorías</h3>
         <div className="flex flex-col gap-2 text-gray-700">
           {categorias.map((cat) => (
@@ -122,7 +122,7 @@ export default function FiltrosSidebar({
       )}
 
       {/* Filtro de precios */}
-      <div className="mb-6 pb-6 border-b border-slate-400">
+      <div className="mb-6 pb-6 border-b border-gray-400">
         <h3 className="font-medium text-sm mb-3">Precio</h3>
         <div className="flex items-center gap-2 mb-2">
           <input
@@ -131,7 +131,7 @@ export default function FiltrosSidebar({
             min="0"
             value={precioMin}
             onChange={(e) => onCambiarPrecioMin(e.target.value)}
-            className="w-full border border-slate-400 rounded px-2 py-1.5 text-sm"
+            className="w-full border border-gray-400 rounded px-2 py-1.5 text-sm"
           />
           <span className="text-slate-400">-</span>
           <input
@@ -140,7 +140,7 @@ export default function FiltrosSidebar({
             min="0"
             value={precioMax}
             onChange={(e) => onCambiarPrecioMax(e.target.value)}
-            className="w-full border border-slate-400 rounded px-2 py-1.5 text-sm"
+            className="w-full border border-gray-400 rounded px-2 py-1.5 text-sm"
           />
         </div>
         <button

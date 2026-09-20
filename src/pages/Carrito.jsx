@@ -102,7 +102,7 @@ export default function Carrito() {
         <div className="flex flex-row gap-3 items-center">
           <div>Carrito </div>
           <div>
-            <ShoppingCart size={25} className="mt-1" />
+            <ShoppingCart size={25} />
           </div>
         </div>
       </TituloAnimado>
@@ -119,12 +119,12 @@ export default function Carrito() {
             {items.map((item) => (
               <div
                 key={item.id}
-                className="flex flex-col md:flex-row md:items-center gap-4 border border-slate-400 shadow-md rounded-lg p-4 bg-white"
+                className="flex flex-col md:flex-row md:items-center gap-4 border border-gray-400 shadow-md rounded-lg p-4 bg-white"
               >
                 {/* Carrusel */}
                 <Link
                   to={`/productos/${item.productoId}`}
-                  className="md:w-50 w-full shrink-0 border border-slate-300 rounded-md"
+                  className="md:w-50 w-full shrink-0 border border-gray-300 rounded-md"
                 >
                   <CarruselImagenes
                     imagenes={item.imagenes}

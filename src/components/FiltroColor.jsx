@@ -22,7 +22,7 @@ export default function FiltroColor({
   }
 
   return (
-    <div className="mb-6 pb-6 border-b border-slate-400">
+    <div className="mb-6 pb-6 border-b border-gray-400">
       <h3 className="font-medium text-sm mb-3">{titulo}</h3>
       <div className="grid grid-cols-6 gap-y-5 gap-x-1 place-items-center">
         {opciones.map((op) => {

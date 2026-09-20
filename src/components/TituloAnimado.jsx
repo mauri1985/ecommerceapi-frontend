@@ -15,7 +15,7 @@ export default function TituloAnimado({
 
   return (
     <Tag
-      className={`p-1 transition-all duration-500 ease-out ${
+      className={`transition-all duration-500 ease-out ${
         visible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-3"
       } ${className}`}
     >

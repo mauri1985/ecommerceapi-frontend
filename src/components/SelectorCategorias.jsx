@@ -43,7 +43,7 @@ export default function SelectorCategorias({
       <button
         type="button"
         onClick={() => setAbierto(!abierto)}
-        className="border border-slate-400 rounded-md px-3 py-2 text-sm flex items-center gap-2 bg-white min-w-50 justify-between "
+        className="border border-gray-400 rounded-md px-3 py-2 text-sm flex items-center gap-2 bg-white min-w-50 justify-between "
       >
         {etiqueta}
         <ChevronDown
