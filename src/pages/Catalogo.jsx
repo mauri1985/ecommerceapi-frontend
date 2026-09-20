@@ -48,6 +48,8 @@ export default function Catalogo() {
   const { usuario, estaLogueado } = useAuth();
   const { abrir: abrirLogin } = useLoginModal();
 
+  const soloOfertas = searchParams.get("ofertas") === "true";
+
   // el useEffect que resetea la página:
   useEffect(() => {
     setPagina(0);
@@ -56,6 +58,7 @@ export default function Catalogo() {
     busqueda,
     atributosSeleccionados.join(","),
     orden,
+    soloOfertas,
   ]);
 
   // el useEffect que carga productos:
@@ -69,6 +72,7 @@ export default function Catalogo() {
     precioMaxAplicado,
     atributosSeleccionados.join(","),
     orden,
+    soloOfertas,
   ]);
 
   useEffect(() => {
@@ -97,6 +101,7 @@ export default function Catalogo() {
     if (atributosSeleccionados.length > 0)
       params.atributos = atributosSeleccionados;
     if (orden) params.orden = orden;
+    if (soloOfertas) params.soloOfertas = true;
 
     api
       .get("/productos", { params })
@@ -167,6 +172,12 @@ export default function Catalogo() {
         {busqueda && (
           <p className="text-sm text-slate-500 mb-4">
             Resultados para: <span className="font-medium">"{busqueda}"</span>
+          </p>
+        )}
+
+        {soloOfertas && (
+          <p className="text-sm text-slate-500 mb-4">
+            Mostrando solo productos con descuento
           </p>
         )}
 

@@ -7,7 +7,7 @@ export default function OrdenPrecio({ orden, onCambiarOrden }) {
         onClick={() =>
           onCambiarOrden(orden === "precio_asc" ? "" : "precio_asc")
         }
-        className={`flex flex-row h-10 md:h-9 rounded-md ring ring-slate-400  w-1/2 cursor-pointer items-center justify-center ${
+        className={`flex flex-row h-10 md:h-9 rounded-md border border-slate-400  w-1/2 cursor-pointer items-center justify-center ${
           orden === "precio_asc"
             ? "bg-blue-600 border-blue-600 text-white"
             : "bg-white border-slate-400 hover:bg-slate-200 text-slate-600"
@@ -19,7 +19,7 @@ export default function OrdenPrecio({ orden, onCambiarOrden }) {
         onClick={() =>
           onCambiarOrden(orden === "precio_desc" ? "" : "precio_desc")
         }
-        className={`flex flex-row h-10 md:h-9 rounded-md ring-1 ring-slate-400 w-1/2 cursor-pointer items-center justify-center ${
+        className={`flex flex-row h-10 md:h-9 rounded-md border border-slate-400 w-1/2 cursor-pointer items-center justify-center ${
           orden === "precio_desc"
             ? "bg-blue-600 border-blue-600 text-white"
             : "bg-white border-slate-400 hover:bg-slate-100 text-slate-600"
