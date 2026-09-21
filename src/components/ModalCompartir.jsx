@@ -125,7 +125,7 @@ export default function ModalCompartir({
 
         <button
           onClick={copiarLink}
-          className="w-full flex items-center justify-center gap-2 border rounded-lg py-2.5 text-sm font-medium hover:bg-slate-50"
+          className="w-full flex items-center justify-center gap-2 border border-gray-400 rounded-lg py-2.5 text-sm font-medium hover:bg-slate-50"
         >
           {copiado ? (
             <Check size={18} className="text-green-600" />
