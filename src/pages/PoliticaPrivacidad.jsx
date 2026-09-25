@@ -10,7 +10,7 @@ export default function PoliticaPrivacidad() {
         <h2 className="text-xl font-semibold mb-3">
           1. Qué datos recolectamos
         </h2>
-        <p>Cuando te registrás y comprás en Mauri Shop, recolectamos:</p>
+        <p>Cuando te registrás y comprás en Easy Shop, recolectamos:</p>
         <ul className="list-disc list-inside mt-2 space-y-1">
           <li>Nombre y dirección de email</li>
           <li>Historial de pedidos y productos favoritos</li>

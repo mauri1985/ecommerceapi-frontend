@@ -11,7 +11,7 @@ export default function TerminosCondiciones() {
           1. Aceptación de los términos
         </h2>
         <p>
-          Al acceder y utilizar el sitio Mauri Shop, aceptás estos Términos y
+          Al acceder y utilizar el sitio Easy Shop, aceptás estos Términos y
           Condiciones en su totalidad. Si no estás de acuerdo con alguna parte,
           te pedimos que no utilices este sitio.
         </p>
@@ -42,7 +42,7 @@ export default function TerminosCondiciones() {
           4. Proceso de compra y pago
         </h2>
         <p>
-          Los pagos se procesan a través de Mercado Pago. Mauri Shop no almacena
+          Los pagos se procesan a través de Mercado Pago. Easy Shop no almacena
           ni tiene acceso a los datos de tu tarjeta en ningún momento. Una vez
           confirmado el pago, recibirás una notificación y podrás ver el estado
           de tu pedido en la sección "Mis pedidos".
@@ -88,7 +88,7 @@ export default function TerminosCondiciones() {
           7. Limitación de responsabilidad
         </h2>
         <p>
-          Mauri Shop no se responsabiliza por daños indirectos derivados del uso
+          Easy Shop no se responsabiliza por daños indirectos derivados del uso
           del sitio o de los productos adquiridos, más allá de lo establecido
           por la normativa vigente de defensa del consumidor.
         </p>

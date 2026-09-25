@@ -1,12 +1,12 @@
-export default function LogoMauriShop({ className = "h-12" }) {
+export default function LogoEasyShop({ className = "h-12" }) {
   return (
     <svg
       viewBox="0 0 340 160"
       xmlns="http://www.w3.org/2000/svg"
       className={className}
     >
-      <title>MauriShop</title>
-      <circle cx="80" cy="80" r="65" fill="#ffffff" />
+      <title>EasyShop</title>
+      <circle cx="92" cy="70" r="65" fill="#ffffff" />
       <g transform="translate(30,20)">
         <path
           d="M4 4 H24 L40 68 H100 L114 22 H30"
@@ -30,44 +30,46 @@ export default function LogoMauriShop({ className = "h-12" }) {
         <circle cx="92" cy="98" r="15" fill="#2563eb" />
       </g>
       <text
-        x="180"
+        x="175"
+        y="70"
+        fontFamily="'Boogaloo', sans-serif"
+        fontWeight="550"
+        fontSize="90"
+        fill="#000000"
+        fillOpacity={0.3}
+      >
+        Easy
+      </text>
+      <text
+        x="182"
         y="65"
         fontFamily="'Boogaloo', sans-serif"
-        fontWeight="700"
-        fontSize="55"
-        fill="#023e8a"
-      >
-        MAURI
-      </text>
-      <text
-        x="185"
-        y="60"
-        fontFamily="'Boogaloo', sans-serif"
-        fontWeight="700"
-        fontSize="55"
+        fontWeight="550"
+        fontSize="90"
         fill="#ffffff"
       >
-        MAURI
+        Easy
       </text>
       <text
-        x="175"
+        x="170"
         y="145"
         fontFamily="'Boogaloo', sans-serif"
-        fontWeight="700"
-        fontSize="85"
-        fill="#023e8a"
+        fontWeight="550"
+        fontSize="75"
+        fill="#000000"
+        fillOpacity={0.3}
       >
-        Shop
+        SHOP
       </text>
       <text
         x="180"
         y="140"
         fontFamily="'Boogaloo', sans-serif"
-        fontWeight="700"
-        fontSize="85"
+        fontWeight="550"
+        fontSize="75"
         fill="#ffffff"
       >
-        Shop
+        SHOP
       </text>
     </svg>
   );

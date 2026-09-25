@@ -1,7 +1,7 @@
 export const INFO_CONTACTO = {
-  telefono: "+598 95291547",
-  whatsapp: "59895291547",
-  email: "contacto@maurishop.com",
+  telefono: "+598 095000000",
+  whatsapp: "59895000000",
+  email: "contacto@dominiofalso.com",
   horario: "Lunes a viernes de 9:00 a 18:00hs",
-  domicilio: "Av. Solano Lopez 1781",
+  domicilio: "Av. 18 de Julio 1234",
 };

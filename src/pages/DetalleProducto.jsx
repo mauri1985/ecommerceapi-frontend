@@ -206,7 +206,7 @@ export default function DetalleProducto() {
           <div className="flex gap-2">
             <BotonCompartir
               titulo={producto.nombre}
-              texto={`¡Mirá "${producto.nombre}" en Mauri Shop! $${
+              texto={`¡Mirá "${producto.nombre}" en Easy Shop! $${
                 producto.precioOferta || producto.precio
               }`}
               size={24}

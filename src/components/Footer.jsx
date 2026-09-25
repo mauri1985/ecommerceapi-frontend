@@ -11,7 +11,7 @@ export default function Footer() {
     <footer className="bg-slate-800 text-slate-300 mt-16">
       <div className="max-w-6xl mx-auto px-6 py-10 grid grid-cols-2 md:grid-cols-4 gap-8">
         <div>
-          <h3 className="text-white font-semibold mb-3">MauriShop</h3>
+          <h3 className="text-white font-semibold mb-3">EasyShop</h3>
           <ul className="flex flex-col gap-2 text-sm">
             <li>
               <Link to="/sobre-nosotros" className="hover:text-white">
@@ -147,7 +147,7 @@ export default function Footer() {
       </div>
 
       <div className="border-t border-slate-700 py-4 text-center text-xs text-slate-400">
-        © {new Date().getFullYear()} MauriShop. Todos los derechos reservados. /
+        © {new Date().getFullYear()} EasyShop. Todos los derechos reservados. /
         Desarrollador: Mauricio Hernandez
       </div>
     </footer>
