@@ -33,8 +33,8 @@ export default function EditorDescripcion({ value, onChange }) {
   if (!editor) return null;
 
   return (
-    <div className="border border-gray-400 rounded overflow-hidden">
-      <div className="flex gap-1 border-b border-gray-400 bg-slate-50 px-2 py-1.5">
+    <div className="border border-slate-300 rounded overflow-hidden">
+      <div className="flex gap-1 border-b border-slate-300 bg-slate-50 px-2 py-1.5">
         <button
           type="button"
           onClick={() => editor.chain().focus().toggleBold().run()}

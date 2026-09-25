@@ -6,6 +6,9 @@ export default function CategoriasArbol({
   categorias,
   categoriasSeleccionadas,
   onToggleCategoria,
+  seleccionUnica = false,
+  categoriaSeleccionadaUnica,
+  onSeleccionarUnica,
 }) {
   const [expandidas, setExpandidas] = useState(new Set());
 
@@ -21,22 +24,48 @@ export default function CategoriasArbol({
     });
   }
 
+  function estaSeleccionada(id) {
+    return seleccionUnica
+      ? categoriaSeleccionadaUnica === id
+      : categoriasSeleccionadas.includes(id);
+  }
+
+  function seleccionar(id) {
+    seleccionUnica ? onSeleccionarUnica(id) : onToggleCategoria(id);
+  }
+
   return (
     <div className="flex flex-col gap-1 text-gray-700">
       {raiz.map((cat) => {
         const hijas = hijasDe(cat.id);
         const tieneHijas = hijas.length > 0;
-        const expandida = expandidas.has(cat.id);
+        const expandida =
+          expandidas.has(cat.id) ||
+          (seleccionUnica &&
+            hijas.some((h) => h.id === categoriaSeleccionadaUnica));
 
         return (
           <div key={cat.id}>
             <div className="flex items-center gap-2 py-0.5">
-              <CheckboxPersonalizado
-                checked={categoriasSeleccionadas.includes(cat.id)}
-                onChange={() => onToggleCategoria(cat.id)}
-                label={cat.nombre}
-                className="flex-1"
-              />
+              {seleccionUnica ? (
+                <label className="flex items-center gap-2 text-sm cursor-pointer flex-1">
+                  <input
+                    type="radio"
+                    name="categoria-unica"
+                    checked={estaSeleccionada(cat.id)}
+                    onChange={() => seleccionar(cat.id)}
+                    className="h-4 w-4 cursor-pointer accent-blue-600"
+                  />
+                  {cat.nombre}
+                </label>
+              ) : (
+                <CheckboxPersonalizado
+                  checked={estaSeleccionada(cat.id)}
+                  onChange={() => seleccionar(cat.id)}
+                  label={cat.nombre}
+                  className="flex-1"
+                />
+              )}
 
               {tieneHijas && (
                 <button
@@ -64,14 +93,30 @@ export default function CategoriasArbol({
               >
                 <div className="overflow-hidden min-h-0">
                   <div className="flex flex-col gap-1 py-1 border-l border-slate-300 pl-3">
-                    {hijas.map((hija) => (
-                      <CheckboxPersonalizado
-                        key={hija.id}
-                        checked={categoriasSeleccionadas.includes(hija.id)}
-                        onChange={() => onToggleCategoria(hija.id)}
-                        label={hija.nombre}
-                      />
-                    ))}
+                    {hijas.map((hija) =>
+                      seleccionUnica ? (
+                        <label
+                          key={hija.id}
+                          className="flex items-center gap-2 text-sm cursor-pointer"
+                        >
+                          <input
+                            type="radio"
+                            name="categoria-unica"
+                            checked={estaSeleccionada(hija.id)}
+                            onChange={() => seleccionar(hija.id)}
+                            className="h-4 w-4 cursor-pointer accent-blue-600"
+                          />
+                          {hija.nombre}
+                        </label>
+                      ) : (
+                        <CheckboxPersonalizado
+                          key={hija.id}
+                          checked={estaSeleccionada(hija.id)}
+                          onChange={() => seleccionar(hija.id)}
+                          label={hija.nombre}
+                        />
+                      )
+                    )}
                   </div>
                 </div>
               </div>
