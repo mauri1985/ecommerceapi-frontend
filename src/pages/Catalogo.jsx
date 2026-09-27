@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import api from "../api/axios";
 import { useAuth } from "../context/AuthContext";
 import { useLoginModal } from "../context/LoginModalContext";
@@ -9,7 +9,6 @@ import OrdenPrecio from "../components/OrdenPrecio";
 import BuscadorConSugerencias from "../components/BuscadorConSugerencias";
 import CarruselImagenes from "../components/CarruselImagenes";
 import { ChevronLeft, ChevronRight, Filter } from "lucide-react";
-import { useSearchParams } from "react-router-dom";
 import { useToast } from "../context/ToastContext";
 import BotonFavorito from "../components/BotonFavorito";
 import TituloAnimado from "../components/TituloAnimado";
@@ -20,24 +19,46 @@ import { obtenerAtributosFiltrables } from "../data/filtrosPorCategoria";
 const TAMANIO_PAGINA = 20;
 
 export default function Catalogo() {
+  const [searchParams, setSearchParams] = useSearchParams();
   const [productos, setProductos] = useState([]);
   const [categorias, setCategorias] = useState([]);
-  const [categoriasSeleccionadas, setCategoriasSeleccionadas] = useState([]);
-  const [pagina, setPagina] = useState(0);
+
+  // Estos 6 estados ahora arrancan leyendo la URL, así una URL compartida/pegada
+  // reproduce los mismos filtros al cargar la página.
+  const [categoriasSeleccionadas, setCategoriasSeleccionadas] = useState(() => {
+    const ids = searchParams.get("categoriaIds");
+    return ids ? ids.split(",").map(Number) : [];
+  });
+  const [atributosSeleccionados, setAtributosSeleccionados] = useState(() => {
+    const attrs = searchParams.get("atributos");
+    return attrs ? attrs.split(",") : [];
+  });
+  const [orden, setOrden] = useState(() => searchParams.get("orden") || "");
+  const [precioMinAplicado, setPrecioMinAplicado] = useState(
+    () => searchParams.get("precioMin") || ""
+  );
+  const [precioMaxAplicado, setPrecioMaxAplicado] = useState(
+    () => searchParams.get("precioMax") || ""
+  );
+  const [precioMinInput, setPrecioMinInput] = useState(
+    () => searchParams.get("precioMin") || ""
+  );
+  const [precioMaxInput, setPrecioMaxInput] = useState(
+    () => searchParams.get("precioMax") || ""
+  );
+  const [pagina, setPagina] = useState(() => {
+    const p = searchParams.get("page");
+    return p ? Number(p) : 0;
+  });
+
   const [totalPaginas, setTotalPaginas] = useState(0);
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState(null);
   const [agregandoId, setAgregandoId] = useState(null);
-  const [searchParams] = useSearchParams();
   const busqueda = searchParams.get("q") || "";
+  const soloOfertas = searchParams.get("ofertas") === "true";
   const { mostrarToast } = useToast();
-  const [precioMinInput, setPrecioMinInput] = useState("");
-  const [precioMaxInput, setPrecioMaxInput] = useState("");
-  const [precioMinAplicado, setPrecioMinAplicado] = useState("");
-  const [precioMaxAplicado, setPrecioMaxAplicado] = useState("");
-  const [atributosSeleccionados, setAtributosSeleccionados] = useState([]);
   const [mostrarFiltros, setMostrarFiltros] = useState(false);
-  const [orden, setOrden] = useState("");
   const { cargarCarrito } = useCarrito();
   const navigate = useNavigate();
   const atributosFiltrables = obtenerAtributosFiltrables(
@@ -48,9 +69,42 @@ export default function Catalogo() {
   const { usuario, estaLogueado } = useAuth();
   const { abrir: abrirLogin } = useLoginModal();
 
-  const soloOfertas = searchParams.get("ofertas") === "true";
+  // Escribe los filtros actuales en la URL, sin pisar q/ofertas (que maneja otro flujo).
+  useEffect(() => {
+    setSearchParams(
+      (prev) => {
+        const params = new URLSearchParams(prev);
 
-  // el useEffect que resetea la página:
+        categoriasSeleccionadas.length > 0
+          ? params.set("categoriaIds", categoriasSeleccionadas.join(","))
+          : params.delete("categoriaIds");
+
+        atributosSeleccionados.length > 0
+          ? params.set("atributos", atributosSeleccionados.join(","))
+          : params.delete("atributos");
+
+        precioMinAplicado
+          ? params.set("precioMin", precioMinAplicado)
+          : params.delete("precioMin");
+        precioMaxAplicado
+          ? params.set("precioMax", precioMaxAplicado)
+          : params.delete("precioMax");
+        orden ? params.set("orden", orden) : params.delete("orden");
+        pagina > 0 ? params.set("page", pagina) : params.delete("page");
+
+        return params;
+      },
+      { replace: true }
+    );
+  }, [
+    categoriasSeleccionadas.join(","),
+    atributosSeleccionados.join(","),
+    precioMinAplicado,
+    precioMaxAplicado,
+    orden,
+    pagina,
+  ]);
+
   useEffect(() => {
     setPagina(0);
   }, [
@@ -61,7 +115,6 @@ export default function Catalogo() {
     soloOfertas,
   ]);
 
-  // el useEffect que carga productos:
   useEffect(() => {
     cargarProductos();
   }, [
@@ -157,7 +210,7 @@ export default function Catalogo() {
     setAtributosSeleccionados([]);
     setOrden("");
     setPagina(0);
-    navigate("/catalogo"); // limpia también el ?q= de la búsqueda por texto
+    navigate("/catalogo");
   }
 
   return (
