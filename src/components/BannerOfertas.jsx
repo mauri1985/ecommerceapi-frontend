@@ -1,13 +1,14 @@
 import { useState, useEffect, useCallback } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import { Link } from "react-router-dom";
-import { BANNERS_OFERTAS } from "../data/bannersOfertas";
+import api from "../api/axios";
 
 const INTERVALO_MS = 5000;
 
 export default function BannerOfertas() {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true });
   const [indiceActivo, setIndiceActivo] = useState(0);
+  const [banners, setBanners] = useState([]);
 
   useEffect(() => {
     if (!emblaApi) return;
@@ -25,16 +26,21 @@ export default function BannerOfertas() {
 
   const irA = useCallback((i) => emblaApi && emblaApi.scrollTo(i), [emblaApi]);
 
-  if (BANNERS_OFERTAS.length === 0) return null;
+  //if (BANNERS_OFERTAS.length === 0) return null;
+  useEffect(() => {
+    api.get("/banners").then((res) => setBanners(res.data));
+  }, []);
+
+  if (banners.length === 0) return null;
 
   return (
     <div className="relative w-full h-[60vh] md:h-[70vh] overflow-hidden">
       <div className="overflow-hidden h-full" ref={emblaRef}>
         <div className="flex h-full">
-          {BANNERS_OFERTAS.map((banner, i) => (
+          {banners.map((banner, i) => (
             <div key={i} className="flex-[0_0_100%] min-w-0 relative h-full">
               <img
-                src={banner.imagen}
+                src={banner.imagenUrl}
                 alt={banner.titulo}
                 className="w-full h-full object-cover"
               />
@@ -57,9 +63,9 @@ export default function BannerOfertas() {
         </div>
       </div>
 
-      {BANNERS_OFERTAS.length > 1 && (
+      {banners.length > 1 && (
         <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2">
-          {BANNERS_OFERTAS.map((_, i) => (
+          {banners.map((_, i) => (
             <button
               key={i}
               onClick={() => irA(i)}

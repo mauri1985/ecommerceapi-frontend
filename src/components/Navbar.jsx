@@ -20,6 +20,7 @@ import {
   UserPlus,
   Phone,
   Heart,
+  Image,
 } from "lucide-react";
 
 export default function Navbar() {
@@ -95,14 +96,24 @@ export default function Navbar() {
                 </Tooltip>
 
                 {esAdmin && (
-                  <Tooltip texto="Panel de administración">
-                    <Link
-                      to="/admin/productos"
-                      className="hover:text-slate-300"
-                    >
-                      <Settings size={20} />
-                    </Link>
-                  </Tooltip>
+                  <>
+                    <Tooltip texto="Panel de administración">
+                      <Link
+                        to="/admin/productos"
+                        className="hover:text-slate-300"
+                      >
+                        <Settings size={20} />
+                      </Link>
+                    </Tooltip>
+                    <Tooltip texto="Banners">
+                      <Link
+                        to="/admin/banners"
+                        className="hover:text-slate-300"
+                      >
+                        <Image size={20} />
+                      </Link>
+                    </Tooltip>
+                  </>
                 )}
 
                 <span className="text-sm text-slate-100">
