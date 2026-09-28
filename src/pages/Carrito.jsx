@@ -1,14 +1,13 @@
 import { useEffect, useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import api from "../api/axios";
 import { useAuth } from "../context/AuthContext";
 import MensajeError from "../components/MensajeError";
 import CarruselImagenes from "../components/CarruselImagenes";
 import ModalConfirmacion from "../components/ModalConfirmacion";
-import { Trash2, Minus, Plus } from "lucide-react";
+import { Trash2, Minus, Plus, ShoppingCart } from "lucide-react";
 import { useToast } from "../context/ToastContext";
 import { useCarrito } from "../context/CarritoContext";
-import { ShoppingCart } from "lucide-react";
 import TituloAnimado from "../components/TituloAnimado";
 
 export default function Carrito() {
@@ -23,7 +22,6 @@ export default function Carrito() {
   const { cargarCarrito: cargarCarritoContext } = useCarrito();
 
   const { usuario } = useAuth();
-  const navigate = useNavigate();
 
   useEffect(() => {
     cargarCarrito();

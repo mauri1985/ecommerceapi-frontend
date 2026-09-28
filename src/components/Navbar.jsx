@@ -7,9 +7,10 @@ import BuscadorConSugerencias from "../components/BuscadorConSugerencias";
 import { useLoginModal } from "../context/LoginModalContext";
 import { useCarrito } from "../context/CarritoContext";
 import { useFavoritos } from "../context/FavoritosContext";
+import { usePedidos } from "../context/PedidosContext";
 import LogoMauriShop from "./LogoMauriShop";
 import api from "../api/axios";
-import HoverNavbar from "./HoverNavbar";
+import DropdownMenu from "./DropdownMenu";
 
 import {
   ShoppingCart,
@@ -19,11 +20,9 @@ import {
   Menu,
   X,
   Store,
-  Settings,
   UserPlus,
   Phone,
   Heart,
-  Image,
 } from "lucide-react";
 
 export default function Navbar() {
@@ -32,9 +31,13 @@ export default function Navbar() {
   const { items: productosCarrito, cantidadTotal } = useCarrito();
   const { favoritos } = useFavoritos();
   const [categorias, setCategorias] = useState([]);
-  const [pedidos, setPedidos] = useState([]);
+  const { pedidos } = usePedidos();
   const [cargando, setCargando] = useState(true);
   const [errorCarga, setErrorCarga] = useState(null);
+  const totalCarrito = productosCarrito.reduce(
+    (acc, item) => acc + item.subtotal,
+    0
+  );
 
   // Se carga categorias para el Link de Catalogo
   useEffect(() => {
@@ -72,7 +75,7 @@ export default function Navbar() {
         <div className="p-2 flex justify-end items-center shrink-0">
           {/* Links en desktop */}
           <div className="hidden md:flex items-center shrink-0">
-            <HoverNavbar
+            <DropdownMenu
               titulo="Catálogo"
               menu="catalogo"
               categorias={categorias}
@@ -86,43 +89,33 @@ export default function Navbar() {
 
             {estaLogueado ? (
               <>
-                <HoverNavbar
+                <DropdownMenu
                   titulo="Carrito"
                   menu="carrito"
                   productosCarrito={productosCarrito}
+                  totalCarrito={totalCarrito}
                   cantidadTotal={cantidadTotal}
                 />
 
-                <HoverNavbar
+                <DropdownMenu
                   titulo="Favoritos"
                   menu="favoritos"
                   favoritos={favoritos}
                 />
 
-                {/* <HoverNavbar
+                <DropdownMenu
                   titulo="Mis pedidos"
                   menu="pedidos"
-                  pedidos={pedidos}
-                /> */}
+                  pedidos={pedidos.slice(0, 3)}
+                />
 
                 {esAdmin && (
                   <>
-                    <Tooltip texto="Panel de administración">
-                      <Link
-                        to="/admin/productos"
-                        className="hover:text-slate-300"
-                      >
-                        <Settings size={20} />
-                      </Link>
-                    </Tooltip>
-                    <Tooltip texto="Banners">
-                      <Link
-                        to="/admin/banners"
-                        className="hover:text-slate-300"
-                      >
-                        <Image size={20} />
-                      </Link>
-                    </Tooltip>
+                    <DropdownMenu
+                      titulo="Panel Admin"
+                      menu="admin"
+                      admin={esAdmin}
+                    />
                   </>
                 )}
 
@@ -133,7 +126,7 @@ export default function Navbar() {
                 <Tooltip texto="Cerrar sesión">
                   <button
                     onClick={handleLogout}
-                    className="text-red-400 hover:text-red-300"
+                    className="text-red-400 hover:text-red-300 px-2"
                   >
                     <LogOut size={20} />
                   </button>
@@ -144,14 +137,14 @@ export default function Navbar() {
                 <Tooltip texto="Iniciar sesión">
                   <button
                     onClick={() => abrirLogin(true)}
-                    className="hover:text-slate-300 cursor-pointer"
+                    className="hover:text-slate-300 cursor-pointer px-2"
                   >
                     <LogIn size={20} />
                   </button>
                 </Tooltip>
 
                 <Tooltip texto="Registrarse">
-                  <Link to="/registro" className="hover:text-slate-300">
+                  <Link to="/registro" className="hover:text-slate-300 px-2">
                     <UserPlus size={20} />
                   </Link>
                 </Tooltip>
