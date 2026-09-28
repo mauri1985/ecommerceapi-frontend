@@ -108,7 +108,12 @@ export default function DropdownMenu({
                         <div className="flex items-stretch gap-3 py-1">
                           <div className="overflow-hidden">
                             <div className="flex">
-                              {producto.imagenes && (
+                              {!producto.imagenes ||
+                              producto.imagenes.length === 0 ? (
+                                <div className="text-xs min-w-20 rounded aspect-square bg-slate-100 flex items-center justify-center text-slate-500 border border-slate-300">
+                                  Sin imagen
+                                </div>
+                              ) : (
                                 <img
                                   src={producto.imagenes?.[0]}
                                   alt={producto.productoNombre}
@@ -216,7 +221,12 @@ export default function DropdownMenu({
                         <div className="flex items-stretch gap-3 py-1">
                           <div className="overflow-hidden">
                             <div className="flex">
-                              {favorito.imagenes && (
+                              {!favorito.imagenes ||
+                              favorito.imagenes.length === 0 ? (
+                                <div className="text-xs min-w-20 rounded aspect-square bg-slate-100 flex items-center justify-center text-slate-500 border border-slate-300">
+                                  Sin imagen
+                                </div>
+                              ) : (
                                 <img
                                   src={favorito.imagenes?.[0]}
                                   alt={favorito.productoNombre}
