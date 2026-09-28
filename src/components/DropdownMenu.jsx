@@ -78,7 +78,7 @@ export default function DropdownMenu({
                 Ver todo
               </Link>
             </div>
-            <div className="pt-2">
+            <div>
               {/* Categorias */}
               {categorias && (
                 <ul>
@@ -88,7 +88,7 @@ export default function DropdownMenu({
                       <li key={c.id}>
                         <Link
                           to={`/catalogo?categoriaIds=${c.id}`}
-                          className="block py-1 hover:font-semibold hover:underline px-4"
+                          className="flex items-center h-12 text-sm hover:font-semibold hover:underline px-4 hover:bg-slate-200"
                         >
                           {c.nombre}
                         </Link>
@@ -98,14 +98,14 @@ export default function DropdownMenu({
               )}
               {/* Carrito */}
               {productosCarrito?.length > 0 ? (
-                <ul className="px-2">
+                <ul>
                   {productosCarrito?.map((producto) => (
                     <li key={producto.productoId}>
                       <Link
                         to={`/productos/${producto.productoId}`}
                         target="_blank"
                       >
-                        <div className="flex items-stretch gap-3 py-1">
+                        <div className="flex items-stretch gap-3 px-3 py-2 hover:bg-slate-200">
                           <div className="overflow-hidden">
                             <div className="flex">
                               {!producto.imagenes ||
@@ -139,8 +139,8 @@ export default function DropdownMenu({
                       </Link>
                     </li>
                   ))}
-                  <li className="mt-2">
-                    <div className="flex justify-between items-center border-t border-slate-400 pt-4 pb-1">
+                  <li>
+                    <div className="flex justify-between items-center border-t border-slate-400 pt-4 pb-1 px-4">
                       <span className="text-md font-semibold">
                         Total: ${totalCarrito.toFixed(2)}
                       </span>
@@ -161,10 +161,10 @@ export default function DropdownMenu({
               )}
               {/* Pedidos */}
               {pedidos?.length > 0 ? (
-                <ul className="px-4">
+                <ul>
                   {pedidos.map((pedido) => (
-                    <li key={pedido.id}>
-                      <div className="border-b pb-2">
+                    <li key={pedido.id} className="border-b px-4 py-2">
+                      <div>
                         <div className="flex justify-between items-start mb-3">
                           <div>
                             <p className="font-semibold">Pedido #{pedido.id}</p>
@@ -195,7 +195,7 @@ export default function DropdownMenu({
                           ))}
                         </div>
 
-                        <div className="flex justify-end border-t border-slate-300 pt-3">
+                        <div className="flex justify-end pt-3">
                           <span className="text-sm font-bold">
                             Total: ${pedido.total}
                           </span>
@@ -211,14 +211,14 @@ export default function DropdownMenu({
               )}
               {/* Favoritos */}
               {favoritos?.length > 0 ? (
-                <ul className="px-4">
+                <ul>
                   {favoritos?.map((favorito) => (
                     <li key={favorito.productoId}>
                       <Link
                         to={`/productos/${favorito.productoId}`}
                         target="_blank"
                       >
-                        <div className="flex items-stretch gap-3 py-1">
+                        <div className="flex items-stretch gap-3 px-3 py-2 hover:bg-slate-200">
                           <div className="overflow-hidden">
                             <div className="flex">
                               {!favorito.imagenes ||
@@ -283,25 +283,25 @@ export default function DropdownMenu({
               )}
               {/* Menu Admin */}
               {admin && (
-                <ul className="px-4">
-                  <li className="pb-1">
-                    <div className="flex w-full items-center justify-between gap-3 hover:font-semibold">
+                <ul>
+                  <li>
+                    <div className="flex w-full h-12 items-center justify-between gap-3 hover:font-semibold hover:bg-slate-200">
                       <Link
                         to="/admin/productos"
                         target="_blank"
-                        className="flex w-full items-center justify-between gap-3"
+                        className="flex w-full items-center justify-between gap-3 text-sm px-4"
                       >
                         Administrar productos
+                        <SlidersHorizontal size={20} />
                       </Link>
-                      <SlidersHorizontal size={20} />
                     </div>
                   </li>
-                  <li className="pb-1">
-                    <div className="hover:font-semibold">
+                  <li>
+                    <div className="flex w-full h-12  items-center justify-between gap-3 hover:font-semibold hover:bg-slate-200">
                       <Link
                         to="/admin/banners"
                         target="_blank"
-                        className="flex w-full items-center justify-between gap-3"
+                        className="flex w-full items-center justify-between gap-3 text-sm px-4"
                       >
                         Banners/Ofertas
                         <Image size={20} />
