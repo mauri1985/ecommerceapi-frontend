@@ -53,14 +53,6 @@ export default function FiltrosSidebar({
             </button>
           )}
         </div>
-        {categoriasSeleccionadas.length > 0 && (
-          <button
-            onClick={onLimpiarCategorias}
-            className="text-xs text-blue-600 hover:underline mt-2"
-          >
-            Quitar filtro de categorías
-          </button>
-        )}
       </div>
 
       {atributosFiltrables.includes("talle") && (

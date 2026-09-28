@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import LoginModal from "./LoginModal";
@@ -6,7 +6,10 @@ import Tooltip from "../components/Tooltip";
 import BuscadorConSugerencias from "../components/BuscadorConSugerencias";
 import { useLoginModal } from "../context/LoginModalContext";
 import { useCarrito } from "../context/CarritoContext";
+import { useFavoritos } from "../context/FavoritosContext";
 import LogoMauriShop from "./LogoMauriShop";
+import api from "../api/axios";
+import HoverNavbar from "./HoverNavbar";
 
 import {
   ShoppingCart,
@@ -26,7 +29,17 @@ import {
 export default function Navbar() {
   const { usuario, logout, estaLogueado, esAdmin } = useAuth();
   const [menuAbierto, setMenuAbierto] = useState(false);
-  const { cantidadTotal } = useCarrito();
+  const { items: productosCarrito, cantidadTotal } = useCarrito();
+  const { favoritos } = useFavoritos();
+  const [categorias, setCategorias] = useState([]);
+  const [pedidos, setPedidos] = useState([]);
+  const [cargando, setCargando] = useState(true);
+  const [errorCarga, setErrorCarga] = useState(null);
+
+  // Se carga categorias para el Link de Catalogo
+  useEffect(() => {
+    api.get("/categorias").then((res) => setCategorias(res.data));
+  }, []);
 
   const {
     abierto: mostrarLogin,
@@ -58,42 +71,39 @@ export default function Navbar() {
         </div>
         <div className="p-2 flex justify-end items-center shrink-0">
           {/* Links en desktop */}
-          <div className="hidden md:flex items-center gap-4 shrink-0">
-            <Tooltip texto="Catálogo">
-              <Link to="/catalogo" className="hover:text-slate-300">
-                <Store size={20} />
-              </Link>
-            </Tooltip>
+          <div className="hidden md:flex items-center shrink-0">
+            <HoverNavbar
+              titulo="Catálogo"
+              menu="catalogo"
+              categorias={categorias}
+            />
+
             <Tooltip texto="Contacto">
-              <Link to="/contacto" className="hover:text-slate-300">
+              <Link to="/contacto" className="hover:text-slate-300 px-2">
                 <Phone size={20} />
               </Link>
             </Tooltip>
 
             {estaLogueado ? (
               <>
-                <Tooltip texto="Carrito">
-                  <Link to="/carrito" className="relative hover:text-slate-300">
-                    <ShoppingCart size={20} />
-                    {cantidadTotal > 0 && (
-                      <span className="absolute -top-2 -right-2 bg-red-600 text-white text-[10px] font-bold rounded-full min-w-4 h-4 flex items-center justify-center px-1">
-                        {cantidadTotal > 9 ? "9+" : cantidadTotal}
-                      </span>
-                    )}
-                  </Link>
-                </Tooltip>
+                <HoverNavbar
+                  titulo="Carrito"
+                  menu="carrito"
+                  productosCarrito={productosCarrito}
+                  cantidadTotal={cantidadTotal}
+                />
 
-                <Tooltip texto="Mis pedidos">
-                  <Link to="/pedidos" className="hover:text-slate-300">
-                    <Package size={20} />
-                  </Link>
-                </Tooltip>
+                <HoverNavbar
+                  titulo="Favoritos"
+                  menu="favoritos"
+                  favoritos={favoritos}
+                />
 
-                <Tooltip texto="Favoritos">
-                  <Link to="/favoritos" className="hover:text-slate-300">
-                    <Heart size={20} />
-                  </Link>
-                </Tooltip>
+                {/* <HoverNavbar
+                  titulo="Mis pedidos"
+                  menu="pedidos"
+                  pedidos={pedidos}
+                /> */}
 
                 {esAdmin && (
                   <>
@@ -181,6 +191,7 @@ export default function Navbar() {
               <Store size={18} />
               Catálogo
             </Link>
+
             {estaLogueado ? (
               <>
                 <Link

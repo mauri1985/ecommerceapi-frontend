@@ -1,4 +1,4 @@
-import { X, MessageCircle, Mail, Link2, Check } from "lucide-react";
+import { X, Mail, Link2, Check } from "lucide-react";
 import { useState } from "react";
 import { useToast } from "../context/ToastContext";
 

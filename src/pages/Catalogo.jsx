@@ -141,6 +141,21 @@ export default function Catalogo() {
     );
   }, [categoriasSeleccionadas.join(",")]);
 
+  // Sincroniza el estado cuando la URL cambia desde afuera del componente
+  // (por ejemplo, un click en el menú de categorías del Navbar).
+  useEffect(() => {
+    const idsDeLaUrl = searchParams.get("categoriaIds");
+    const arrayDeLaUrl = idsDeLaUrl ? idsDeLaUrl.split(",").map(Number) : [];
+
+    const sonIguales =
+      arrayDeLaUrl.length === categoriasSeleccionadas.length &&
+      arrayDeLaUrl.every((id) => categoriasSeleccionadas.includes(id));
+
+    if (!sonIguales) {
+      setCategoriasSeleccionadas(arrayDeLaUrl);
+    }
+  }, [searchParams.get("categoriaIds")]);
+
   function cargarProductos() {
     setCargando(true);
     setError(null);

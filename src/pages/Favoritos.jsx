@@ -56,16 +56,16 @@ export default function Favoritos() {
                 </Link>
                 {producto.porcentajeDescuento ? (
                   <div className="flex items-center gap-2 mt-1">
-                    <span className="font-bold text-lg text-green-50bg-green-500">
-                      ${producto.precioOferta}
+                    <span className="font-bold text-lg text-green-500">
+                      ${producto.precioOferta.toLocaleString("es-ES")}
                     </span>
                     <span className="text-sm text-slate-400 line-through">
-                      ${producto.precio}
+                      ${producto.precio.toLocaleString("es-ES")}
                     </span>
                   </div>
                 ) : (
                   <span className="font-bold text-lg mt-1">
-                    ${producto.precio}
+                    ${producto.precio.toLocaleString("es-ES")}
                   </span>
                 )}
                 {!producto.activo && (
