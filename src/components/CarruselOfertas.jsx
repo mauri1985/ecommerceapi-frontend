@@ -45,12 +45,18 @@ export default function CarruselOfertas() {
                   className="flex-[0_0_100%] sm:flex-[0_0_320px] min-w-0 bg-white rounded-sm shadow-black shadow-md/20 hover:shadow-md/40 transition overflow-hidden"
                 >
                   <div className="overflow-hidden">
-                    <img
-                      src={producto.imagenes[0]}
-                      alt={producto.nombre}
-                      loading="eager"
-                      className="w-full aspect-square object-contain shrink-0 transition-all duration-300 ease-in-out hover:scale-105"
-                    />
+                    {!producto.imagenes || producto.imagenes.length === 0 ? (
+                      <div className="text-md min-w-20 rounded aspect-square bg-slate-100 flex items-center justify-center text-slate-500 border border-slate-300">
+                        Sin imagen
+                      </div>
+                    ) : (
+                      <img
+                        src={producto.imagenes[0]}
+                        alt={producto.nombre}
+                        loading="eager"
+                        className="w-full aspect-square object-contain shrink-0 transition-all duration-300 ease-in-out hover:scale-105"
+                      />
+                    )}
                   </div>
                   <div className="p-4 bg-green-500 text-white overflow-hidden">
                     <h3 className="font-semibold text-lg truncate">

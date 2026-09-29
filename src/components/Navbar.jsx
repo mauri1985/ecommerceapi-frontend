@@ -95,7 +95,7 @@ export default function Navbar() {
               </Link>
             </Tooltip>
 
-            {estaLogueado ? (
+            {estaLogueado && (
               <>
                 <DropdownMenu
                   titulo="Carrito"
@@ -116,27 +116,27 @@ export default function Navbar() {
                   menu="pedidos"
                   pedidos={pedidos.slice(0, 3)}
                 />
-
-                <DropdownMenu titulo="Menú de usuario" menu="cuenta" />
               </>
-            ) : (
-              <>
-                <Tooltip texto="Iniciar sesión">
-                  <button
-                    onClick={() => abrirLogin(true)}
-                    className="hover:text-slate-300 cursor-pointer px-2"
-                  >
-                    <LogIn size={20} />
-                  </button>
-                </Tooltip>
+              // ) : (
+              //   <></>
+              //   // <>
+              //   //   <Tooltip texto="Iniciar sesión">
+              //   //     <button
+              //   //       onClick={() => abrirLogin(true)}
+              //   //       className="hover:text-slate-300 cursor-pointer px-2"
+              //   //     >
+              //   //       <LogIn size={20} />
+              //   //     </button>
+              //   //   </Tooltip>
 
-                <Tooltip texto="Registrarse">
-                  <Link to="/registro" className="hover:text-slate-300 px-2">
-                    <UserPlus size={20} />
-                  </Link>
-                </Tooltip>
-              </>
+              //   //   <Tooltip texto="Registrarse">
+              //   //     <Link to="/registro" className="hover:text-slate-300 px-2">
+              //   //       <UserPlus size={20} />
+              //   //     </Link>
+              //   //   </Tooltip>
+              //   </>
             )}
+            <DropdownMenu titulo="Menú de usuario" menu="cuenta" />
           </div>
 
           <div>

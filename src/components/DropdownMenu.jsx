@@ -4,6 +4,8 @@ import { estadoColor } from "../data/enumerados";
 import api from "../api/axios";
 import { useAuth } from "../context/AuthContext";
 import { useToast } from "../context/ToastContext";
+import { useLoginModal } from "../context/LoginModalContext";
+import LoginModal from "./LoginModal";
 
 import {
   CircleUserRound,
@@ -13,6 +15,8 @@ import {
   Heart,
   Image,
   SlidersHorizontal,
+  LogIn,
+  UserPlus,
   LogOut,
 } from "lucide-react";
 
@@ -31,6 +35,12 @@ export default function DropdownMenu({
   const [confirmando, setConfirmando] = useState(false);
   const { mostrarToast } = useToast();
   const { usuario, logout, estaLogueado, esAdmin } = useAuth();
+
+  const {
+    abierto: mostrarLogin,
+    abrir: abrirLogin,
+    cerrar: cerrarLogin,
+  } = useLoginModal();
 
   async function confirmarPedido() {
     setConfirmando(true);
@@ -71,7 +81,7 @@ export default function DropdownMenu({
         </Link>
       </div>
       {isHovered && (
-        <div className="absolute top-12 right-0 min-w-100 bg-slate-100 border border-slate-300 rounded-b-md rounded-l-md py-2 text-slate-600 shadow-md shadow-black/15">
+        <div className="absolute top-14 right-0 min-w-100 bg-slate-100 border border-slate-300 rounded-b-xl py-2 text-slate-600 shadow-md shadow-black/15">
           <div>
             <div className="flex justify-between border-b border-slate-400 pb-2">
               <h1 className="text-md font-semibold px-4">{titulo}</h1>
@@ -290,49 +300,79 @@ export default function DropdownMenu({
               {/* Menu Usuario */}
               {menu === "cuenta" && (
                 <ul>
-                  {esAdmin && (
+                  {estaLogueado ? (
+                    <>
+                      {esAdmin && (
+                        <>
+                          <li>
+                            <div className="flex w-full h-10 items-center justify-between gap-3 hover:font-semibold hover:bg-slate-200">
+                              <Link
+                                to="/admin/productos"
+                                target="_blank"
+                                className="flex w-full items-center justify-between gap-3 text-sm px-4"
+                              >
+                                Administrar productos
+                                <SlidersHorizontal size={20} />
+                              </Link>
+                            </div>
+                          </li>
+                          <li>
+                            <div className="flex w-full h-10 items-center justify-between gap-3 hover:font-semibold hover:bg-slate-200">
+                              <Link
+                                to="/admin/banners"
+                                target="_blank"
+                                className="flex w-full items-center justify-between gap-3 text-sm px-4"
+                              >
+                                Banners/Ofertas
+                                <Image size={20} />
+                              </Link>
+                            </div>
+                          </li>
+                        </>
+                      )}
+                      <li>
+                        <button
+                          onClick={handleLogout}
+                          className="flex w-full h-10 items-center justify-between hover:font-semibold hover:bg-slate-200 px-4 cursor-pointer"
+                        >
+                          <span className="text-sm">Cerrar sesión</span>
+                          <LogOut size={20} className="text-red-400" />
+                        </button>
+                      </li>
+                    </>
+                  ) : (
                     <>
                       <li>
-                        <div className="flex w-full h-10 items-center justify-between gap-3 hover:font-semibold hover:bg-slate-200">
-                          <Link
-                            to="/admin/productos"
-                            target="_blank"
-                            className="flex w-full items-center justify-between gap-3 text-sm px-4"
+                        <div className="flex w-full h-10 items-center justify-between gap-3 hover:font-semibold hover:bg-slate-200 cursor-pointer">
+                          <button
+                            onClick={() => abrirLogin(true)}
+                            className="flex w-full items-center justify-between gap-3 text-sm px-4 cursor-pointer"
                           >
-                            Administrar productos
-                            <SlidersHorizontal size={20} />
-                          </Link>
+                            Iniciar sesion
+                            <LogIn size={20} />
+                          </button>
                         </div>
                       </li>
                       <li>
                         <div className="flex w-full h-10 items-center justify-between gap-3 hover:font-semibold hover:bg-slate-200">
                           <Link
-                            to="/admin/banners"
-                            target="_blank"
+                            to="/registro"
                             className="flex w-full items-center justify-between gap-3 text-sm px-4"
                           >
-                            Banners/Ofertas
-                            <Image size={20} />
+                            Registrarse
+                            <UserPlus size={20} />
                           </Link>
                         </div>
                       </li>
                     </>
                   )}
-                  <li>
-                    <button
-                      onClick={handleLogout}
-                      className="flex w-full h-10 items-center justify-between hover:font-semibold hover:bg-slate-200 px-4 cursor-pointer"
-                    >
-                      <span className="text-sm">Cerrar sesión</span>
-                      <LogOut size={20} className="text-red-400" />
-                    </button>
-                  </li>
                 </ul>
               )}
             </div>
           </div>
         </div>
       )}
+      <LoginModal abierto={mostrarLogin} onClose={cerrarLogin} />{" "}
     </div>
   );
 }
