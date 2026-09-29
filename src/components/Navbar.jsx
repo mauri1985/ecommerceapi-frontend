@@ -8,7 +8,7 @@ import { useLoginModal } from "../context/LoginModalContext";
 import { useCarrito } from "../context/CarritoContext";
 import { useFavoritos } from "../context/FavoritosContext";
 import { usePedidos } from "../context/PedidosContext";
-import LogoMauriShop from "./LogoMauriShop";
+import LogoEasyShop from "./LogoEasyShop";
 import api from "../api/axios";
 import DropdownMenu from "./DropdownMenu";
 
@@ -16,13 +16,14 @@ import {
   ShoppingCart,
   Package,
   LogIn,
-  LogOut,
   Menu,
   X,
   Store,
   UserPlus,
   Phone,
   Heart,
+  SlidersHorizontal,
+  Image,
 } from "lucide-react";
 
 export default function Navbar() {
@@ -32,8 +33,6 @@ export default function Navbar() {
   const { favoritos } = useFavoritos();
   const [categorias, setCategorias] = useState([]);
   const { pedidos } = usePedidos();
-  const [cargando, setCargando] = useState(true);
-  const [errorCarga, setErrorCarga] = useState(null);
   const totalCarrito = productosCarrito.reduce(
     (acc, item) => acc + item.subtotal,
     0
@@ -60,21 +59,27 @@ export default function Navbar() {
   }
 
   return (
-    <nav className="bg-blue-800 text-white shadow-[0_4px_6px_-2px_rgba(0,0,0,0.30)] py-1 relative z-30">
-      <div className="flex gap-2 items-center justify-between w-full md:max-w-350 mx-auto px-4">
-        <div className="p-2 shrink-0">
+    <nav className="md:flex items-center h-14 bg-blue-800 text-white shadow-[0_4px_6px_-2px_rgba(0,0,0,0.30)] relative z-30">
+      <div className="flex h-14 gap-2 items-center justify-between w-full md:max-w-350 mx-auto px-1 md:px-4">
+        <div className="shrink-0">
           {/* Boton de inicio */}
           <Link to="/" className="shrink-0" onClick={cerrarMenu}>
-            <LogoMauriShop className="h-12" />
+            <LogoEasyShop className="h-10" />
           </Link>
         </div>
-        <div className="hidden md:flex flex-1 max-w-lg p-2 min-w-0">
+        <div className="hidden md:flex flex-1 max-w-lg min-w-0">
           {/* Buscador, visible en desktop */}
           <BuscadorConSugerencias claseInput="w-full h-10 rounded-full bg-gray-100 text-gray-100 placeholder-slate-400 pl-10 pr-4 py-1.5 text-sm outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white focus:text-black" />
         </div>
-        <div className="p-2 flex justify-end items-center shrink-0">
+        <div className="px-2 flex justify-end items-center shrink-0">
           {/* Links en desktop */}
-          <div className="hidden md:flex items-center shrink-0">
+          <div className="hidden px-2 md:flex items-center shrink-0">
+            {estaLogueado && (
+              <span className="text-sm text-slate-100 px-2">
+                Hola, {usuario.nombre}
+              </span>
+            )}
+
             <DropdownMenu
               titulo="Catálogo"
               menu="catalogo"
@@ -82,7 +87,10 @@ export default function Navbar() {
             />
 
             <Tooltip texto="Contacto">
-              <Link to="/contacto" className="hover:text-slate-300 px-2">
+              <Link
+                to="/contacto"
+                className="flex justify-center items-center h-14 w-11 hover:bg-slate-100 hover:text-slate-600"
+              >
                 <Phone size={20} />
               </Link>
             </Tooltip>
@@ -109,28 +117,7 @@ export default function Navbar() {
                   pedidos={pedidos.slice(0, 3)}
                 />
 
-                {esAdmin && (
-                  <>
-                    <DropdownMenu
-                      titulo="Panel Admin"
-                      menu="admin"
-                      admin={esAdmin}
-                    />
-                  </>
-                )}
-
-                <span className="text-sm text-slate-100">
-                  Hola, {usuario.nombre}
-                </span>
-
-                <Tooltip texto="Cerrar sesión">
-                  <button
-                    onClick={handleLogout}
-                    className="text-red-400 hover:text-red-300 px-2"
-                  >
-                    <LogOut size={20} />
-                  </button>
-                </Tooltip>
+                <DropdownMenu titulo="Menú de usuario" menu="cuenta" />
               </>
             ) : (
               <>
@@ -152,7 +139,7 @@ export default function Navbar() {
             )}
           </div>
 
-          <div className="pt-1">
+          <div>
             {/* Botón hamburguesa, solo en mobile */}
             <button
               onClick={() => setMenuAbierto(!menuAbierto)}
@@ -166,9 +153,9 @@ export default function Navbar() {
       </div>
       {/* Menú desplegable, solo en mobile */}
       <div
-        className={`md:hidden px-4 grid transition-all duration-300 ease-in-out ${
+        className={`grid md:hidden bg-blue-800 p-2 md:w-0 transition-all duration-300 ease-in-out ${
           menuAbierto
-            ? "grid-rows-[1fr] opacity-100 mt-4"
+            ? "grid-rows-[1fr] opacity-100"
             : "grid-rows-[0fr] opacity-0"
         }`}
       >
@@ -217,13 +204,24 @@ export default function Navbar() {
                   Favoritos
                 </Link>
                 {esAdmin && (
-                  <Link
-                    to="/admin/productos"
-                    className="hover:text-slate-300 text-sm"
-                    onClick={cerrarMenu}
-                  >
-                    Admin
-                  </Link>
+                  <>
+                    <Link
+                      to="/admin/productos"
+                      className="flex items-center gap-1.5 hover:text-slate-300 text-sm"
+                      onClick={cerrarMenu}
+                    >
+                      <SlidersHorizontal size={18} />
+                      Adminsitrar productos
+                    </Link>
+                    <Link
+                      to="/admin/banners"
+                      className="flex items-center gap-1.5 hover:text-slate-300 text-sm"
+                      onClick={cerrarMenu}
+                    >
+                      <Image size={18} />
+                      Banner/Ofertas
+                    </Link>
+                  </>
                 )}
                 <span className="text-sm text-slate-300">
                   Hola, {usuario.nombre}

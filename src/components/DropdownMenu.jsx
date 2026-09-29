@@ -6,13 +6,14 @@ import { useAuth } from "../context/AuthContext";
 import { useToast } from "../context/ToastContext";
 
 import {
+  CircleUserRound,
   ShoppingCart,
   Package,
   Store,
-  Settings,
   Heart,
   Image,
   SlidersHorizontal,
+  LogOut,
 } from "lucide-react";
 
 export default function DropdownMenu({
@@ -24,13 +25,12 @@ export default function DropdownMenu({
   cantidadTotal,
   pedidos,
   favoritos,
-  admin,
 }) {
   const ruta = "/" + menu.toLowerCase();
   const [isHovered, setIsHovered] = useState(false);
   const [confirmando, setConfirmando] = useState(false);
-  const { usuario } = useAuth();
   const { mostrarToast } = useToast();
+  const { usuario, logout, estaLogueado, esAdmin } = useAuth();
 
   async function confirmarPedido() {
     setConfirmando(true);
@@ -46,19 +46,23 @@ export default function DropdownMenu({
     }
   }
 
+  function handleLogout() {
+    logout();
+  }
+
   return (
     <div
-      className="relative h-10 w-10"
+      className="relative w-11 h-14"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <div className="flex h-full items-center justify-center">
-        <Link to={ruta} className="relative hover:text-slate-300">
+      <div className="flex h-14 items-center justify-center hover:bg-slate-100 hover:text-slate-600">
+        <Link to={ruta} className="relative ">
           {menu === "catalogo" && <Store size={20} />}
           {menu === "carrito" && <ShoppingCart size={20} />}
           {menu === "pedidos" && <Package size={20} />}
           {menu === "favoritos" && <Heart size={20} />}
-          {menu === "admin" && <Settings size={20} />}
+          {menu === "cuenta" && <CircleUserRound size={20} />}
           {cantidadTotal > 0 && (
             <span className="absolute -top-2 -right-2 bg-red-600 text-white text-[10px] font-bold rounded-full min-w-4 h-4 flex items-center justify-center px-1">
               {cantidadTotal > 9 ? "9+" : cantidadTotal}
@@ -67,16 +71,18 @@ export default function DropdownMenu({
         </Link>
       </div>
       {isHovered && (
-        <div className="absolute top-10 right-0 min-w-100 bg-slate-100 border border-slate-300 rounded-md py-2 text-slate-600 shadow-md shadow-black/15">
+        <div className="absolute top-12 right-0 min-w-100 bg-slate-100 border border-slate-300 rounded-b-md rounded-l-md py-2 text-slate-600 shadow-md shadow-black/15">
           <div>
             <div className="flex justify-between border-b border-slate-400 pb-2">
               <h1 className="text-md font-semibold px-4">{titulo}</h1>
-              <Link
-                to={ruta}
-                className="px-4 hover:font-semibold hover:underline"
-              >
-                Ver todo
-              </Link>
+              {menu !== "cuenta" && (
+                <Link
+                  to={ruta}
+                  className="px-4 hover:font-semibold hover:underline"
+                >
+                  Ver todo
+                </Link>
+              )}
             </div>
             <div>
               {/* Categorias */}
@@ -88,7 +94,7 @@ export default function DropdownMenu({
                       <li key={c.id}>
                         <Link
                           to={`/catalogo?categoriaIds=${c.id}`}
-                          className="flex items-center h-12 text-sm hover:font-semibold hover:underline px-4 hover:bg-slate-200"
+                          className="flex items-center h-10 text-sm hover:font-semibold hover:underline px-4 hover:bg-slate-200"
                         >
                           {c.nombre}
                         </Link>
@@ -281,32 +287,45 @@ export default function DropdownMenu({
                   </p>
                 )
               )}
-              {/* Menu Admin */}
-              {admin && (
+              {/* Menu Usuario */}
+              {menu === "cuenta" && (
                 <ul>
+                  {esAdmin && (
+                    <>
+                      <li>
+                        <div className="flex w-full h-10 items-center justify-between gap-3 hover:font-semibold hover:bg-slate-200">
+                          <Link
+                            to="/admin/productos"
+                            target="_blank"
+                            className="flex w-full items-center justify-between gap-3 text-sm px-4"
+                          >
+                            Administrar productos
+                            <SlidersHorizontal size={20} />
+                          </Link>
+                        </div>
+                      </li>
+                      <li>
+                        <div className="flex w-full h-10 items-center justify-between gap-3 hover:font-semibold hover:bg-slate-200">
+                          <Link
+                            to="/admin/banners"
+                            target="_blank"
+                            className="flex w-full items-center justify-between gap-3 text-sm px-4"
+                          >
+                            Banners/Ofertas
+                            <Image size={20} />
+                          </Link>
+                        </div>
+                      </li>
+                    </>
+                  )}
                   <li>
-                    <div className="flex w-full h-12 items-center justify-between gap-3 hover:font-semibold hover:bg-slate-200">
-                      <Link
-                        to="/admin/productos"
-                        target="_blank"
-                        className="flex w-full items-center justify-between gap-3 text-sm px-4"
-                      >
-                        Administrar productos
-                        <SlidersHorizontal size={20} />
-                      </Link>
-                    </div>
-                  </li>
-                  <li>
-                    <div className="flex w-full h-12  items-center justify-between gap-3 hover:font-semibold hover:bg-slate-200">
-                      <Link
-                        to="/admin/banners"
-                        target="_blank"
-                        className="flex w-full items-center justify-between gap-3 text-sm px-4"
-                      >
-                        Banners/Ofertas
-                        <Image size={20} />
-                      </Link>
-                    </div>
+                    <button
+                      onClick={handleLogout}
+                      className="flex w-full h-10 items-center justify-between hover:font-semibold hover:bg-slate-200 px-4 cursor-pointer"
+                    >
+                      <span className="text-sm">Cerrar sesión</span>
+                      <LogOut size={20} className="text-red-400" />
+                    </button>
                   </li>
                 </ul>
               )}
