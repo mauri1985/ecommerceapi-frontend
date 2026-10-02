@@ -35,6 +35,7 @@ export default function DropdownMenu({
   const [confirmando, setConfirmando] = useState(false);
   const { mostrarToast } = useToast();
   const { usuario, logout, estaLogueado, esAdmin } = useAuth();
+  const { isActive, setIsActive } = useState(null);
 
   const {
     abierto: mostrarLogin,
@@ -66,7 +67,11 @@ export default function DropdownMenu({
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <div className="flex h-14 items-center justify-center hover:bg-slate-100 hover:text-slate-600">
+      <div
+        className={`flex h-14 items-center justify-center  ${
+          isHovered && "bg-slate-100 text-slate-600"
+        }`}
+      >
         <Link to={ruta} className="relative ">
           {menu === "catalogo" && <Store size={20} />}
           {menu === "carrito" && <ShoppingCart size={20} />}
