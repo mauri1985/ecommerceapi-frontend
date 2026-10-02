@@ -4,6 +4,8 @@ import api from "../api/axios";
 import { useLoginModal } from "../context/LoginModalContext";
 import { useAuth } from "../context/AuthContext";
 import { GoogleLogin } from "@react-oauth/google";
+import TituloAnimado from "../components/TituloAnimado";
+import { UserRoundPlus } from "lucide-react";
 
 export default function Registro() {
   const [nombre, setNombre] = useState("");
@@ -66,7 +68,17 @@ export default function Registro() {
 
   return (
     <div className="max-w-sm mx-auto mt-16 px-4 min-h-svh">
-      <h1 className="text-2xl font-bold mb-6 text-center">Crear cuenta</h1>
+      <TituloAnimado
+        className="flex items-center h-15 text-2xl font-bold pb-6"
+        timeout={400}
+      >
+        <div className="flex flex-row gap-3 items-center">
+          <div>Registrarse</div>
+          <div>
+            <UserRoundPlus size={25} />
+          </div>
+        </div>
+      </TituloAnimado>
 
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <input
@@ -75,7 +87,7 @@ export default function Registro() {
           value={nombre}
           onChange={(e) => setNombre(e.target.value)}
           required
-          className="border rounded px-3 py-2 outline-none focus:ring-2 focus:ring-blue-500"
+          className="border border-slate-400 rounded px-3 py-2 outline-none focus:ring-2 focus:ring-blue-500"
         />
 
         <input
@@ -84,7 +96,7 @@ export default function Registro() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
-          className="border rounded px-3 py-2 outline-none focus:ring-2 focus:ring-blue-500"
+          className="border border-slate-400 rounded px-3 py-2 outline-none focus:ring-2 focus:ring-blue-500"
         />
 
         <input
@@ -93,7 +105,7 @@ export default function Registro() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
-          className="border rounded px-3 py-2 outline-none focus:ring-2 focus:ring-blue-500"
+          className="border border-slate-400 rounded px-3 py-2 outline-none focus:ring-2 focus:ring-blue-500"
         />
 
         <input
@@ -102,7 +114,7 @@ export default function Registro() {
           value={confirmarPassword}
           onChange={(e) => setConfirmarPassword(e.target.value)}
           required
-          className="border rounded px-3 py-2 outline-none focus:ring-2 focus:ring-blue-500"
+          className="border border-slate-400 rounded px-3 py-2 outline-none focus:ring-2 focus:ring-blue-500"
         />
 
         {errores.length > 0 && (
@@ -134,9 +146,9 @@ export default function Registro() {
       </form>
 
       <div className="flex items-center gap-3 my-4">
-        <div className="flex-1 border-t"></div>
+        <div className="flex-1 border-t border-slate-400"></div>
         <span className="text-xs text-slate-400">O</span>
-        <div className="flex-1 border-t"></div>
+        <div className="flex-1 border-t border-slate-400"></div>
       </div>
 
       <div className="flex justify-center">

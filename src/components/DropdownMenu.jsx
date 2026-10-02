@@ -74,16 +74,16 @@ export default function DropdownMenu({
           {menu === "favoritos" && <Heart size={20} />}
           {menu === "cuenta" && <CircleUserRound size={20} />}
           {cantidadTotal > 0 && (
-            <span className="absolute -top-2 -right-2 bg-red-600 text-white text-[10px] font-bold rounded-full min-w-4 h-4 flex items-center justify-center px-1">
+            <span className="absolute -top-2 -right-2 bg-red-600 text-white text-[10px] font-bold rounded-full min-w-4 h-4 flex items-center justify-center px-1 overflow-hidden">
               {cantidadTotal > 9 ? "9+" : cantidadTotal}
             </span>
           )}
         </Link>
       </div>
       {isHovered && (
-        <div className="absolute top-14 right-0 min-w-100 bg-slate-100 border border-slate-300 rounded-b-xl py-2 text-slate-600 shadow-md shadow-black/15">
+        <div className="absolute top-14 right-0 min-w-100 bg-slate-100 rounded-l-xl rounded-b-xl py-2 text-slate-600 shadow-md shadow-black/15 overflow-hidden">
           <div>
-            <div className="flex justify-between border-b border-slate-400 pb-2">
+            <div className="flex justify-between border-b border-slate-300 pb-2">
               <h1 className="text-md font-semibold px-4">{titulo}</h1>
               {menu !== "cuenta" && (
                 <Link
@@ -94,7 +94,7 @@ export default function DropdownMenu({
                 </Link>
               )}
             </div>
-            <div>
+            <div className="overflow-hidden">
               {/* Categorias */}
               {categorias && (
                 <ul>
@@ -156,7 +156,7 @@ export default function DropdownMenu({
                     </li>
                   ))}
                   <li>
-                    <div className="flex justify-between items-center border-t border-slate-400 pt-4 pb-1 px-4">
+                    <div className="flex justify-between items-center border-t border-slate-300 pt-4 pb-1 px-4">
                       <span className="text-md font-semibold">
                         Total: ${totalCarrito.toFixed(2)}
                       </span>
@@ -179,7 +179,10 @@ export default function DropdownMenu({
               {pedidos?.length > 0 ? (
                 <ul>
                   {pedidos.map((pedido) => (
-                    <li key={pedido.id} className="border-b px-4 py-2">
+                    <li
+                      key={pedido.id}
+                      className="border-b border-slate-300 px-4 py-2"
+                    >
                       <div>
                         <div className="flex justify-between items-start mb-3">
                           <div>
@@ -311,7 +314,7 @@ export default function DropdownMenu({
                                 target="_blank"
                                 className="flex w-full items-center justify-between gap-3 text-sm px-4"
                               >
-                                Administrar productos
+                                Editar productos
                                 <SlidersHorizontal size={20} />
                               </Link>
                             </div>
@@ -323,7 +326,7 @@ export default function DropdownMenu({
                                 target="_blank"
                                 className="flex w-full items-center justify-between gap-3 text-sm px-4"
                               >
-                                Banners/Ofertas
+                                Editar Banners/Ofertas
                                 <Image size={20} />
                               </Link>
                             </div>
