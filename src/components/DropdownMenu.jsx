@@ -69,7 +69,7 @@ export default function DropdownMenu({
       onMouseLeave={() => setIsHovered(false)}
     >
       <div
-        className={`flex h-14 items-center justify-center  ${
+        className={`flex h-14 items-center justify-center cursor-pointer ${
           isHovered && "bg-slate-100 text-slate-600"
         }`}
       >
@@ -312,50 +312,44 @@ export default function DropdownMenu({
                   {estaLogueado ? (
                     <>
                       <li>
-                        <div className="flex w-full h-10 items-center justify-between gap-3 hover:font-semibold hover:bg-slate-200">
-                          <Link
-                            to="/mi-cuenta"
-                            className="flex w-full items-center justify-between gap-3 text-sm px-4"
-                          >
-                            Cuenta
-                            <UserCog size={20} />
-                          </Link>
-                        </div>
+                        <Link
+                          className="flex w-full h-10 items-center justify-between hover:font-semibold hover:bg-slate-200 gap-3 text-sm px-4"
+                          to="/mi-cuenta"
+                        >
+                          Cuenta
+                          <UserCog size={20} />
+                        </Link>
                       </li>
                       {esAdmin && (
                         <>
                           <li>
-                            <div className="flex w-full h-10 items-center justify-between gap-3 hover:font-semibold hover:bg-slate-200">
-                              <Link
-                                to="/admin/productos"
-                                target="_blank"
-                                className="flex w-full items-center justify-between gap-3 text-sm px-4"
-                              >
-                                Editar productos
-                                <SlidersHorizontal size={20} />
-                              </Link>
-                            </div>
+                            <Link
+                              className="flex w-full h-10 items-center justify-between hover:font-semibold hover:bg-slate-200 gap-3 text-sm px-4"
+                              to="/admin/productos"
+                              target="_blank"
+                            >
+                              Editar productos
+                              <SlidersHorizontal size={20} />
+                            </Link>
                           </li>
                           <li>
-                            <div className="flex w-full h-10 items-center justify-between gap-3 hover:font-semibold hover:bg-slate-200">
-                              <Link
-                                to="/admin/banners"
-                                target="_blank"
-                                className="flex w-full items-center justify-between gap-3 text-sm px-4"
-                              >
-                                Editar Banners/Ofertas
-                                <Image size={20} />
-                              </Link>
-                            </div>
+                            <Link
+                              to="/admin/banners"
+                              target="_blank"
+                              className="flex w-full h-10 items-center justify-between hover:font-semibold hover:bg-slate-200 gap-3 text-sm px-4"
+                            >
+                              Editar Banners/Ofertas
+                              <Image size={20} />
+                            </Link>
                           </li>
                         </>
                       )}
                       <li>
                         <button
                           onClick={handleLogout}
-                          className="flex w-full h-10 items-center justify-between hover:font-semibold hover:bg-slate-200 px-4 cursor-pointer"
+                          className="flex w-full h-10 items-center justify-between hover:font-semibold hover:bg-slate-200 gap-3 text-sm px-4 cursor-pointer"
                         >
-                          <span className="text-sm">Cerrar sesión</span>
+                          <span>Cerrar sesión</span>
                           <LogOut size={20} className="text-red-400" />
                         </button>
                       </li>
@@ -363,10 +357,10 @@ export default function DropdownMenu({
                   ) : (
                     <>
                       <li>
-                        <div className="flex w-full h-10 items-center justify-between gap-3 hover:font-semibold hover:bg-slate-200 cursor-pointer">
+                        <div className="flex w-full h-10 items-center justify-between gap-3 hover:font-semibold hover:bg-slate-200 ">
                           <button
                             onClick={() => abrirLogin(true)}
-                            className="flex w-full items-center justify-between gap-3 text-sm px-4 cursor-pointer"
+                            className="flex w-full items-center justify-between gap-3 text-sm px-4"
                           >
                             Iniciar sesion
                             <LogIn size={20} />

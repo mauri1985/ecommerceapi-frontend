@@ -25,6 +25,22 @@ export default function MiCuenta() {
   const [mostrarPassword, setMostrarPassword] = useState(false);
   const [guardandoPassword, setGuardandoPassword] = useState(false);
   const [erroresPassword, setErroresPassword] = useState([]);
+  const [esGoogle, setEsGoogle] = useState(false);
+
+  useEffect(() => {
+    if (!usuario) return;
+    api.get(`/usuarios/${usuario.id}`).then((res) => {
+      setForm({
+        nombre: res.data.nombre || "",
+        apellido: res.data.apellido || "",
+        telefono: res.data.telefono || "",
+        direccionCalle: res.data.direccionCalle || "",
+        ciudad: res.data.ciudad || "",
+      });
+      setEsGoogle(res.data.proveedorAuth === "GOOGLE");
+      setCargandoPerfil(false);
+    });
+  }, [usuario]);
 
   useEffect(() => {
     if (!usuario) return;
@@ -169,66 +185,75 @@ export default function MiCuenta() {
         </button>
       </form>
 
-      <form
-        onSubmit={handleSubmitPassword}
-        className="border border-slate-300 rounded-lg p-5 bg-white flex flex-col gap-3"
-      >
-        <h2 className="font-semibold text-lg mb-1">Cambiar contraseña</h2>
+      {!esGoogle ? (
+        <form
+          onSubmit={handleSubmitPassword}
+          className="border border-slate-300 rounded-lg p-5 bg-white flex flex-col gap-3"
+        >
+          <h2 className="font-semibold text-lg mb-1">Cambiar contraseña</h2>
 
-        <input
-          type={mostrarPassword ? "text" : "password"}
-          placeholder="Contraseña actual"
-          value={passwordActual}
-          onChange={(e) => setPasswordActual(e.target.value)}
-          required
-          className="border border-slate-300 rounded px-3 py-2"
-        />
-
-        <div className="relative">
           <input
             type={mostrarPassword ? "text" : "password"}
-            placeholder="Nueva contraseña"
-            value={passwordNueva}
-            onChange={(e) => setPasswordNueva(e.target.value)}
+            placeholder="Contraseña actual"
+            value={passwordActual}
+            onChange={(e) => setPasswordActual(e.target.value)}
             required
-            minLength={6}
-            className="border border-slate-300 rounded px-3 py-2 pr-10 w-full"
+            className="border border-slate-300 rounded px-3 py-2"
           />
+
+          <div className="relative">
+            <input
+              type={mostrarPassword ? "text" : "password"}
+              placeholder="Nueva contraseña"
+              value={passwordNueva}
+              onChange={(e) => setPasswordNueva(e.target.value)}
+              required
+              minLength={6}
+              className="border border-slate-300 rounded px-3 py-2 pr-10 w-full"
+            />
+            <button
+              type="button"
+              onClick={() => setMostrarPassword(!mostrarPassword)}
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
+            >
+              {mostrarPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+            </button>
+          </div>
+
+          <input
+            type={mostrarPassword ? "text" : "password"}
+            placeholder="Confirmar nueva contraseña"
+            value={confirmarPasswordNueva}
+            onChange={(e) => setConfirmarPasswordNueva(e.target.value)}
+            required
+            className="border border-slate-300 rounded px-3 py-2"
+          />
+
+          {erroresPassword.length > 0 && (
+            <ul className="text-red-600 text-sm list-disc list-inside">
+              {erroresPassword.map((msg, i) => (
+                <li key={i}>{msg}</li>
+              ))}
+            </ul>
+          )}
+
           <button
-            type="button"
-            onClick={() => setMostrarPassword(!mostrarPassword)}
-            className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
+            type="submit"
+            disabled={guardandoPassword}
+            className="bg-blue-600 hover:bg-blue-700 disabled:bg-blue-300 text-white rounded py-2 font-medium flex items-center justify-center gap-2"
           >
-            {mostrarPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+            {guardandoPassword && (
+              <Loader2 size={18} className="animate-spin" />
+            )}
+            {guardandoPassword ? "Guardando..." : "Cambiar contraseña"}
           </button>
+        </form>
+      ) : (
+        <div className="border border-slate-300 rounded-lg p-5 bg-slate-50 text-sm text-slate-500">
+          Iniciaste sesión con Google, así que tu usuario no necesita
+          contraseña.
         </div>
-
-        <input
-          type={mostrarPassword ? "text" : "password"}
-          placeholder="Confirmar nueva contraseña"
-          value={confirmarPasswordNueva}
-          onChange={(e) => setConfirmarPasswordNueva(e.target.value)}
-          required
-          className="border border-slate-300 rounded px-3 py-2"
-        />
-
-        {erroresPassword.length > 0 && (
-          <ul className="text-red-600 text-sm list-disc list-inside">
-            {erroresPassword.map((msg, i) => (
-              <li key={i}>{msg}</li>
-            ))}
-          </ul>
-        )}
-
-        <button
-          type="submit"
-          disabled={guardandoPassword}
-          className="bg-blue-600 hover:bg-blue-700 disabled:bg-blue-300 text-white rounded py-2 font-medium flex items-center justify-center gap-2"
-        >
-          {guardandoPassword && <Loader2 size={18} className="animate-spin" />}
-          {guardandoPassword ? "Guardando..." : "Cambiar contraseña"}
-        </button>
-      </form>
+      )}
     </div>
   );
 }
