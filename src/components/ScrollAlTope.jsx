@@ -18,8 +18,7 @@ export default function ScrollAlTope() {
       // Volver atrás/adelante: restauramos la posición guardada, si existe
       const posicion = posicionesGuardadas.get(location.key);
       window.scrollTo(0, posicion ?? 0);
-    } else {
-      // Navegación nueva (click en un link): siempre al tope
+    } else if (navigationType === "PUSH") {
       window.scrollTo(0, 0);
     }
 
