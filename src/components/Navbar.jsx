@@ -76,7 +76,7 @@ export default function Navbar() {
           <div className="hidden px-2 md:flex items-center shrink-0">
             {estaLogueado && (
               <span className="text-sm text-slate-100 px-2">
-                Hola, {usuario.nombre}
+                Hola, {usuario.nombre} {usuario.apelldio}
               </span>
             )}
 

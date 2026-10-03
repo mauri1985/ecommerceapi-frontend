@@ -59,6 +59,7 @@ export function AuthProvider({ children }) {
       id: data.id,
       email: data.email,
       nombre: data.nombre,
+      apellido: data.apellido,
       rol: data.rol,
     };
     localStorage.setItem("token", data.token);
@@ -73,6 +74,7 @@ export function AuthProvider({ children }) {
       id: data.id,
       email: data.email,
       nombre: data.nombre,
+      apellido: data.apellido,
       rol: data.rol,
     };
     localStorage.setItem("token", data.token);

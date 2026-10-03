@@ -18,6 +18,7 @@ import {
   LogIn,
   UserPlus,
   LogOut,
+  UserCog,
 } from "lucide-react";
 
 export default function DropdownMenu({
@@ -310,6 +311,17 @@ export default function DropdownMenu({
                 <ul>
                   {estaLogueado ? (
                     <>
+                      <li>
+                        <div className="flex w-full h-10 items-center justify-between gap-3 hover:font-semibold hover:bg-slate-200">
+                          <Link
+                            to="/mi-cuenta"
+                            className="flex w-full items-center justify-between gap-3 text-sm px-4"
+                          >
+                            Cuenta
+                            <UserCog size={20} />
+                          </Link>
+                        </div>
+                      </li>
                       {esAdmin && (
                         <>
                           <li>

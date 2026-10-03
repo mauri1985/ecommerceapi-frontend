@@ -22,6 +22,7 @@ import TerminosCondiciones from "./pages/TerminosCondiciones";
 import PoliticaPrivacidad from "./pages/PoliticaPrivacidad";
 import ScrollAlTope from "./components/ScrollAlTope";
 import AdminBanners from "./pages/AdminBanners";
+import MiCuenta from "./pages/MiCuenta";
 
 function App() {
   return (
@@ -39,6 +40,14 @@ function App() {
             <Route path="/contacto" element={<Contacto />} />
             <Route path="/sobre-nosotros" element={<SobreNosotros />} />
             <Route path="/verificar-email" element={<VerificarEmail />} />
+            <Route
+              path="/mi-cuenta"
+              element={
+                <RutaProtegida>
+                  <MiCuenta />
+                </RutaProtegida>
+              }
+            />
             <Route
               path="/admin/banners"
               element={
