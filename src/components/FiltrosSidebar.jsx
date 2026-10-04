@@ -22,8 +22,8 @@ export default function FiltrosSidebar({
   atributosFiltrables,
 }) {
   return (
-    <aside className="flex flex-col w-full md:w-64 shrink-0">
-      <div className="flex justify-between items-center mb-4">
+    <aside className="flex flex-col w-full md:w-64 shrink-0 ">
+      <div className="flex justify-between items-center mb-3">
         <h2 className="font-semibold text-lg">Filtros</h2>
         <button
           onClick={onLimpiarTodo}
@@ -32,7 +32,7 @@ export default function FiltrosSidebar({
           Limpiar todo
         </button>
       </div>
-      <div className="hidden md:flex flex-1 justify-between gap-2 pb-5">
+      <div className="hidden md:flex w-full mb-6 pb-6 border-b border-gray-400">
         <OrdenPrecio orden={orden} onCambiarOrden={onCambiarOrden} />
       </div>
       {/* Filtros de categorias */}
@@ -47,7 +47,7 @@ export default function FiltrosSidebar({
           {categoriasSeleccionadas.length > 0 && (
             <button
               onClick={onLimpiarCategorias}
-              className="text-xs text-blue-600 hover:underline mt-2"
+              className="flex justify-center w-full mt-3 p-3 rounded-md bg-blue-500 md:bg-blue-400 hover:bg-blue-500 font-semibold hover:font-bold text-sm text-white cursor-pointer"
             >
               Quitar filtro de categorías
             </button>
@@ -96,7 +96,7 @@ export default function FiltrosSidebar({
       )}
 
       {/* Filtro de precios */}
-      <div className="mb-6 pb-6 border-b border-gray-400">
+      <div className="mb-3 pb-3 border-b border-gray-400">
         <h3 className="font-medium text-sm mb-3">Precio</h3>
         <div className="flex items-center gap-2 mb-2">
           <input
@@ -119,9 +119,9 @@ export default function FiltrosSidebar({
         </div>
         <button
           onClick={onAplicarPrecio}
-          className="w-full bg-slate-700 hover:bg-slate-800 text-white text-sm py-1.5 rounded"
+          className="w-full bg-blue-600 md:bg-blue-400 hover:bg-blue-500 text-white text-sm font-semibold hover:font-bold my-2 py-3 rounded cursor-pointer"
         >
-          Aplicar
+          Aplicar precios
         </button>
       </div>
     </aside>

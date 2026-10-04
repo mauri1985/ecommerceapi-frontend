@@ -357,26 +357,22 @@ export default function DropdownMenu({
                   ) : (
                     <>
                       <li>
-                        <div className="flex w-full h-10 items-center justify-between gap-3 hover:font-semibold hover:bg-slate-200 ">
-                          <button
-                            onClick={() => abrirLogin(true)}
-                            className="flex w-full items-center justify-between gap-3 text-sm px-4"
-                          >
-                            Iniciar sesion
-                            <LogIn size={20} />
-                          </button>
-                        </div>
+                        <button
+                          onClick={() => abrirLogin(true)}
+                          className="flex w-full h-10 items-center justify-between hover:font-semibold hover:bg-slate-200 gap-3 text-sm px-4 cursor-pointer"
+                        >
+                          <span>Iniciar sesion</span>
+                          <LogIn size={20} />
+                        </button>
                       </li>
                       <li>
-                        <div className="flex w-full h-10 items-center justify-between gap-3 hover:font-semibold hover:bg-slate-200">
-                          <Link
-                            to="/registro"
-                            className="flex w-full items-center justify-between gap-3 text-sm px-4"
-                          >
-                            Registrarse
-                            <UserPlus size={20} />
-                          </Link>
-                        </div>
+                        <Link
+                          to="/registro"
+                          className="flex w-full h-10 items-center justify-between hover:font-semibold hover:bg-slate-200 gap-3 text-sm px-4 cursor-pointer"
+                        >
+                          <span>Registrarse</span>
+                          <UserPlus size={20} />
+                        </Link>
                       </li>
                     </>
                   )}

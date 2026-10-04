@@ -94,7 +94,7 @@ export default function Registro() {
         <input
           type="text"
           placeholder="Apellido"
-          value={apelldio}
+          value={apellido}
           onChange={(e) => setApellido(e.target.value)}
           required
           className="border border-slate-400 rounded px-3 py-2 outline-none focus:ring-2 focus:ring-blue-500"
@@ -138,7 +138,7 @@ export default function Registro() {
         <button
           type="submit"
           disabled={cargando}
-          className="bg-blue-600 hover:bg-blue-700 disabled:bg-blue-300 text-white rounded py-2 font-medium"
+          className="bg-blue-600 hover:bg-blue-700 disabled:bg-blue-300 text-white rounded py-2 font-medium cursor-pointer"
         >
           {cargando ? "Creando cuenta..." : "Registrarse"}
         </button>
@@ -148,9 +148,9 @@ export default function Registro() {
           <button
             type="button"
             onClick={abrirLogin}
-            className="text-blue-600 hover:underline"
+            className="text-blue-600 hover:underline cursor-pointer"
           >
-            Iniciá sesión
+            Iniciar sesión
           </button>
         </p>
       </form>

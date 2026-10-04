@@ -21,13 +21,22 @@ export default function FiltroColor({
     }
   }
 
+  function limpiarFiltroColores() {
+    onChange([]);
+  }
+
   return (
     <div className="mb-6 pb-6 border-b border-gray-400">
       <h3 className="font-medium text-sm mb-3">{titulo}</h3>
       <div className="grid grid-cols-6 gap-y-5 gap-x-1 place-items-center">
         {opciones.map((op) => {
           const activo = activos.includes(op);
-          const esClaro = op === "Blanco" || op === "Amarillo" || op === "Lima";
+          const esClaro =
+            op === "Blanco" ||
+            op === "Amarillo" ||
+            op === "Lima" ||
+            op === "Beige" ||
+            op === "Caqui";
 
           return (
             <button
@@ -36,7 +45,7 @@ export default function FiltroColor({
               title={op}
               aria-label={op}
               className={`w-10 h-10 md:w-8 md:h-8 rounded-lg flex items-center justify-center transition-transform ${
-                activo ? "ring-2 ring-blue-600 scale-110" : "hover:scale-105"
+                activo ? "ring-1 ring-blue-500 scale-110" : "hover:scale-105"
               } ${esClaro ? "border border-gray-300" : ""}`}
               style={{ backgroundColor: COLORES_HEX[op] }}
             >
@@ -53,6 +62,14 @@ export default function FiltroColor({
           );
         })}
       </div>
+      {seleccionados?.length > 0 && (
+        <button
+          className="flex justify-center w-full mt-3 p-3 rounded-md bg-blue-500 md:bg-blue-400 hover:bg-blue-500 font-semibold hover:font-bold text-sm text-white cursor-pointer"
+          onClick={() => limpiarFiltroColores()}
+        >
+          <span className="">Quitar filtro color</span>
+        </button>
+      )}
     </div>
   );
 }

@@ -23,7 +23,7 @@ export default function Catalogo() {
   const [productos, setProductos] = useState([]);
   const [categorias, setCategorias] = useState([]);
 
-  // Estos 6 estados ahora arrancan leyendo la URL, así una URL compartida/pegada
+  // Los estados arrancan leyendo la URL, así una URL compartida/pegada
   // reproduce los mismos filtros al cargar la página.
   const [categoriasSeleccionadas, setCategoriasSeleccionadas] = useState(() => {
     const ids = searchParams.get("categoriaIds");

@@ -19,9 +19,9 @@ export default function FiltroAtributo({
   }
 
   return (
-    <div className="mb-6 pb-6 border-b border-gray-400">
+    <div className="mb-6 pb-6 border-b border-slate-400">
       <h3 className="font-medium text-sm mb-3">{titulo}</h3>
-      <div className="flex flex-col gap-2 text-gray-700">
+      <div className="flex flex-col gap-2 text-slate-700">
         {opciones.map((op) => (
           <label
             key={op}
