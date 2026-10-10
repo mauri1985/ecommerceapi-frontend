@@ -2,7 +2,7 @@ import React from "react";
 
 export default function OrdenPrecio({ orden, onCambiarOrden }) {
   return (
-    <div className="flex justify-between gap-2 w-full">
+    <div className="flex justify-between gap-2 w-full h-10">
       <button
         onClick={() =>
           onCambiarOrden(orden === "precio_asc" ? "" : "precio_asc")

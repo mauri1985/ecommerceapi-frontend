@@ -32,7 +32,7 @@ export default function FiltrosSidebar({
           Limpiar todo
         </button>
       </div>
-      <div className="hidden md:flex w-full mb-6 pb-6 border-b border-gray-400">
+      <div className="hidden md:flex w-full mb-5 pb-5 border-b border-gray-400">
         <OrdenPrecio orden={orden} onCambiarOrden={onCambiarOrden} />
       </div>
       {/* Filtros de categorias */}
@@ -44,14 +44,17 @@ export default function FiltrosSidebar({
             categoriasSeleccionadas={categoriasSeleccionadas}
             onToggleCategoria={onToggleCategoria}
           />
-          {categoriasSeleccionadas.length > 0 && (
-            <button
-              onClick={onLimpiarCategorias}
-              className="flex justify-center w-full mt-3 p-3 rounded-md bg-blue-500 md:bg-blue-400 hover:bg-blue-500 font-semibold hover:font-bold text-sm text-white cursor-pointer"
-            >
-              Quitar filtro de categorías
-            </button>
-          )}
+          <button
+            className={`flex justify-center w-full text-sm font-semibold mt-3 p-3 rounded-md ${
+              categoriasSeleccionadas.length > 0
+                ? "bg-blue-500 hover:bg-blue-600 hover:font-bold  text-white cursor-pointer"
+                : "bg-gray-300 text-gray-400"
+            }`}
+            onClick={onLimpiarCategorias}
+            disabled={!categoriasSeleccionadas.length > 0}
+          >
+            <span className="">Quitar filtro de talles</span>
+          </button>
         </div>
       </div>
 
@@ -119,7 +122,7 @@ export default function FiltrosSidebar({
         </div>
         <button
           onClick={onAplicarPrecio}
-          className="w-full bg-blue-600 md:bg-blue-400 hover:bg-blue-500 text-white text-sm font-semibold hover:font-bold my-2 py-3 rounded cursor-pointer"
+          className="w-full bg-blue-500 hover:bg-blue-600 text-white text-sm font-semibold hover:font-bold my-2 py-3 rounded cursor-pointer"
         >
           Aplicar precios
         </button>

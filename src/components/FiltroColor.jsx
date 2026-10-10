@@ -22,7 +22,7 @@ export default function FiltroColor({
   }
 
   function limpiarFiltroColores() {
-    onChange([]);
+    onChange(seleccionados.filter((s) => !s.startsWith(`${clave}:`)));
   }
 
   return (
@@ -62,14 +62,17 @@ export default function FiltroColor({
           );
         })}
       </div>
-      {seleccionados?.length > 0 && (
-        <button
-          className="flex justify-center w-full mt-3 p-3 rounded-md bg-blue-500 md:bg-blue-400 hover:bg-blue-500 font-semibold hover:font-bold text-sm text-white cursor-pointer"
-          onClick={() => limpiarFiltroColores()}
-        >
-          <span className="">Quitar filtro color</span>
-        </button>
-      )}
+      <button
+        className={`flex justify-center w-full font-semibold text-sm mt-3 p-3 rounded-md ${
+          activos.length > 0
+            ? "bg-blue-500 hover:bg-blue-600  hover:font-bold  text-white cursor-pointer"
+            : "bg-gray-300 text-gray-400"
+        }`}
+        onClick={() => limpiarFiltroColores()}
+        disabled={!activos}
+      >
+        <span className="">Quitar filtro de colores</span>
+      </button>
     </div>
   );
 }

@@ -18,6 +18,10 @@ export default function FiltroAtributo({
     }
   }
 
+  function limpiarFiltro() {
+    onChange(seleccionados.filter((s) => !s.startsWith(`${clave}:`)));
+  }
+
   return (
     <div className="mb-6 pb-6 border-b border-slate-400">
       <h3 className="font-medium text-sm mb-3">{titulo}</h3>
@@ -55,6 +59,17 @@ export default function FiltroAtributo({
           </label>
         ))}
       </div>
+      <button
+        className={`flex justify-center w-full text-sm font-semibold mt-3 p-3 rounded-md ${
+          activos.length > 0
+            ? "bg-blue-500 hover:bg-blue-600 hover:font-bold  text-white cursor-pointer"
+            : "bg-gray-300 text-gray-400"
+        }`}
+        onClick={() => limpiarFiltro()}
+        disabled={!activos}
+      >
+        <span className="">Quitar filtro de talles</span>
+      </button>
     </div>
   );
 }
